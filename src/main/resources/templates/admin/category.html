@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>首页</title>
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css"> -->
+    <link rel="stylesheet" href="../../static/css/semantic.min.css" th:href="@{/res/css/semantic.min.css}">
+    <link rel="stylesheet" href="../../static/dist/components/icon.min.css" th:href="@{/res/dist/components/icon.min.css}">
+    <link rel="stylesheet" href="../../static/css/index.css" th:href="@{/res/css/index.css}">
+</head>
+<body>
+    <!-- 导航 -->
+    <div th:include="/admin/commonend :: nav(2)"></div>
+
+    <!-- 主体内容 -->
+    <div class="m-content"> 
+        <div class="ui container">
+            <!-- 搜索 -->
+           <form id="searchForm" class="ui segment form" action="" method="get" onsubmit="return searchCategory();">
+                <div class="inline fields">
+                    <div class="field">
+                        <input type="text" placeholder="分类名称..." class="condition" name="condition" value="" th:value="${condition}">
+                        <input type="hidden" name="currentPage" value="1">
+                    </div>
+                    <div class="feild">
+                        <button id="category-search-btn" type="submit" class="ui grey button"> <i class="icon search"></i> 搜索</button>
+                    </div>
+                    <div class="feild">
+                        <button id="add-category" type="button"  class="ui primary button" style="margin-left: 40em;"> <i class="icon paper plane"></i> 新建分类 </button>
+                    </div>
+                </div>
+           </form>
+           <!-- 搜索内容 -->
+           <div class="ui segment">
+            <table class="ui celled table">
+                <thead>
+                    <tr>
+                      <th>
+                          <input class="ui checkbox" type="checkbox">
+                      </th>
+                      <th>序号</th>
+                      <th>图片标识</th>
+                      <th>名称</th>
+                      <th>描述</th>
+                      <th>更新时间</th>
+                      <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+<!--                  <tr>-->
+<!--                    <td>-->
+<!--                        <input class="ui checkbox" type="checkbox">-->
+<!--                    </td>-->
+<!--                    <td>1</td>-->
+<!--                    <td><img class="ui image mini" src="../../static/images/category/java.jpg" alt="图片"></td>-->
+<!--                    <td>Java</td>-->
+<!--                    <td>描述</td>-->
+<!--                    <td>2020-12-1 9:06</td>-->
+<!--                    <td>-->
+<!--                        <a href="javascript:;" class="ui thiny teal basic button">编辑</a>-->
+<!--                        <a href="javascript:;" class="ui thiny red  basic button">删除</a>-->
+<!--                    </td>-->
+<!--                  </tr>-->
+                  <tr th:each="page,status:${pageInfo.list}">
+                    <td>
+                        <input class="ui checkbox" type="checkbox">
+                        <input class="cid" type="hidden" name="cid" value="" th:value="${page.cid}">
+                    </td>
+                    <td>[[${status.count + (pageInfo.pageNum-1) * pageInfo.pageSize}]]</td>
+                    <td><img class="ui image m-category-img-size" th:src="${page.picture}" src="../../static/images/category/java.jpg" alt=""></td>
+                    <td class="m-original-name" data-original-name="" th:data-original-name="${page.name}">[[${page.name}]]</td>
+                    <td class="m-original-description" data-original-description="" th:data-original-description="${page.description}">[[${page.description}]]</td>
+                    <td>[[${#dates.format(page.createTime, 'yyy-MM-dd HH:mm:ss') }]]</td>
+                    <td>
+                        <a href="javascript:;" class="ui thiny teal basic button m-modify">编辑</a>
+                        <a href="javascript:;" class="ui thiny red  basic button m-delete">删除</a>
+                    </td>
+                  </tr>
+                </tbody>
+                <!-- 分页 -->
+                <tfoot>
+                    <tr>
+                        <th colspan="7">
+                            <div  class="ui right floated pagination menu">
+                                <!--   上一页，当没有查询条件时    -->
+                                <a class="icon hidden item m-hidden" href="javascript:;"  th:if="${condition == null}"
+                                    th:href="@{'/admin/category/'+${pageInfo.prePage}}"
+                                    th:classappend="${pageInfo.pageNum == 1} ? 'm-hidden' : 'm-show'">
+                                    <i class="left chevron icon"></i>
+                                </a>
+                                <!--   上一页，当有查询条件时    -->
+                                <a class="icon hidden item m-hidden" href="javascript:;"  th:if="${condition != null}"
+                                   th:href="@{'/admin/category/'+${condition}+'/'+${pageInfo.prePage}}"
+                                   th:classappend="${pageInfo.pageNum == 1} ? 'm-hidden' : 'm-show'">
+                                   <i class="left chevron icon"></i>
+                                </a>
+
+                                <!--  当总页数为0时，不显示分页条  -->
+                                <a class="item" th:if="${pageInfo.pages != 0}" th:remove="tag">
+                                    <!--   页码，无查询条件时    -->
+                                    <a class="item" th:if="${condition == null}" th:each="n:${#numbers.sequence(1, pageInfo.pages)}"
+                                       th:href="@{'/admin/category/'+${n}}"
+                                       th:classappend="${n == pageInfo.pageNum} ? 'm-active'">[[${n}]]
+                                    </a>
+                                    <!--   页码，有查询条件时    -->
+                                    <a class="item" th:if="${condition != null}" th:each="n:${#numbers.sequence(1, pageInfo.pages)}"
+                                       th:href="@{'/admin/category/'+${condition}+'/'+${n}}"
+                                       th:classappend="${n == pageInfo.pageNum} ? 'm-active'">[[${n}]]
+                                    </a>
+
+                                    <!--   下一页，当没有查询条件时    -->
+                                    <a class="icon hidden item m-hidden" href="javascript:;"  th:if="${condition == null}"
+                                       th:href="@{'/admin/category/'+${pageInfo.nextPage}}"
+                                       th:classappend="${pageInfo.pageNum >= pageInfo.pages} ? 'm-hidden' : 'm-show'">
+                                        <i class="right chevron icon"></i>
+                                    </a>
+                                    <!--   下一页，当有查询条件时    -->
+                                    <a class="icon hidden item m-hidden" href="javascript:;"  th:if="${condition != null}"
+                                       th:href="@{'/admin/category/'+${condition}+'/'+${pageInfo.nextPage}}"
+                                       th:classappend="${pageInfo.pageNum >= pageInfo.pages} ? 'm-hidden' : 'm-show'">
+                                        <i class="right chevron icon"></i>
+                                    </a>
+                                </a>
+                                <div class="ui item">
+                                    共&nbsp; [[${pageInfo.total}]] &nbsp;条
+                                </div>
+                            </div>
+
+                        </th>
+                    </tr>
+                </tfoot>
+              </table>
+           </div>
+        </div>
+    </div>  
+
+    <!-- 底部 -->
+    <div th:include="/admin/commonend :: copyright"></div>
+
+    <!-- 新建分类模态框 -->
+    <div class="ui fullscreen modal" >
+        <i class="close icon"></i>
+        <div class="ui header center aligned"> 新建 </div>
+        <div class="content m-padding-top-clear">
+          <div class="ui form">
+              <form id="categoryForm" class="ui form" enctype="multipart/form-data">
+                <input type="hidden" name="uid" value="" th:value="${session.loginUser.uid}">
+                <h4 class="ui dividing m-margin-bottom-middle">
+                    当前用户:
+                    <span class="m-padding-left-small"> <i class="icon user mini"></i> <span th:text="${session.loginUser.nickname}">jack</span>  </span>
+                    <span class="m-padding-left-small"> <i class="icon mini mail"></i> <span th:text="${session.loginUser.mail}">jack@qq.com</span> </span>
+                </h4>
+                <div class="field m-margin-bottom-middle">
+                    <label>分类名称:</label>
+                    <input class="ui input" type="text" name="name">
+                </div>
+                <div class="field m-margin-bottom-middle">
+                    <label>图片标识: <span style="color: red;">文件格式要求:jpg、jpeg、png 大小要求:小于1MB</span></label>
+                    <input type="file" class="ui input" name="pictureFile">
+                </div>
+                <div class="field">
+                    <label>分类描述:</label>
+                    <textarea rows="5" cols="5" style="resize: none;" name="description"></textarea>
+                </div>
+              </form>
+          </div>
+        </div>
+        <div class="actions">
+          <button class="ui negative button">返回</button>
+          <button class="ui green button" id="submit-btn"> <i class="checkmark icon"></i> 确定</button>
+        </div>
+      </div>
+
+    <!-- 删除分类模态框 -->
+    <div class="ui basic modal">
+        <div class="ui icon header">
+            <i class="trash alternate icon"></i>
+            删除此分类
+        </div>
+        <div class="content">
+            <p class="ui header" style="color: rgba(218,52,52,0.85) !important;">此操作不可逆，你确定要继续吗?</p>
+        </div>
+        <div class="actions">
+            <button class="ui negative button">取消</button>
+            <button class="ui green button" id="delete-btn"> <i class="checkmark icon"></i> 删除</button>
+        </div>
+    </div>
+
+    <!-- 编辑分类模态框 -->
+    <div class="ui fullscreen2 modal" >
+        <i class="close icon"></i>
+        <div class="ui header center aligned">编辑</div>
+        <div class="content m-padding-top-clear">
+            <div class="ui form">
+                <form id="modifyForm" class="ui form" enctype="multipart/form-data">
+                    <input type="hidden" name="uid" value="" th:value="${session.loginUser.uid}">
+                    <h4 class="ui dividing m-margin-bottom-middle">
+                        当前用户:
+                        <span class="m-padding-left-small"> <i class="icon user mini"></i> <span th:text="${session.loginUser.nickname}">jack</span>  </span>
+                        <span class="m-padding-left-small"> <i class="icon mini mail"></i> <span th:text="${session.loginUser.mail}">jack@qq.com</span> </span>
+                    </h4>
+                    <div class="field m-margin-bottom-middle">
+                        <label>分类名称:</label>
+                        <input class="ui input" type="text" name="name" value="">
+                        <input type="hidden" name="_method" value="PUT">
+                    </div>
+                    <div class="field m-margin-bottom-middle">
+                        <label>图片标识: <span style="color: red;">文件格式要求:jpg、jpeg、png 大小要求:小于1MB</span></label>
+                        <input class="ui input" type="file" name="pictureFile">
+                    </div>
+                    <div class="field">
+                        <label>分类描述:</label>
+                        <textarea rows="5" cols="5" style="resize: none;" name="description"></textarea>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="actions">
+            <button class="ui negative button">返回</button>
+            <button class="ui green button" id="modify-btn"> <i class="checkmark icon"></i> 确定</button>
+        </div>
+    </div>
+
+ <!-- ------------------------ js ----------------------------------------------------------------------- -->
+    <script src="../../static/js/jquery.min.js" th:src="@{/res/js/jquery.min.js}"></script>
+    <!-- <script src="js/flexible.js"></script> -->
+    <script src="../../static/js/semantic.min.js" th:src="@{/res/js/semantic.min.js}"></script>
+    <script src="../../static/js/end.js" th:src="@{/res/js/end.js}"></script>
+
+    <script type="text/javascript">
+        $(function() {
+            /*------------移动端导航栏显示------------*/
+            $("#m-show-nav").on("click", function() {
+                $(".m-item").toggle("fast",function(){
+                    $(".m-item").removeClass("m-mobile-hide");
+                });
+            })
+            
+            /*-----------退出下拉菜单-------------*/
+            $('.ui.dropdown').dropdown();
+        })
+    </script>
+    
+</body>
+</html>

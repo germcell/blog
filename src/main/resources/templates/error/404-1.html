@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../static/css/semantic.min.css" th:href="@{/res/css/semantic.min.css}">
+    <link rel="stylesheet" href="../../staticdist/components/icon.min.css" th:href="@{/res/components/icon.min.css}">
+    <link rel="stylesheet" href="../../static/css/index.css" th:href="@{/res/css/index.css}">
+    <title>404</title>
+    <style>
+        .m-404-padding {
+            padding: 5em 20em 23em 20em !important;
+        }
+    </style>
+</head>
+<body>
+    <nav class="ui inverted attached segment m-navpd">
+        <div class="ui container">
+            <div class="ui inverted secondary menu stackable">
+                <h2 class="ui teal header m-title">Blog</h2>
+                <a href="#" class="item m-item m-mobile-hide active">首页</a>
+                <a href="#" class="item m-item m-mobile-hide">分类</a>
+                <!-- <a href="#" class="item m-item m-mobile-hide">标签</a> -->
+                <a href="#" class="item m-item m-mobile-hide">归档</a>
+                <a href="#" class="item m-item m-mobile-hide" id="about-me">关于我</a>
+                <div class="right item m-item m-mobile-hide">
+                    <div class="ui icon input">
+                        <input type="text" placeholder="Search...">
+                        <i class="search link icon"></i>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <a id="m-show-nav" href="javascript:;" class="ui inverted icon button m-top-right m-mobile-show">
+            <i class="sidebar icon"></i>
+        </a>
+    </nav>
+
+    <div class="m-content m-404-padding">
+        <div class="ui container">
+            <div class="ui error message">
+                <div class="ui two column grid">
+                    <div class="column">
+                        <h1 class="ui header">404</h1>
+                        <br>
+                        <p class="ui header">对不起，您访问的资源不存在或已丢失</p>
+                        <br><br><br>
+                    </div>
+                    <div class="ui bottom aligned column">
+                        <button class="ui basic button" style="margin-left: 15em !important;" onclick="window.history.go(-1)">返回</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+    </div>
+   
+
+    <footer class="ui inverted vertical segment m-footer">
+        <div class="ui center aligned container">
+            <div class="ui inverted divided grid mobile reversed stackable">
+                <div class="three wide column">
+                    <div class="ui inverted list">
+                        <div class="item">
+                            <img class="ui rounded image" src="../../static/images/wechat.png" th:src="@{/res/images/wechat.png}" alt="联系我" style="width: 80px !important; height: 80px !important;">
+                        </div>
+                    </div>
+                </div>
+                <div class="three wide column">
+                    <h4 class="ui inverted header">最新博客</h4>
+                </div>
+                <div class="three wide column">
+                    <h4 class="ui inverted header">最新博客</h4>
+                </div>
+                <div class="seven wide column">
+                    <h4 class="ui inverted header">最新博客</h4>
+                </div>
+            </div>
+            <div class="ui inverted section divider"></div>
+            <p class="copyright">Copyright</p>
+        </div>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>公共样式</title>
+</head>
+<body>
+
+    <div th:fragment="nav(n)">
+        <!-- 导航 -->
+        <nav class="ui inverted attached segment m-navpd">
+            <div class="ui container">
+                <div class="ui inverted secondary menu stackable">
+                    <h2 class="ui teal header m-title">Blog</h2>
+                    <a href="#" class="item m-item m-mobile-hide" th:classappend="${n==1} ? 'active'">首页</a>
+                    <a href="#" class="item m-item m-mobile-hide" th:classappend="${n==2} ? 'active'">分类</a>
+                    <!-- <a href="#" class="item m-item m-mobile-hide">标签</a> -->
+                    <a href="#" class="item m-item m-mobile-hide" th:classappend="${n==3} ? 'active'">归档</a>
+                    <a href="#" class="item m-item m-mobile-hide" id="about-me">关于我</a>
+                    <div class="right item m-item m-mobile-hide">
+                        <div class="ui icon input">
+                            <input type="text" placeholder="Search...">
+                            <i class="search link icon"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a id="m-show-nav" href="javascript:;" class="ui inverted icon button m-top-right m-mobile-show">
+                <i class="sidebar icon"></i>
+            </a>
+        </nav>
+    </div>
+
+    <div th:fragment="copyright">
+        <!-- 底部 -->
+        <footer class="ui inverted vertical segment m-footer">
+            <div class="ui center aligned container">
+                <div class="ui inverted divided grid mobile reversed stackable">
+                    <div class="three wide column">
+                        <div class="ui inverted list">
+                            <div class="item">
+                                <img class="ui rounded image" src="../static/images/wechat.png" th:src="@{/res/images/wechat.png}" alt="联系我" style="width: 80px !important; height: 80px !important;">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="three wide column">
+                        <h4 class="ui inverted header">最新博客</h4>
+                    </div>
+                    <div class="three wide column">
+                        <h4 class="ui inverted header">最新博客</h4>
+                    </div>
+                    <div class="seven wide column">
+                        <h4 class="ui inverted header">最新博客</h4>
+                    </div>
+                </div>
+                <div class="ui inverted section divider"></div>
+                <p class="copyright">Copyright</p>
+            </div>
+        </footer>
+    </div>
+
+    <div th:fragment="aboutme">
+        <!-- 关于我模态框 -->
+        <div class="ui modal">
+            <i class="close icon"></i>
+            <div class="header">
+                关于作者
+            </div>
+            <div class="image content">
+                <div class="ui medium image">
+                    <img src="../static/images/del_user_avatar2.jpg" th:src="@{/res/images/del_user_avatar2.jpg}" style="width: 260px; height: 300px;">
+                </div>
+                <div class="description">
+                    <div class="ui header">We've auto-chosen a profile image for you.</div>
+                    <p>We've grabbed the following image from the <a href="https://www.gravatar.com" target="_blank">gravatar</a> image associated with your registered e-mail address.</p>
+                    <p>了解的技术</p>
+                    <div class="ui segment">
+                        <div class="ui black basic left pointing label">Java</div>
+                        <div class="ui black basic left pointing label">Spring</div>
+                        <div class="ui black basic left pointing label">Jquery</div>
+                        <div class="ui black basic left pointing label">MyBatis</div>
+                    </div>
+                    <p>请联系我</p>
+                    <div class="ui segment">
+                        <div class="m-qq-qr">
+                            <img src="../static/images/wechat.png" th:src="@{/res/images/wechat.png}" class="ui image rounded" style="width: 90px; height: 90px; border: 2px blue solid;">
+                        </div>
+                        <button class="ui blue button m-qq">
+                            <i class="qq icon"></i>QQ
+                        </button>
+                        <div class="m-wechat-qr">
+                            <img src="../static/images/wechat.png" th:src="@{/res/images/wechat.png}" class="ui image rounded" style="width: 90px; height: 90px; border: 2px rgb(42, 224, 112) solid;">
+                        </div>
+                        <button class="ui positive button m-wechat">
+                            <i class="wechat icon"></i>WeChat
+                        </button>
+                        <div class="m-github-qr">
+                            <img src="../static/images/wechat.png" th:src="@{/res/images/wechat.png}" class="ui image rounded" style="width: 90px; height: 90px; border: 2px rgb(190, 50, 50) solid;">
+                        </div>
+                        <button class="ui google plus button m-github">
+                            <i class="github icon"></i>GitHub
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="actions">
+                <div class="ui black deny button">
+                    确定
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

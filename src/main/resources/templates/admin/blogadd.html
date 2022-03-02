@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>发布博客</title>
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css"> -->
+    <link rel="stylesheet" href="../../static/css/semantic.min.css" th:href="@{/res/css/semantic.min.css}">
+    <link rel="stylesheet" href="../../static/dist/components/icon.min.css" th:href="@{/res/dist/components/icon.min.css}">
+    <link rel="stylesheet" href="../../static/lib/editormd/css/editormd.min.css" th:href="@{/res/lib/editormd/css/editormd.min.css}">
+    <link rel="stylesheet" href="../../static/css/index.css" th:href="@{/res/css/index.css}">
+</head>
+<body>
+    <!-- 导航 -->
+    <div th:include="/admin/commonend :: nav(2)"></div>
+
+    <!-- 主体内容 -->
+    <div class="m-content  m-padding-big" style="padding-bottom: 5em !important;"> 
+        <div class="ui container">
+            <!-- 编写博客 -->
+            <form action="" class="ui form">
+                <div class="required field">
+                    <div class="ui right labeled input">
+                        <!-- 标题提交 -->
+                        <input type="text" placeholder="标题" name="blogTitle">
+                        <!-- 转载、翻译或原创提交 -->
+                        <div class="ui dropdown orange label">
+                            <input type="hidden">
+                            <div class="text">原创</div>
+                            <i class="dropdown icon"></i>
+                            <div class="menu">
+                                <div class="item" data-value="0">原创</div>
+                                <div class="item" data-value="1">转载</div>
+                                <div class="item" data-value="2">翻译</div>
+                            </div>
+                        </div>
+                      </div>
+                </div>
+                <!-- 博客内容提交 -->
+                <div class="field">
+                    <div id="m-editormd" style="z-index: 1 !important;">
+                        <textarea placeholder="内容" name="blogContent" style="display: none;"></textarea>
+                    </div>
+                </div>
+                <!-- 博客首图提交 -->
+                <div class="field">
+                    <div class="ui left labeled input">
+                        <label class="ui grey label">首图</label>
+                        <input type="file" name="">
+                    </div>
+                </div>
+                <!-- 博客类别提交、个性化提交 -->
+                <div class="inline fields">
+                    <div class="field">
+                        <div class="ui left labeled input">
+                            <label for="" class="ui grey label">分类</label>
+                            <div class="ui dropdown large input label">
+                                <input type="hidden">
+                                <div class="text">Java</div>
+                                <i class="dropdown icon"></i>
+                                <div class="menu">
+                                    <div class="item" data-value="0">Java</div>
+                                    <div class="item" data-value="1">MyBatis</div>
+                                    <div class="item" data-value="2">时事</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="ui checkbox">
+                            <input type="checkbox" id="isRecommend" name="isRecommend">
+                            <label for="isRecommend">推荐到首页</label>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="ui checkbox">
+                            <input type="checkbox" id="isAppreciate" name="isAppreciate">
+                            <label for="isAppreciate">赞赏功能</label>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="ui checkbox">
+                            <input type="checkbox" id="isLeaveMessage" name="isLeaveMessage">
+                            <label for="isLeaveMessage">留言功能</label>
+                        </div>
+                    </div>
+                </div>
+                <!-- 操作按钮 -->
+                <div class="ui container right aligned">
+                    <button type="button" class="ui secondary button" onclick="window.history.go(-1)">返回</button>
+                    <button type="reset" class="ui red button">重置</button>
+                    <button type="submit" class="ui positive button">发布</button>
+                </div>
+            </form>
+        </div>
+    </div>  
+
+
+    <!-- 底部 -->
+    <div th:include="/admin/commonend :: copyright"></div>
+
+
+    <!-- ---------------- js ------------------------- -->
+    <script src="../../static/js/jquery.min.js" th:src="@{/res/js/jquery.min.js}"></script>
+    <!-- <script src="js/flexible.js"></script> -->
+    <script src="../../static/js/semantic.min.js" th:src="@{/res/js/semantic.min.js}"></script>
+    <script src="../../static/lib/editormd/editormd.min.js" th:src="@{/res/lib/editormd/editormd.min.js}"></script>
+
+    <script type="text/javascript">
+
+        var contentEditor;
+
+        $(function() {
+
+             /*--------初始化markdown编辑器---------*/  
+             contentEditor = editormd("m-editormd", {
+                 width: "100%",
+                 height: 700,
+                 syncScrolling: "single",
+                // 此路径为editor编辑器需要的lib目录 
+                 path: "../../static/lib/editormd/lib/"
+                 // TODO blog-add.html markdown静态资源引入失败
+             })
+
+            /*------------移动端导航栏显示------------*/
+            $("#m-show-nav").on("click", function() {
+                $(".m-item").toggle("fast",function(){
+                    $(".m-item").removeClass("m-mobile-hide");
+                });
+            })
+            
+            /*-----------退出下拉菜单-------------*/
+            $('.ui.dropdown').dropdown();
+            
+            /*--------表单验证-----------*/
+            $('.ui.form').form({
+                fields: {
+                   blogTitle    : 'empty',
+                   blogContent  : 'empty'
+                }
+            }) ;
+
+
+        })
+    </script>
+    
+</body>
+</html>

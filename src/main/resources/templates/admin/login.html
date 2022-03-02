@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>登录</title>
+	<link rel="stylesheet" type="text/css" href="../../static/css/style.css"  th:href="@{/res/css/style.css}">
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div class="form-structor">
+	<div class="signup">
+		<h2 class="form-title" id="signup"><span>or</span>登 录</h2>
+		<!-- 登录表单	-->
+		<form class="loginForm" method="post" action="" onsubmit="return checkForm();" th:action="@{/admin/login.do}">
+			<div class="form-holder">
+				<input type="text" class="input nickname" maxlength="18" placeholder="用户名" name="nickname" value="mushroom"/>
+				<input type="password" class="input pwd" maxlength="18" placeholder="密码" name="pwd" value="111"/>
+			</div>
+			<p class="prompt" th:text="${prompt}" style="margin-left: 1em; padding: 0; font-size: 14px; font-weight: 700; color: #bb3030;"></p>
+			<button type="submit" class="submit-btn">登 录</button>
+		</form>
+	</div>
+	<div class="login slide-up">
+		<div class="center">
+			<h2 class="form-title" id="login"><span></span>注 册</h2>
+			<!--	th:action="@{/admin/register.do}" -->
+			<form class="registerFrom">
+				<div class="form-holder">
+					<input type="text" class="input register-nickname" placeholder="用户名" name="nickname"/>
+					<input type="password" class="input register-pwd" placeholder="密码" name="pwd"/>
+					<input type="password" class="input register-repeat-pwd" placeholder="重复输入密码" name="repeat-pwd"/>
+					<input type="email" class="input register-mail" placeholder="邮箱" name="mail"/>
+					<div class="validate">
+						<input type="text" class="input register-code " placeholder="验证码" maxlength="4" name="validateCode"/>
+						<button type="button" class="validate-btn">获取验证码</button>
+					</div>
+				</div>
+				<p class="prompt-reg" style="margin-left: 1em; padding: 0; font-size: 14px; font-weight: 700; color: #bb3030;"></p>
+				<button id="register-btn" type="button" class="submit-btn">注 册</button>
+			</form>
+
+		</div>
+	</div>
+</div>
+<!-- partial -->
+  	<script src="../../static/js/script.js" th:src="@{/res/js/script.js}"></script>
+	<script src="../../static/js/jquery.min.js" th:src="@{/res/js/jquery.min.js}"></script>
+  	<script src="../../static/js/end.js" th:src="@{/res/js/end.js}"></script>
+
+</body>
+</html>

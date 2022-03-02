@@ -1,0 +1,207 @@
+2022-03-02 08:58:27.098 INFO  com.zs.BlogApplication - Starting BlogApplication using Java 1.8.0_144 on Air-20210908VSZ with PID 61816 (D:\IDEA_workspace01\blog\target\classes started by Air in D:\IDEA_workspace01\blog)
+2022-03-02 08:58:27.098 DEBUG com.zs.BlogApplication - Running with Spring Boot v2.6.3, Spring v5.3.15
+2022-03-02 08:58:27.098 INFO  com.zs.BlogApplication - No active profile set, falling back to default profiles: default
+2022-03-02 08:58:27.176 INFO  o.s.b.d.env.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-03-02 08:58:27.176 INFO  o.s.b.d.env.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-03-02 08:58:29.103 INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2022-03-02 08:58:29.103 INFO  org.apache.catalina.core.AprLifecycleListener - Loaded Apache Tomcat Native library [1.2.31] using APR version [1.7.0].
+2022-03-02 08:58:29.103 INFO  org.apache.catalina.core.AprLifecycleListener - APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true], UDS [true].
+2022-03-02 08:58:29.103 INFO  org.apache.catalina.core.AprLifecycleListener - APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+2022-03-02 08:58:29.119 INFO  org.apache.catalina.core.AprLifecycleListener - OpenSSL successfully initialized [OpenSSL 1.1.1l  24 Aug 2021]
+2022-03-02 08:58:29.119 INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2022-03-02 08:58:29.119 INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2022-03-02 08:58:29.119 INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.56]
+2022-03-02 08:58:29.197 INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2022-03-02 08:58:29.197 INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2021 ms
+2022-03-02 08:58:29.338 INFO  c.a.d.s.b.a.DruidDataSourceAutoConfigure - Init DruidDataSource
+2022-03-02 08:58:29.510 INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} inited
+2022-03-02 08:58:30.228 INFO  o.s.b.a.web.servlet.WelcomePageHandlerMapping - Adding welcome page template: index
+2022-03-02 08:58:30.588 INFO  o.s.b.d.autoconfigure.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2022-03-02 08:58:30.603 INFO  org.apache.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2022-03-02 08:58:30.635 INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2022-03-02 08:58:30.650 INFO  com.zs.BlogApplication - Started BlogApplication in 4.647 seconds (JVM running for 6.226)
+2022-03-02 08:58:38.753 INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-03-02 08:58:38.753 INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2022-03-02 08:58:38.753 INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 0 ms
+2022-03-02 08:58:38.784 INFO  com.zs.aspect.LogAspect - RequestLog:{url='http://localhost:8080/admin', requestIP='0:0:0:0:0:0:0:1', requestMethod='com.zs.controller.LoginController.loginPage', requestArgs=[]}
+2022-03-02 08:58:42.404 WARN  org.springframework.web.servlet.PageNotFound - No mapping for GET /favicon.ico
+2022-03-02 08:58:43.759 INFO  com.zs.aspect.LogAspect - RequestLog:{url='http://localhost:8080/admin/login.do', requestIP='0:0:0:0:0:0:0:1', requestMethod='com.zs.controller.LoginController.login', requestArgs=[mushroom, 111, org.apache.catalina.session.StandardSessionFacade@34e7ce86, {}]}
+2022-03-02 08:58:44.299 DEBUG com.zs.mapper.UserMapper.getUserByNicknamePwd - ==>  Preparing: select uid,nickname,mail,avatar,type,register_time,update_time from tb_user where nickname = ? and pwd = ?;
+2022-03-02 08:58:44.327 DEBUG com.zs.mapper.UserMapper.getUserByNicknamePwd - ==> Parameters: mushroom(String), 698d51a19d8a121ce581499d7b701668(String)
+2022-03-02 08:58:44.356 DEBUG com.zs.mapper.UserMapper.getUserByNicknamePwd - <==      Total: 1
+2022-03-02 08:58:44.361 DEBUG com.zs.mapper.UserMapper.updateLoginTime - ==>  Preparing: update tb_user set update_time = now() where uid = ?
+2022-03-02 08:58:44.361 DEBUG com.zs.mapper.UserMapper.updateLoginTime - ==> Parameters: 6(Long)
+2022-03-02 08:58:44.366 DEBUG com.zs.mapper.UserMapper.updateLoginTime - <==    Updates: 1
+2022-03-02 08:58:44.382 INFO  com.zs.aspect.LogAspect - RequestLog:{url='http://localhost:8080/admin/index;jsessionid=A79130BD508568B9FE94506AEC2C2D26', requestIP='0:0:0:0:0:0:0:1', requestMethod='com.zs.controller.LoginController.indexPage', requestArgs=[]}
+2022-03-02 08:58:54.936 INFO  com.zs.aspect.LogAspect - RequestLog:{url='http://localhost:8080/admin/category/1', requestIP='0:0:0:0:0:0:0:1', requestMethod='com.zs.controller.CategoryController.page', requestArgs=[1, {}]}
+2022-03-02 08:58:54.983 DEBUG com.zs.mapper.CategoryMapper.listCategories_COUNT - ==>  Preparing: SELECT count(0) FROM tb_category
+2022-03-02 08:58:54.983 DEBUG com.zs.mapper.CategoryMapper.listCategories_COUNT - ==> Parameters: 
+2022-03-02 08:58:54.983 DEBUG com.zs.mapper.CategoryMapper.listCategories_COUNT - <==      Total: 1
+2022-03-02 08:58:54.998 DEBUG com.zs.mapper.CategoryMapper.listCategories - ==>  Preparing: select cid,`name`,uid,create_time,description,picture from tb_category LIMIT ?
+2022-03-02 08:58:54.998 DEBUG com.zs.mapper.CategoryMapper.listCategories - ==> Parameters: 5(Integer)
+2022-03-02 08:58:54.998 DEBUG com.zs.mapper.CategoryMapper.listCategories - <==      Total: 5
+2022-03-02 08:58:58.212 INFO  com.zs.aspect.LogAspect - RequestLog:{url='http://localhost:8080/admin/category/2', requestIP='0:0:0:0:0:0:0:1', requestMethod='com.zs.controller.CategoryController.page', requestArgs=[2, {}]}
+2022-03-02 08:58:58.214 DEBUG com.zs.mapper.CategoryMapper.listCategories_COUNT - ==>  Preparing: SELECT count(0) FROM tb_category
+2022-03-02 08:58:58.214 DEBUG com.zs.mapper.CategoryMapper.listCategories_COUNT - ==> Parameters: 
+2022-03-02 08:58:58.217 DEBUG com.zs.mapper.CategoryMapper.listCategories_COUNT - <==      Total: 1
+2022-03-02 08:58:58.218 DEBUG com.zs.mapper.CategoryMapper.listCategories - ==>  Preparing: select cid,`name`,uid,create_time,description,picture from tb_category LIMIT ?, ?
+2022-03-02 08:58:58.219 DEBUG com.zs.mapper.CategoryMapper.listCategories - ==> Parameters: 5(Integer), 5(Integer)
+2022-03-02 08:58:58.221 DEBUG com.zs.mapper.CategoryMapper.listCategories - <==      Total: 2
+2022-03-02 08:59:02.831 INFO  com.zs.aspect.LogAspect - RequestLog:{url='http://localhost:8080/admin/category/update/24', requestIP='0:0:0:0:0:0:0:1', requestMethod='com.zs.controller.CategoryController.update', requestArgs=[24, Category(cid=24, name=test5, uid=6, createTime=null, description=test55, picture=null, user=null, listBlogs=null), org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile@3fea6121]}
+2022-03-02 08:59:02.859 DEBUG com.zs.mapper.CategoryMapper.getCategory - ==>  Preparing: select cid,`name`,uid,create_time,description,picture from tb_category WHERE cid = ?
+2022-03-02 08:59:02.860 DEBUG com.zs.mapper.CategoryMapper.getCategory - ==> Parameters: 24(Integer)
+2022-03-02 08:59:02.862 DEBUG com.zs.mapper.CategoryMapper.getCategory - <==      Total: 1
+2022-03-02 08:59:21.711 INFO  com.zs.aspect.LogAspect - RequestLog:{url='http://localhost:8080/admin/category/update/24', requestIP='0:0:0:0:0:0:0:1', requestMethod='com.zs.controller.CategoryController.update', requestArgs=[24, Category(cid=24, name=test4, uid=6, createTime=null, description=test444, picture=null, user=null, listBlogs=null), org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile@36e00f7a]}
+2022-03-02 08:59:21.712 DEBUG com.zs.mapper.CategoryMapper.getCategory - ==>  Preparing: select cid,`name`,uid,create_time,description,picture from tb_category WHERE cid = ?
+2022-03-02 08:59:21.713 DEBUG com.zs.mapper.CategoryMapper.getCategory - ==> Parameters: 24(Integer)
+2022-03-02 08:59:21.715 DEBUG com.zs.mapper.CategoryMapper.getCategory - <==      Total: 1
+2022-03-02 08:59:21.717 DEBUG com.zs.mapper.CategoryMapper.updateCategoryById - ==>  Preparing: update tb_category set name = ?, description = ?, create_time = now() where cid = ?
+2022-03-02 08:59:21.718 DEBUG com.zs.mapper.CategoryMapper.updateCategoryById - ==> Parameters: test4(String), test444(String), 24(Integer)
+2022-03-02 08:59:21.720 DEBUG com.zs.mapper.CategoryMapper.updateCategoryById - <==    Updates: 1
+2022-03-02 08:59:23.049 INFO  com.zs.aspect.LogAspect - RequestLog:{url='http://localhost:8080/admin/category/2', requestIP='0:0:0:0:0:0:0:1', requestMethod='com.zs.controller.CategoryController.page', requestArgs=[2, {}]}
+2022-03-02 08:59:23.050 DEBUG com.zs.mapper.CategoryMapper.listCategories_COUNT - ==>  Preparing: SELECT count(0) FROM tb_category
+2022-03-02 08:59:23.051 DEBUG com.zs.mapper.CategoryMapper.listCategories_COUNT - ==> Parameters: 
+2022-03-02 08:59:23.053 DEBUG com.zs.mapper.CategoryMapper.listCategories_COUNT - <==      Total: 1
+2022-03-02 08:59:23.054 DEBUG com.zs.mapper.CategoryMapper.listCategories - ==>  Preparing: select cid,`name`,uid,create_time,description,picture from tb_category LIMIT ?, ?
+2022-03-02 08:59:23.055 DEBUG com.zs.mapper.CategoryMapper.listCategories - ==> Parameters: 5(Integer), 5(Integer)
+2022-03-02 08:59:23.057 DEBUG com.zs.mapper.CategoryMapper.listCategories - <==      Total: 2
+2022-03-02 08:59:36.318 INFO  com.zs.aspect.LogAspect - RequestLog:{url='http://localhost:8080/admin/category/1', requestIP='0:0:0:0:0:0:0:1', requestMethod='com.zs.controller.CategoryController.page', requestArgs=[1, {}]}
+2022-03-02 08:59:36.319 DEBUG com.zs.mapper.CategoryMapper.listCategories_COUNT - ==>  Preparing: SELECT count(0) FROM tb_category
+2022-03-02 08:59:36.320 DEBUG com.zs.mapper.CategoryMapper.listCategories_COUNT - ==> Parameters: 
+2022-03-02 08:59:36.324 DEBUG com.zs.mapper.CategoryMapper.listCategories_COUNT - <==      Total: 1
+2022-03-02 08:59:36.325 DEBUG com.zs.mapper.CategoryMapper.listCategories - ==>  Preparing: select cid,`name`,uid,create_time,description,picture from tb_category LIMIT ?
+2022-03-02 08:59:36.325 DEBUG com.zs.mapper.CategoryMapper.listCategories - ==> Parameters: 5(Integer)
+2022-03-02 08:59:36.329 DEBUG com.zs.mapper.CategoryMapper.listCategories - <==      Total: 5
+2022-03-02 08:59:38.448 INFO  com.zs.aspect.LogAspect - RequestLog:{url='http://localhost:8080/admin/category/2', requestIP='0:0:0:0:0:0:0:1', requestMethod='com.zs.controller.CategoryController.page', requestArgs=[2, {}]}
+2022-03-02 08:59:38.450 DEBUG com.zs.mapper.CategoryMapper.listCategories_COUNT - ==>  Preparing: SELECT count(0) FROM tb_category
+2022-03-02 08:59:38.451 DEBUG com.zs.mapper.CategoryMapper.listCategories_COUNT - ==> Parameters: 
+2022-03-02 08:59:38.454 DEBUG com.zs.mapper.CategoryMapper.listCategories_COUNT - <==      Total: 1
+2022-03-02 08:59:38.455 DEBUG com.zs.mapper.CategoryMapper.listCategories - ==>  Preparing: select cid,`name`,uid,create_time,description,picture from tb_category LIMIT ?, ?
+2022-03-02 08:59:38.456 DEBUG com.zs.mapper.CategoryMapper.listCategories - ==> Parameters: 5(Integer), 5(Integer)
+2022-03-02 08:59:38.458 DEBUG com.zs.mapper.CategoryMapper.listCategories - <==      Total: 2
+2022-03-02 08:59:52.095 INFO  com.zs.aspect.LogAspect - RequestLog:{url='http://localhost:8080/admin/category/update/24', requestIP='0:0:0:0:0:0:0:1', requestMethod='com.zs.controller.CategoryController.update', requestArgs=[24, Category(cid=24, name=test4, uid=6, createTime=null, description=test444, picture=null, user=null, listBlogs=null), org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile@6857b1d7]}
+2022-03-02 08:59:58.329 INFO  com.zs.aspect.LogAspect - RequestLog:{url='http://localhost:8080/admin/category/update/24', requestIP='0:0:0:0:0:0:0:1', requestMethod='com.zs.controller.CategoryController.update', requestArgs=[24, Category(cid=24, name=test4, uid=6, createTime=null, description=test444, picture=null, user=null, listBlogs=null), org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile@544bc06a]}
+2022-03-02 08:59:58.335 DEBUG com.zs.mapper.CategoryMapper.getCategory - ==>  Preparing: select cid,`name`,uid,create_time,description,picture from tb_category WHERE `name` = ?
+2022-03-02 08:59:58.336 DEBUG com.zs.mapper.CategoryMapper.getCategory - ==> Parameters: test4(String)
+2022-03-02 08:59:58.338 DEBUG com.zs.mapper.CategoryMapper.getCategory - <==      Total: 1
+2022-03-02 09:00:34.468 INFO  com.zs.aspect.LogAspect - RequestLog:{url='http://localhost:8080/admin/category/update/24', requestIP='0:0:0:0:0:0:0:1', requestMethod='com.zs.controller.CategoryController.update', requestArgs=[24, Category(cid=24, name=test3, uid=6, createTime=null, description=test444, picture=null, user=null, listBlogs=null), org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile@85f078c]}
+2022-03-02 09:00:34.472 DEBUG com.zs.mapper.CategoryMapper.getCategory - ==>  Preparing: select cid,`name`,uid,create_time,description,picture from tb_category WHERE `name` = ?
+2022-03-02 09:00:34.472 DEBUG com.zs.mapper.CategoryMapper.getCategory - ==> Parameters: test3(String)
+2022-03-02 09:00:34.474 DEBUG com.zs.mapper.CategoryMapper.getCategory - <==      Total: 1
+2022-03-02 09:00:39.453 INFO  com.zs.aspect.LogAspect - RequestLog:{url='http://localhost:8080/admin/category/2', requestIP='0:0:0:0:0:0:0:1', requestMethod='com.zs.controller.CategoryController.page', requestArgs=[2, {}]}
+2022-03-02 09:00:39.454 DEBUG com.zs.mapper.CategoryMapper.listCategories_COUNT - ==>  Preparing: SELECT count(0) FROM tb_category
+2022-03-02 09:00:39.455 DEBUG com.zs.mapper.CategoryMapper.listCategories_COUNT - ==> Parameters: 
+2022-03-02 09:00:39.458 DEBUG com.zs.mapper.CategoryMapper.listCategories_COUNT - <==      Total: 1
+2022-03-02 09:00:39.460 DEBUG com.zs.mapper.CategoryMapper.listCategories - ==>  Preparing: select cid,`name`,uid,create_time,description,picture from tb_category LIMIT ?, ?
+2022-03-02 09:00:39.461 DEBUG com.zs.mapper.CategoryMapper.listCategories - ==> Parameters: 5(Integer), 5(Integer)
+2022-03-02 09:00:39.463 DEBUG com.zs.mapper.CategoryMapper.listCategories - <==      Total: 2
+2022-03-02 09:00:54.919 INFO  com.zs.aspect.LogAspect - RequestLog:{url='http://localhost:8080/admin/category/update/24', requestIP='0:0:0:0:0:0:0:1', requestMethod='com.zs.controller.CategoryController.update', requestArgs=[24, Category(cid=24, name=test4, uid=6, createTime=null, description=test444, picture=null, user=null, listBlogs=null), org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile@5281ca43]}
+2022-03-02 09:00:54.924 DEBUG com.zs.mapper.CategoryMapper.getCategory - ==>  Preparing: select cid,`name`,uid,create_time,description,picture from tb_category WHERE `name` = ?
+2022-03-02 09:00:54.924 DEBUG com.zs.mapper.CategoryMapper.getCategory - ==> Parameters: test4(String)
+2022-03-02 09:00:54.926 DEBUG com.zs.mapper.CategoryMapper.getCategory - <==      Total: 1
+2022-03-02 09:01:09.962 INFO  com.zs.aspect.LogAspect - RequestLog:{url='http://localhost:8080/admin/category/update/24', requestIP='0:0:0:0:0:0:0:1', requestMethod='com.zs.controller.CategoryController.update', requestArgs=[24, Category(cid=24, name=test5, uid=6, createTime=null, description=test555, picture=null, user=null, listBlogs=null), org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile@13d9dd85]}
+2022-03-02 09:01:09.966 DEBUG com.zs.mapper.CategoryMapper.getCategory - ==>  Preparing: select cid,`name`,uid,create_time,description,picture from tb_category WHERE `name` = ?
+2022-03-02 09:01:09.967 DEBUG com.zs.mapper.CategoryMapper.getCategory - ==> Parameters: test5(String)
+2022-03-02 09:01:09.968 DEBUG com.zs.mapper.CategoryMapper.getCategory - <==      Total: 0
+2022-03-02 09:01:09.969 DEBUG com.zs.mapper.CategoryMapper.updateCategoryById - ==>  Preparing: update tb_category set name = ?, picture = ?, description = ?, create_time = now() where cid = ?
+2022-03-02 09:01:09.970 DEBUG com.zs.mapper.CategoryMapper.updateCategoryById - ==> Parameters: test5(String), /res/images/category/1646182869962.jpg(String), test555(String), 24(Integer)
+2022-03-02 09:01:09.974 DEBUG com.zs.mapper.CategoryMapper.updateCategoryById - <==    Updates: 1
+2022-03-02 09:01:11.050 INFO  com.zs.aspect.LogAspect - RequestLog:{url='http://localhost:8080/admin/category/2', requestIP='0:0:0:0:0:0:0:1', requestMethod='com.zs.controller.CategoryController.page', requestArgs=[2, {}]}
+2022-03-02 09:01:11.051 DEBUG com.zs.mapper.CategoryMapper.listCategories_COUNT - ==>  Preparing: SELECT count(0) FROM tb_category
+2022-03-02 09:01:11.052 DEBUG com.zs.mapper.CategoryMapper.listCategories_COUNT - ==> Parameters: 
+2022-03-02 09:01:11.054 DEBUG com.zs.mapper.CategoryMapper.listCategories_COUNT - <==      Total: 1
+2022-03-02 09:01:11.056 DEBUG com.zs.mapper.CategoryMapper.listCategories - ==>  Preparing: select cid,`name`,uid,create_time,description,picture from tb_category LIMIT ?, ?
+2022-03-02 09:01:11.057 DEBUG com.zs.mapper.CategoryMapper.listCategories - ==> Parameters: 5(Integer), 5(Integer)
+2022-03-02 09:01:11.059 DEBUG com.zs.mapper.CategoryMapper.listCategories - <==      Total: 2
+2022-03-02 09:17:14.191 INFO  com.zs.aspect.LogAspect - RequestLog:{url='http://localhost:8080/admin/category/update/24', requestIP='0:0:0:0:0:0:0:1', requestMethod='com.zs.controller.CategoryController.update', requestArgs=[24, Category(cid=24, name=test5, uid=6, createTime=null, description=test555, picture=null, user=null, listBlogs=null), org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile@4a169501]}
+2022-03-02 09:17:14.200 DEBUG com.zs.mapper.CategoryMapper.getCategory - ==>  Preparing: select cid,`name`,uid,create_time,description,picture from tb_category WHERE cid = ?
+2022-03-02 09:17:14.200 DEBUG com.zs.mapper.CategoryMapper.getCategory - ==> Parameters: 24(Integer)
+2022-03-02 09:17:14.202 DEBUG com.zs.mapper.CategoryMapper.getCategory - <==      Total: 1
+2022-03-02 09:17:28.401 INFO  com.zs.aspect.LogAspect - RequestLog:{url='http://localhost:8080/admin/category/update/24', requestIP='0:0:0:0:0:0:0:1', requestMethod='com.zs.controller.CategoryController.update', requestArgs=[24, Category(cid=24, name=test5, uid=6, createTime=null, description=test555, picture=null, user=null, listBlogs=null), org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile@3ec92667]}
+2022-03-02 09:17:34.104 INFO  com.zs.aspect.LogAspect - RequestLog:{url='http://localhost:8080/admin/category/update/24', requestIP='0:0:0:0:0:0:0:1', requestMethod='com.zs.controller.CategoryController.update', requestArgs=[24, Category(cid=24, name=test5, uid=6, createTime=null, description=test555, picture=null, user=null, listBlogs=null), org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile@ff3bbc4]}
+2022-03-02 09:17:34.107 DEBUG com.zs.mapper.CategoryMapper.getCategory - ==>  Preparing: select cid,`name`,uid,create_time,description,picture from tb_category WHERE `name` = ?
+2022-03-02 09:17:34.108 DEBUG com.zs.mapper.CategoryMapper.getCategory - ==> Parameters: test5(String)
+2022-03-02 09:17:34.109 DEBUG com.zs.mapper.CategoryMapper.getCategory - <==      Total: 1
+2022-03-02 09:19:22.684 INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closing ...
+2022-03-02 09:19:22.684 INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closed
+2022-03-02 09:19:29.498 INFO  com.zs.BlogApplication - Starting BlogApplication using Java 1.8.0_144 on Air-20210908VSZ with PID 65240 (D:\IDEA_workspace01\blog\target\classes started by Air in D:\IDEA_workspace01\blog)
+2022-03-02 09:19:29.514 DEBUG com.zs.BlogApplication - Running with Spring Boot v2.6.3, Spring v5.3.15
+2022-03-02 09:19:29.514 INFO  com.zs.BlogApplication - No active profile set, falling back to default profiles: default
+2022-03-02 09:19:29.561 INFO  o.s.b.d.env.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-03-02 09:19:29.561 INFO  o.s.b.d.env.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-03-02 09:19:30.936 INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2022-03-02 09:19:30.936 INFO  org.apache.catalina.core.AprLifecycleListener - Loaded Apache Tomcat Native library [1.2.31] using APR version [1.7.0].
+2022-03-02 09:19:30.936 INFO  org.apache.catalina.core.AprLifecycleListener - APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true], UDS [true].
+2022-03-02 09:19:30.936 INFO  org.apache.catalina.core.AprLifecycleListener - APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+2022-03-02 09:19:30.936 INFO  org.apache.catalina.core.AprLifecycleListener - OpenSSL successfully initialized [OpenSSL 1.1.1l  24 Aug 2021]
+2022-03-02 09:19:30.936 INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2022-03-02 09:19:30.936 INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2022-03-02 09:19:30.951 INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.56]
+2022-03-02 09:19:31.014 INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2022-03-02 09:19:31.014 INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1438 ms
+2022-03-02 09:19:31.123 INFO  c.a.d.s.b.a.DruidDataSourceAutoConfigure - Init DruidDataSource
+2022-03-02 09:19:31.248 INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} inited
+2022-03-02 09:19:31.811 INFO  o.s.b.a.web.servlet.WelcomePageHandlerMapping - Adding welcome page template: index
+2022-03-02 09:19:32.092 INFO  o.s.b.d.autoconfigure.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2022-03-02 09:19:32.123 INFO  org.apache.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2022-03-02 09:19:32.139 INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2022-03-02 09:19:32.154 INFO  com.zs.BlogApplication - Started BlogApplication in 3.206 seconds (JVM running for 4.239)
+2022-03-02 09:20:41.149 INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-03-02 09:20:41.149 INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2022-03-02 09:20:41.149 INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 0 ms
+2022-03-02 09:20:41.180 INFO  com.zs.aspect.LogAspect - RequestLog:{url='http://localhost:8080/admin', requestIP='0:0:0:0:0:0:0:1', requestMethod='com.zs.controller.LoginController.loginPage', requestArgs=[]}
+2022-03-02 09:20:42.649 INFO  com.zs.aspect.LogAspect - RequestLog:{url='http://localhost:8080/admin/login.do', requestIP='0:0:0:0:0:0:0:1', requestMethod='com.zs.controller.LoginController.login', requestArgs=[mushroom, 111, org.apache.catalina.session.StandardSessionFacade@1d15f0a8, {}]}
+2022-03-02 09:20:43.164 DEBUG com.zs.mapper.UserMapper.getUserByNicknamePwd - ==>  Preparing: select uid,nickname,mail,avatar,type,register_time,update_time from tb_user where nickname = ? and pwd = ?;
+2022-03-02 09:20:43.180 DEBUG com.zs.mapper.UserMapper.getUserByNicknamePwd - ==> Parameters: mushroom(String), 698d51a19d8a121ce581499d7b701668(String)
+2022-03-02 09:20:43.211 DEBUG com.zs.mapper.UserMapper.getUserByNicknamePwd - <==      Total: 1
+2022-03-02 09:20:43.211 DEBUG com.zs.mapper.UserMapper.updateLoginTime - ==>  Preparing: update tb_user set update_time = now() where uid = ?
+2022-03-02 09:20:43.211 DEBUG com.zs.mapper.UserMapper.updateLoginTime - ==> Parameters: 6(Long)
+2022-03-02 09:20:43.211 DEBUG com.zs.mapper.UserMapper.updateLoginTime - <==    Updates: 1
+2022-03-02 09:20:43.227 INFO  com.zs.aspect.LogAspect - RequestLog:{url='http://localhost:8080/admin/index', requestIP='0:0:0:0:0:0:0:1', requestMethod='com.zs.controller.LoginController.indexPage', requestArgs=[]}
+2022-03-02 09:20:44.936 INFO  com.zs.aspect.LogAspect - RequestLog:{url='http://localhost:8080/admin/category/1', requestIP='0:0:0:0:0:0:0:1', requestMethod='com.zs.controller.CategoryController.page', requestArgs=[1, {}]}
+2022-03-02 09:20:44.971 DEBUG com.zs.mapper.CategoryMapper.listCategories_COUNT - ==>  Preparing: SELECT count(0) FROM tb_category
+2022-03-02 09:20:44.971 DEBUG com.zs.mapper.CategoryMapper.listCategories_COUNT - ==> Parameters: 
+2022-03-02 09:20:44.976 DEBUG com.zs.mapper.CategoryMapper.listCategories_COUNT - <==      Total: 1
+2022-03-02 09:20:44.978 DEBUG com.zs.mapper.CategoryMapper.listCategories - ==>  Preparing: select cid,`name`,uid,create_time,description,picture from tb_category LIMIT ?
+2022-03-02 09:20:44.979 DEBUG com.zs.mapper.CategoryMapper.listCategories - ==> Parameters: 5(Integer)
+2022-03-02 09:20:44.982 DEBUG com.zs.mapper.CategoryMapper.listCategories - <==      Total: 5
+2022-03-02 09:20:46.762 INFO  com.zs.aspect.LogAspect - RequestLog:{url='http://localhost:8080/admin/category/2', requestIP='0:0:0:0:0:0:0:1', requestMethod='com.zs.controller.CategoryController.page', requestArgs=[2, {}]}
+2022-03-02 09:20:46.764 DEBUG com.zs.mapper.CategoryMapper.listCategories_COUNT - ==>  Preparing: SELECT count(0) FROM tb_category
+2022-03-02 09:20:46.764 DEBUG com.zs.mapper.CategoryMapper.listCategories_COUNT - ==> Parameters: 
+2022-03-02 09:20:46.767 DEBUG com.zs.mapper.CategoryMapper.listCategories_COUNT - <==      Total: 1
+2022-03-02 09:20:46.768 DEBUG com.zs.mapper.CategoryMapper.listCategories - ==>  Preparing: select cid,`name`,uid,create_time,description,picture from tb_category LIMIT ?, ?
+2022-03-02 09:20:46.769 DEBUG com.zs.mapper.CategoryMapper.listCategories - ==> Parameters: 5(Integer), 5(Integer)
+2022-03-02 09:20:46.771 DEBUG com.zs.mapper.CategoryMapper.listCategories - <==      Total: 2
+2022-03-02 09:20:49.877 INFO  com.zs.aspect.LogAspect - RequestLog:{url='http://localhost:8080/admin/category/update/24', requestIP='0:0:0:0:0:0:0:1', requestMethod='com.zs.controller.CategoryController.update', requestArgs=[24, Category(cid=24, name=test5, uid=6, createTime=null, description=test555, picture=null, user=null, listBlogs=null), org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile@3ea935ba]}
+2022-03-02 09:20:49.903 DEBUG com.zs.mapper.CategoryMapper.getCategory - ==>  Preparing: select cid,`name`,uid,create_time,description,picture from tb_category WHERE cid = ?
+2022-03-02 09:20:49.904 DEBUG com.zs.mapper.CategoryMapper.getCategory - ==> Parameters: 24(Integer)
+2022-03-02 09:20:49.907 DEBUG com.zs.mapper.CategoryMapper.getCategory - <==      Total: 1
+2022-03-02 09:20:54.933 INFO  com.zs.aspect.LogAspect - RequestLog:{url='http://localhost:8080/admin/category/update/24', requestIP='0:0:0:0:0:0:0:1', requestMethod='com.zs.controller.CategoryController.update', requestArgs=[24, Category(cid=24, name=test5, uid=6, createTime=null, description=test555, picture=null, user=null, listBlogs=null), org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile@3dc34d85]}
+2022-03-02 09:20:54.934 DEBUG com.zs.mapper.CategoryMapper.getCategory - ==>  Preparing: select cid,`name`,uid,create_time,description,picture from tb_category WHERE cid = ?
+2022-03-02 09:20:54.935 DEBUG com.zs.mapper.CategoryMapper.getCategory - ==> Parameters: 24(Integer)
+2022-03-02 09:20:54.936 DEBUG com.zs.mapper.CategoryMapper.getCategory - <==      Total: 1
+2022-03-02 09:21:00.501 INFO  com.zs.aspect.LogAspect - RequestLog:{url='http://localhost:8080/admin/category/update/24', requestIP='0:0:0:0:0:0:0:1', requestMethod='com.zs.controller.CategoryController.update', requestArgs=[24, Category(cid=24, name=test5, uid=6, createTime=null, description=test555, picture=null, user=null, listBlogs=null), org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile@6824aad9]}
+2022-03-02 09:21:00.506 DEBUG com.zs.mapper.CategoryMapper.getCategory - ==>  Preparing: select cid,`name`,uid,create_time,description,picture from tb_category WHERE `name` = ?
+2022-03-02 09:21:00.506 DEBUG com.zs.mapper.CategoryMapper.getCategory - ==> Parameters: test5(String)
+2022-03-02 09:21:00.508 DEBUG com.zs.mapper.CategoryMapper.getCategory - <==      Total: 1
+2022-03-02 09:21:00.510 DEBUG com.zs.mapper.CategoryMapper.updateCategoryById - ==>  Preparing: update tb_category set name = ?, picture = ?, description = ?, create_time = now() where cid = ?
+2022-03-02 09:21:00.511 DEBUG com.zs.mapper.CategoryMapper.updateCategoryById - ==> Parameters: test5(String), /res/images/category/1646184060501.jpg(String), test555(String), 24(Integer)
+2022-03-02 09:21:00.512 DEBUG com.zs.mapper.CategoryMapper.updateCategoryById - <==    Updates: 1
+2022-03-02 09:21:07.127 INFO  com.zs.aspect.LogAspect - RequestLog:{url='http://localhost:8080/admin/category/2', requestIP='0:0:0:0:0:0:0:1', requestMethod='com.zs.controller.CategoryController.page', requestArgs=[2, {}]}
+2022-03-02 09:21:07.128 DEBUG com.zs.mapper.CategoryMapper.listCategories_COUNT - ==>  Preparing: SELECT count(0) FROM tb_category
+2022-03-02 09:21:07.128 DEBUG com.zs.mapper.CategoryMapper.listCategories_COUNT - ==> Parameters: 
+2022-03-02 09:21:07.131 DEBUG com.zs.mapper.CategoryMapper.listCategories_COUNT - <==      Total: 1
+2022-03-02 09:21:07.132 DEBUG com.zs.mapper.CategoryMapper.listCategories - ==>  Preparing: select cid,`name`,uid,create_time,description,picture from tb_category LIMIT ?, ?
+2022-03-02 09:21:07.133 DEBUG com.zs.mapper.CategoryMapper.listCategories - ==> Parameters: 5(Integer), 5(Integer)
+2022-03-02 09:21:07.135 DEBUG com.zs.mapper.CategoryMapper.listCategories - <==      Total: 2
+2022-03-02 09:21:09.921 INFO  com.zs.aspect.LogAspect - RequestLog:{url='http://localhost:8080/admin/category/1', requestIP='0:0:0:0:0:0:0:1', requestMethod='com.zs.controller.CategoryController.page', requestArgs=[1, {}]}
+2022-03-02 09:21:09.923 DEBUG com.zs.mapper.CategoryMapper.listCategories_COUNT - ==>  Preparing: SELECT count(0) FROM tb_category
+2022-03-02 09:21:09.923 DEBUG com.zs.mapper.CategoryMapper.listCategories_COUNT - ==> Parameters: 
+2022-03-02 09:21:09.926 DEBUG com.zs.mapper.CategoryMapper.listCategories_COUNT - <==      Total: 1
+2022-03-02 09:21:09.927 DEBUG com.zs.mapper.CategoryMapper.listCategories - ==>  Preparing: select cid,`name`,uid,create_time,description,picture from tb_category LIMIT ?
+2022-03-02 09:21:09.927 DEBUG com.zs.mapper.CategoryMapper.listCategories - ==> Parameters: 5(Integer)
+2022-03-02 09:21:09.932 DEBUG com.zs.mapper.CategoryMapper.listCategories - <==      Total: 5
+2022-03-02 09:21:14.527 INFO  com.zs.aspect.LogAspect - RequestLog:{url='http://localhost:8080/admin/loginOut', requestIP='0:0:0:0:0:0:0:1', requestMethod='com.zs.controller.LoginController.loginOut', requestArgs=[org.apache.catalina.session.StandardSessionFacade@1d15f0a8]}
+2022-03-02 09:21:14.537 INFO  com.zs.aspect.LogAspect - RequestLog:{url='http://localhost:8080/admin', requestIP='0:0:0:0:0:0:0:1', requestMethod='com.zs.controller.LoginController.loginPage', requestArgs=[]}
+2022-03-02 09:21:17.799 INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closing ...
+2022-03-02 09:21:17.799 INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closed
