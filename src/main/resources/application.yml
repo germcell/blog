@@ -11,6 +11,10 @@ spring:
       filter:
         enabled: true
 
+    favicon:
+      enabled: false
+
+
   # druid数据源配置
   datasource:
     druid:

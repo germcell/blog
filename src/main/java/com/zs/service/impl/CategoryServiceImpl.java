@@ -3,8 +3,11 @@ package com.zs.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.mysql.cj.log.Log;
+import com.sun.glass.ui.Size;
 import com.zs.config.Const;
+import com.zs.mapper.BlogMapper;
 import com.zs.mapper.CategoryMapper;
+import com.zs.pojo.Blog;
 import com.zs.pojo.Category;
 import com.zs.pojo.RequestResult;
 import com.zs.service.CategoryService;
@@ -22,6 +25,8 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Autowired
     private CategoryMapper categoryMapper;
+    @Autowired
+    private BlogMapper blogMapper;
 
     /**
      * 分页查询分类
@@ -72,9 +77,16 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public RequestResult deleteCategoryById(Integer cid) {
         RequestResult requestResult = new RequestResult();
-        int rows = categoryMapper.deleteCategoryById(cid);
-        requestResult.setCode(Const.DELETE_CATEGORY_SUCCESS);
-        requestResult.setMessage("删除成功");
+        // 查询被删除分类是否有关联的博客
+        List<Blog> listBlogsByCid = blogMapper.listConditionBlogs(null, cid, null);
+        if (listBlogsByCid.size() == 0) {
+            int rows = categoryMapper.deleteCategoryById(cid);
+            requestResult.setCode(Const.DELETE_CATEGORY_SUCCESS);
+            requestResult.setMessage("删除成功");
+        } else {
+            requestResult.setCode(Const.DELETE_CATEGORY_FAILED);
+            requestResult.setMessage("删除失败 : 该分类下有关联博客");
+        }
         return requestResult;
     }
 
@@ -116,5 +128,14 @@ public class CategoryServiceImpl implements CategoryService {
             }
         }
         return requestResult;
+    }
+
+    /**
+     * 查询所有分类
+     * @return
+     */
+    @Override
+    public List<Category> listCategories() {
+        return categoryMapper.listCategories();
     }
 }

@@ -30,7 +30,16 @@
   padding-bottom: 2em !important;
   padding-left: 8em !important;
   padding-right: 5em !important; */
-  background-color: rgba(0,0,0,.1);
+  /*background-color: rgba(0,0,0,.1);*/
+  background-image: url("../images/del_bj.png");
+}
+
+.m-content-most-big {
+  padding: 2em 0em 5em 0em !important;
+  /*background-color: rgba(0,0,0);*/
+  background-image: url("../images/del_bj.png");
+
+
 }
 
 .blogCount {
@@ -228,4 +237,11 @@
 
  .m-margin-bottom-middle {
    margin-bottom: 2em !important;
+ }
+
+ .m-is-publish {
+   color: #1ebb1e !important;
+ }
+ .m-is-draft {
+   color: rgb(236,0,39) !important;
  }

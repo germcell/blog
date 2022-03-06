@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" th:href="@{/res/favicon.ico}">
+    <title>首页</title>
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css"> -->
+    <link rel="stylesheet" href="../../static/css/semantic.min.css" th:href="@{/res/css/semantic.min.css}">
+    <link rel="stylesheet" href="../../static/dist/components/icon.min.css" th:href="@{/res/dist/components/icon.min.css}">
+    <link rel="stylesheet" href="../../static/css/index.css" th:href="@{/res/css/index.css}">
+</head>
+<body>
+    <!-- 导航 -->
+    <div th:include="/admin/commonend :: nav(1)"></div>
+
+    <!-- 主体内容 -->
+    <div class="m-content blog">
+        <div class="ui container">
+            <!-- 搜索 -->
+           <form id="blogSearchForm" action="" class="ui grey segment form" onsubmit="return checkBlogSearchForm();" method="get">
+                <div class="inline fields">
+                    <div class="field">
+                        <input type="text" placeholder="博客标题..." name="title" value="" th:value="${title}">
+                    </div>
+                    <div class="field">
+                        <div class="ui selection dropdown">
+                            <input type="hidden" name="categoryId" value="0" th:unless="${categoryId == null}" th:value="${categoryId}">
+                            <input type="hidden" name="categoryId" value="0" th:unless="${categoryId != null}">
+                            <i class="dropdown icon"></i>
+                            <div class="default text">分类筛选...</div>
+                            <div class="menu">
+                                <div class="item" data-value="0">所有分类</div>
+                                <div class="item" th:each="category:${categories}" data-value="" th:data-value="${category.cid}" th:text="${category.name}">Java</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="ui checkbox">
+                            <input type="checkbox" id="isPublish" name="isPublish" value="true" th:checked="${isPublish != null ? 'true' : 'false'}">
+                            <label for="isPublish" class="m-is-publish" style="font-weight: 700 !important;">已发布</label>
+                        </div>
+                    </div>
+                    <div class="feild">
+                        <button id="blog-search" type="submit" class="ui green button"> <i class="icon search"></i>搜索 </button>
+                        <a class="ui grey button" href="javascript:;" th:href="@{/admin/blogs/page/1}"> <i class="icon trash"></i>清空条件 </a>
+                    </div>
+                    <div class="feild">
+                        <a class="ui primary button" href="javascript:;" target="_blank" th:href="@{/admin/blogs/edit/0}" style="margin-left: 10em!important;"> <i class="icon paint brush"></i> 发布博客</a>
+                    </div>
+                </div>
+           </form>
+            <!-- 操作结果提示 -->
+            <div th:unless="${requestResult == null}">
+                <div class="ui ignored info message" th:unless="${requestResult.code == 5053 || requestResult.code == 5054 || requestResult.code == 5055}">
+                    <i class="close icon"></i>
+                    <div class="header">[[${requestResult.message}]]</div>
+                    <p>[[${'状态码 : ' + requestResult.code + '，你或许可以询问管理员这些状态码的含义'}]]</p>
+                </div>
+                <div class="ui error message" th:unless="${requestResult.code == 5052}">
+                    <i class="close icon"></i>
+                    <div class="header">[[${requestResult.message}]]</div>
+                    <p>[[${'状态码 : ' + requestResult.code + '，你或许可以询问管理员这些状态码的含义'}]]</p>
+                </div>
+            </div>
+           <!-- 内容 -->
+           <div class="ui segment">
+               <table class="ui red celled table">
+                <thead>
+                    <tr>
+                      <th>
+                          <input class="ui checkbox" type="checkbox">
+                      </th>
+                      <th>序号</th>
+                      <th>标题</th>
+                      <th>类别</th>
+                      <th>状态</th>
+                      <th>更新时间</th>
+                      <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  <tr th:each="blog,status:${pageInfo.list}">
+                    <td>
+                        <input class="ui checkbox" type="checkbox">
+                        <input class="bid" type="hidden" name="bid" value="" th:value="${blog.bid}">
+                    </td>
+                    <td th:text="${status.count + ((pageInfo.pageNum-1) * pageInfo.pageSize)}">1</td>
+                    <td th:text="${blog.title}">static关键字</td>
+                    <td th:text="${blog.category.name}">Java</td>
+                    <td th:unless="${blog.isPublish == false}" class="m-is-publish">发布</td>
+                    <td th:unless="${blog.isPublish == true}" class="m-is-draft">草稿</td>
+                    <td th:text="${#dates.format(blog.updateTime, 'yyyy-MM-dd HH:mm:ss')}">2020-12-1 9:06</td>
+                    <td>
+                        <a href="javascript:;" class="ui thiny teal basic button" th:href="@{/admin/blogs/edit/{bid}(bid=${blog.bid})}">编辑</a>
+                        <a href="javascript:;" class="ui thiny red  basic button m-blog-delete">删除</a>
+                    </td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th colspan="7">
+                        <div  class="ui right floated pagination menu">
+                            <!--   上一页，当没有查询条件时    -->
+                            <a class="icon hidden item m-hidden" href="javascript:;"  th:if="${title == null}"
+                               th:href="@{'/admin/blogs/page/'+${pageInfo.prePage}}"
+                               th:classappend="${pageInfo.pageNum == 1} ? 'm-hidden' : 'm-show'">
+                                <i class="left chevron icon"></i>
+                            </a>
+                            <!--   上一页，当有查询条件时    -->
+                            <a class="icon hidden item m-hidden" href="javascript:;"  th:if="${title != null}"
+                               th:href="@{/admin/blogs/page/{currentPage}/search?title={title}&categoryName={categoryName}(currentPage=${pageInfo.prePage},title=${title},categoryName=${categoryName})}"
+                               th:classappend="${pageInfo.pageNum == 1} ? 'm-hidden' : 'm-show'">
+                                <i class="left chevron icon"></i>
+                            </a>
+
+                            <!--  当总页数为0时，不显示分页条  -->
+                            <a class="item" th:if="${pageInfo.pages != 0}" th:remove="tag">
+                                <!--   页码，无查询条件时    -->
+                                <a class="item" th:if="${title == null}" th:each="n:${#numbers.sequence(1, pageInfo.pages)}"
+                                   th:href="@{'/admin/blogs/page/'+${n}}"
+                                   th:classappend="${n == pageInfo.pageNum} ? 'm-active'">[[${n}]]
+                                </a>
+                                <!--   页码，有查询条件时    -->
+                                <a class="item" th:if="${title != null}" th:each="n:${#numbers.sequence(1, pageInfo.pages)}"
+                                   th:href="@{/admin/blogs/page/{currentPage}/search?title={title}&categoryName={categoryName}(currentPage=${n},title=${title},categoryName=${categoryName})}"
+                                   th:classappend="${n == pageInfo.pageNum} ? 'm-active'">[[${n}]]
+                                </a>
+
+                                <!--   下一页，当没有查询条件时    -->
+                                <a class="icon hidden item m-hidden" href="javascript:;"  th:if="${title == null}"
+                                   th:href="@{'/admin/blogs/page/'+${pageInfo.nextPage}}"
+                                   th:classappend="${pageInfo.pageNum >= pageInfo.pages} ? 'm-hidden' : 'm-show'">
+                                    <i class="right chevron icon"></i>
+                                </a>
+                                <!--   下一页，当有查询条件时    -->
+                                <a class="icon hidden item m-hidden" href="javascript:;"  th:if="${title != null}"
+                                   th:href="@{/admin/blogs/page/{currentPage}/search?title={title}&categoryName={categoryName}(currentPage=${pageInfo.nextPage},title=${title},categoryName=${categoryName})}"
+                                   th:classappend="${pageInfo.pageNum >= pageInfo.pages} ? 'm-hidden' : 'm-show'">
+                                    <i class="right chevron icon"></i>
+                                </a>
+                            </a>
+                            <div class="ui item">
+                                共&nbsp; [[${pageInfo.total}]] &nbsp;条
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+                </tfoot>
+              </table>
+           </div>
+        </div>
+    </div>
+
+    <!-- 底部 -->
+    <div th:include="/admin/commonend :: copyright"></div>
+
+    <!-- 删除分类模态框 -->
+    <div class="ui basic modal">
+        <div class="ui icon header">
+            <i class="trash alternate icon"></i> 删除这篇博客
+        </div>
+        <div class="content">
+            <p class="ui header" style="color: rgba(218,52,52,0.85) !important;">此操作不可逆，你确定要继续吗?</p>
+        </div>
+        <div class="actions">
+            <button class="ui negative button">取消</button>
+            <button class="ui green button" id="blog-delete-btn"> <i class="checkmark icon"></i> 删除</button>
+        </div>
+    </div>
+
+    <!-- ---------------- js ------------------------- -->
+    <script src="../../static/js/jquery.min.js" th:src="@{/res/js/jquery.min.js}"></script>
+    <!-- <script src="js/flexible.js"></script> -->
+    <script src="../../static/js/semantic.min.js" th:src="@{/res/js/semantic.min.js}"></script>
+    <script src="../../static/js/end.js" th:src="@{/res/js/end.js}"></script>
+
+    <script type="text/javascript">
+        $(function() {
+            /*------------移动端导航栏显示------------*/
+            $("#m-show-nav").on("click", function() {
+                $(".m-item").toggle("fast",function(){
+                    $(".m-item").removeClass("m-mobile-hide");
+                });
+            })
+            
+            /*-----------退出下拉菜单-------------*/
+            $('.ui.dropdown').dropdown();
+
+            /*-----------关闭提示框-------------*/
+            $('.message .close')
+                .on('click', function() {
+                    $(this)
+                        .closest('.message')
+                        .transition('fade')
+                    ;
+                })
+            ;
+        })
+    </script>
+    
+</body>
+</html>

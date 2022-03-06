@@ -51,12 +51,10 @@ $(function () {
 
     /* --------------- 获取验证码-----------  */
     $("#register-btn").attr("disabled", "disabled");  // 未验证码时将注册按钮禁用,待异步提交成功后启用
-
     var timer;
     var sec = 60;
     var reg_email = /^\w{1,}@\w{1,}\.\w{1,}$/;
     var validateBtn = $(".validate-btn");
-
     validateBtn.on("click", function () {
         var mail = $(".register-mail").val();
         if (reg_email.test(mail)) {
@@ -85,12 +83,12 @@ $(function () {
         }
     })
 
-    /*-----------新建分类模态框-------------*/
+    /*-----------category.html 新建分类模态框-------------*/
     $("#add-category").on("click", function() {
         $('.fullscreen.modal').modal('show');
     })
 
-    /*-----------新建分类提交,上传文件需使用 $.ajax 才能提交,且下列属性为必填项-------------*/
+    /*-----------category.html 新建分类提交,上传文件需使用 $.ajax 才能提交,且下列属性为必填项-------------*/
     $("#submit-btn").on("click", function () {
         // console.log("提交成功")
         // var data = $("#categoryForm");
@@ -116,23 +114,23 @@ $(function () {
         })
     })
 
-    /*-----------删除分类-------------*/
-    $(".m-delete").on("click", function () {
+    /*-----------category.html 删除分类-------------*/
+    var cid;
+    $(".m-delete").on("click", function (e) {
+        cid = $(this).parent().parent().find(".cid").val();
         $('.ui.basic.modal').modal('show');
     })
     $("#delete-btn").on("click", function () {
-        var cid = $(".cid").val();
-        // console.log(cid)
         $.ajax({
             url: "/admin/category/del/" + cid,
             type: "POST",
             data: cid + "&_method=DELETE",
             success: function (result) {
                 if (result.code == 4423) {
-                    alert("删除成功");
+                    alert(result.message);
                     location.reload();
                 } else {
-                    alert("删除失败");
+                    alert(result.message);
                 }
             },
             error: function () {
@@ -141,7 +139,7 @@ $(function () {
         })
     })
 
-    /*-----------编辑分类-------------*/
+    /*-----------category.html 编辑分类-------------*/
     var originalName;
     var originalDescription;
     var cid;
@@ -154,11 +152,6 @@ $(function () {
         $(".ui.fullscreen2.modal").modal("show");
     })
     $("#modify-btn").on("click", function () {
-        // var newName = $("#modifyForm :input[name=name]").val();
-        // var newDescription = $("#modifyForm :input[name=description]").val();
-        // if (newName.trim() === originalName || newName.trim() === "") {
-        //     alert("编辑失败:无更改项");
-        // } else {
             var formData = new FormData(document.getElementById("modifyForm"));
             // console.log(formData)
             $.ajax({
@@ -180,17 +173,62 @@ $(function () {
                     alert("编辑失败:500");
                 }
             })
-        // }
-
-        // TODO 更改表单提交习惯
-
     })
 
+    /*-----------blog.html 删除博客-------------*/
+    var bid;
+    $(".m-blog-delete").on("click", function () {
+        bid = $(this).parent().parent().find(".bid").val();
+        $('.ui.basic.modal').modal('show');
+    })
+    $("#blog-delete-btn").on("click", function () {
+        // console.log(bid)
+        $.ajax({
+            url: "/admin/blogs/del/" + bid,
+            type: "POST",
+            data: cid + "&_method=DELETE",
+            success: function (result) {
+                if (result.code == 5050) {
+                    alert(result.message);
+                    location.reload();
+                } else {
+                    alert(result.message);
+                }
+            },
+            error: function () {
+                alert("删除失败 : 500");
+            }
+        })
+    })
 
+    /*-----------blog_add.html 保存草稿按钮-------------*/
+    $('#blog-draft-btn').on('click', function () {
+        $('#blogEditForm :input[name=isPublish]').prop('value','false');
+        $('#blogEditForm').submit();
+    })
+
+    /*-----------blog_add.html 发布按钮-------------*/
+    $('#blog-publish-btn').on('click', function () {
+        $('#blogEditForm :input[name=isPublish]').prop('value','true');
+        $('#blogEditForm').submit();
+    })
 
 })
 
-/*-----------分类搜索-------------*/
+/*-----------blog.html 博客搜索-------------*/
+function checkBlogSearchForm() {
+
+    const categoryId = $("#blogSearchForm :input[name=categoryId]").val();
+    const title = $("#blogSearchForm :input[name=title]").val();
+    // if (title.trim() === "" && categoryId == 0) {
+    //     return false;
+    // }
+    const url = "/admin/blogs/page/1/search?" + $("#blogSearchForm").serialize();
+    $("#blogSearchForm").attr("action", url);
+    return true;
+}
+
+/*-----------category.html 分类搜索-------------*/
 function searchCategory() {
     var condition = $(".condition").val();
     // 条件为空时，查询所有

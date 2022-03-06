@@ -11,8 +11,8 @@
         <nav class="ui inverted attached segment m-navpd">
             <div class="ui container">
                 <div class="ui inverted secondary menu stackable">
-                    <h2 class="ui teal header m-title">Blog后台管理</h2>
-                    <a href="#" class="item m-item m-mobile-hide" th:classappend="${n==1} ? 'active'">博客管理</a>
+                    <a href="index.html" th:href="@{/admin/index}"><h2 class="ui teal header m-title">Blog后台管理</h2></a>
+                    <a href="#" class="item m-item m-mobile-hide" th:href="@{/admin/blogs/page/1}" th:classappend="${n==1} ? 'active'">博客管理</a>
                     <a href="javascript:;" th:href="@{/admin/category/1}" class="item m-item m-mobile-hide" th:classappend="${n==2} ? 'active'">分类管理</a>
                     <a href="#" class="item m-item m-mobile-hide" th:classappend="${n==3} ? 'active'">归档管理</a>
                     <div class="right menu">
@@ -55,17 +55,22 @@
                         </div>
                     </div>
                     <div class="three wide column">
-                        <h4 class="ui inverted header">最新博客</h4>
+                        <h4 class="ui inverted header">联系我</h4>
+                        <p class="copyright">Gitee : germcell</p>
+                        <p class="copyright right aligned">WeChat : z_Cricket</p>
                     </div>
                     <div class="three wide column">
-                        <h4 class="ui inverted header">最新博客</h4>
+                        <h4 class="ui inverted header">网站声明</h4>
+                        <p class="copyright">SpringBoot入门学习,涉及Spring、SpringMVC、MyBatis、thymeleaf</p>
                     </div>
                     <div class="seven wide column">
-                        <h4 class="ui inverted header">最新博客</h4>
+                        <h4 class="ui inverted header">开发日志</h4>
+                        <p class="copyright">1.xxxxxxxx</p>
                     </div>
                 </div>
                 <div class="ui inverted section divider"></div>
-                <p class="copyright">Copyright</p>
+                <p class="copyright">Copyright &copy; 2022</p>
+                <p class="copyright">https://gitee.com/germcell/blog.git</p>
             </div>
         </footer>
     </div>

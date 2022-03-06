@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" th:href="@{/res/favicon.ico}">
     <title>首页</title>
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css"> -->
     <link rel="stylesheet" href="../../static/css/semantic.min.css" th:href="@{/res/css/semantic.min.css}">
@@ -49,20 +50,6 @@
                     </tr>
                 </thead>
                 <tbody>
-<!--                  <tr>-->
-<!--                    <td>-->
-<!--                        <input class="ui checkbox" type="checkbox">-->
-<!--                    </td>-->
-<!--                    <td>1</td>-->
-<!--                    <td><img class="ui image mini" src="../../static/images/category/java.jpg" alt="图片"></td>-->
-<!--                    <td>Java</td>-->
-<!--                    <td>描述</td>-->
-<!--                    <td>2020-12-1 9:06</td>-->
-<!--                    <td>-->
-<!--                        <a href="javascript:;" class="ui thiny teal basic button">编辑</a>-->
-<!--                        <a href="javascript:;" class="ui thiny red  basic button">删除</a>-->
-<!--                    </td>-->
-<!--                  </tr>-->
                   <tr th:each="page,status:${pageInfo.list}">
                     <td>
                         <input class="ui checkbox" type="checkbox">

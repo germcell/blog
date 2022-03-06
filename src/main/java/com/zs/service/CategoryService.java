@@ -4,6 +4,8 @@ import com.github.pagehelper.PageInfo;
 import com.zs.pojo.Category;
 import com.zs.pojo.RequestResult;
 
+import java.util.List;
+
 /**
  * @Created by zs on 2022/2/24.
  */
@@ -46,4 +48,9 @@ public interface CategoryService {
      * @return
      */
     RequestResult updateCategory(Category category);
+
+    /**
+     * 查询所有分类
+     */
+    List<Category> listCategories();
 }

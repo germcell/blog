@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zs.mapper.BlogMapper">
+
+    <!--  只查询了tb_category表的name字段，后续需要时在添加  -->
+    <sql id="blogColumn">
+        b.bid,b.title,b.content,b.first_picture,b.cid,b.views,b.is_appreciate,b.is_comment,b.is_publish,b.write_time,update_time,b.uid,
+        b.cr_tip_id,b.is_reprint,c.`name`,cr.cr_id,cr.cr_tip,cr.cr_tip_id
+    </sql>
+
+    <resultMap id="blogMap" type="Blog">
+        <id column="bid" property="bid"/>
+        <result column="title" property="title"/>
+        <result column="content" property="content"/>
+        <result column="first_picture" property="firstPicture"/>
+        <result column="cid" property="cid"/>
+        <result column="views" property="views"/>
+        <result column="is_comment" property="isComment"/>
+        <result column="is_publish" property="isPublish"/>
+        <result column="is_appreciate" property="isAppreciate"/>
+        <result column="is_reprint" property="isReprint"/>
+        <result column="write_time" property="writeTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="uid" property="uid"/>
+        <result column="cr_tip_id" property="crTipId"/>
+        <!--   只查询了tb_category表的name字段，后续需要时在添加     -->
+        <association property="category" javaType="Category">
+            <id column="cid" property="cid"/>
+            <result column="name" property="name"/>
+        </association>
+        <!--   tb_copyright表     -->
+        <association property="copyright" javaType="Copyright">
+            <id column="cr_id" property="crId"/>
+            <result column="cr_tip" property="crTip"/>
+            <result column="cr_tip_id" property="crTipId"/>
+        </association>
+    </resultMap>
+
+    <select id="listBlogs" resultMap="blogMap">
+        select <include refid="blogColumn"/>
+        from tb_blog b
+        inner join tb_category c on b.cid = c.cid
+        inner join tb_copyright cr on cr.cr_tip_id = b.cr_tip_id
+    </select>
+
+    <select id="listConditionBlogs" resultMap="blogMap">
+        select <include refid="blogColumn"/>
+        from tb_blog b
+        inner join tb_category c on b.cid = c.cid
+        inner join tb_copyright cr on cr.cr_tip_id = b.cr_tip_id
+        <where>
+            <if test="cid != null"> and b.cid = #{cid} </if>
+            <if test="title != null"> and b.title like '%${title}%'</if>
+            <if test="isPublish != false"> and b.is_publish = 1</if>
+        </where>
+    </select>
+
+    <delete id="deleteBlogById">
+        delete from tb_blog where bid = #{bid}
+    </delete>
+
+    <insert id="insertBlog">
+        insert into tb_blog
+        (`bid`, `title`, `content`, `first_picture`, `cid`, `views`, `is_appreciate`,
+         `is_comment`, `is_publish`, `write_time`, `update_time`, `uid`, `cr_tip_id`, `is_reprint`)
+        values
+       (null,#{blog.title},#{blog.content},#{blog.firstPicture},#{blog.cid},#{blog.views},#{blog.isAppreciate}
+        ,#{blog.isComment},#{blog.isPublish},now(),now(),#{user.uid},#{blog.crTipId},#{blog.isReprint})
+    </insert>
+
+    <select id="getBlog" resultMap="blogMap">
+        select <include refid="blogColumn"/>
+        from tb_blog b
+        inner join tb_category c on b.cid = c.cid
+        inner join tb_copyright cr on cr.cr_tip_id = b.cr_tip_id
+        <where>
+            <!-- 动态条件后续用到时在补充 -->
+            <if test="blog.bid != null">and b.bid = #{blog.bid} </if>
+        </where>
+    </select>
+
+    <update id="updateBlogById">
+    update tb_blog
+        <trim prefix="set" suffixOverrides=",">
+            <if test="blog != null"> update_time = now(), </if>
+            <if test="blog.title != null">  title = #{blog.title}, </if>
+            <if test="blog.content != null">  content = #{blog.content}, </if>
+            <if test="blog.cid != null">  cid = #{blog.cid}, </if>
+            <if test="blog.isAppreciate != null">  is_appreciate = #{blog.isAppreciate}, </if>
+            <if test="blog.isComment != null">  is_comment = #{blog.isComment}, </if>
+            <if test="blog.isReprint != null">  is_reprint = #{blog.isReprint}, </if>
+            <if test="blog.isPublish != null">  is_publish = #{blog.isPublish}, </if>
+            <if test="blog.crTipId != null">  cr_tip_id = #{blog.crTipId}, </if>
+            <if test="blog.firstPicture != ''">  first_picture = #{blog.firstPicture}, </if>
+        </trim>
+    where bid = #{bid}
+    </update>
+
+</mapper>

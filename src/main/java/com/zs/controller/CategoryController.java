@@ -68,7 +68,7 @@ public class CategoryController {
                              MultipartFile pictureFile,
                              HttpServletRequest request) {
 
-        // TODO 将上传文件直接存储到服务器
+        // FIXME 将上传的文件直接存储到服务器
 
         RequestResult requestResult = new RequestResult();
         // 文件大小判断
@@ -85,7 +85,7 @@ public class CategoryController {
                 String serverFileName = System.currentTimeMillis() + ext;
                 // 获取项目工作目录 D:\IDEA_workspace01\blog
                 String parentDir = System.getProperty("user.dir");
-                // 文件存储目录,存储在本地，需重启服务后才能访问
+                // 文件存储目录,存储在本地，需重启服务器后才能访问
                 String childrenDir = "/src/main/resources/static/images/category/" + serverFileName;
                 // 本地的绝对路径，也就是文件存储的目录
                 File destPath = new File(parentDir + childrenDir);
@@ -129,9 +129,6 @@ public class CategoryController {
         }
         return requestResult;
     }
-
-
-    // TODO 分类删改查
 
     /**
      * 分页条件查询
@@ -216,9 +213,6 @@ public class CategoryController {
         // 表单处理
         requestResult = categoryService.updateCategory(category);
         return requestResult;
-//        requestResult.setCode(Const.CATEGORY_ADD_FAILED);
-//        requestResult.setMessage("编辑失败:无更改项");
-//        return requestResult;
     }
 
 }
