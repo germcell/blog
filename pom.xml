@@ -18,7 +18,7 @@
     </properties>
     <dependencies>
 
-        <!--    web场景    -->
+        <!--    web    -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -30,7 +30,7 @@
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
 
-        <!--   mybatis场景     -->
+        <!--   mybatis     -->
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
@@ -43,7 +43,7 @@
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
 
-        <!--   druid连接池     -->
+        <!--   druid    -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-starter</artifactId>
@@ -103,6 +103,37 @@
             <artifactId>pagehelper</artifactId>
             <version>5.1.2</version>
         </dependency>
+
+        <!--    redis    -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
+        <!-- 序列化工具 -->
+<!--        <dependency>-->
+<!--            <groupId>com.esotericsoftware</groupId>-->
+<!--            <artifactId>kryo</artifactId>-->
+<!--            <version>4.0.0</version>-->
+<!--        </dependency>-->
+
+        <!-- Markdown 转 Html -->
+        <dependency>
+            <groupId>com.atlassian.commonmark</groupId>
+            <artifactId>commonmark</artifactId>
+            <version>0.15.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.atlassian.commonmark</groupId>
+            <artifactId>commonmark-ext-gfm-tables</artifactId>
+            <version>0.15.2</version>
+        </dependency>
+        <dependency>
+          <groupId>com.atlassian.commonmark</groupId>
+          <artifactId>commonmark-ext-heading-anchor</artifactId>
+            <version>0.15.2</version>
+        </dependency>
+
     </dependencies>
 
 

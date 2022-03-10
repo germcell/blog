@@ -49,7 +49,7 @@ public interface BlogMapper {
                    @Param("user") User user);
 
     /**
-     * 动态条件查询，但至少具备一个条件，否则使用 listBlogs
+     * 动态条件查询，但至少具备一个条件，否则使用 listBlogs，返回博客的编辑视图
      * @param blog
      * @return
      */
@@ -64,4 +64,11 @@ public interface BlogMapper {
     @Transactional
     int updateBlogById(@Param("blog") Blog blog,
                        @Param("bid") Long bid);
+
+    /**
+     * 根据bid查询博客的浏览视图
+     * @param bid
+     * @return
+     */
+    Blog getBlogView(@Param("bid") Long bid);
 }

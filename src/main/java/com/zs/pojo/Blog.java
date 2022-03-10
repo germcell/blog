@@ -40,6 +40,8 @@ public class Blog {
     private Category category;
     /* 一篇博客对应多个评论 */
     private List<Comment> listComments;
+    /* 博客概要，也就是博客的前135个字符 */
+    private BlogOutline blogOutline;
 
     @Override
     public boolean equals(Object o) {

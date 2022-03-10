@@ -13,6 +13,11 @@
         <result column="picture" property="picture"/>
     </resultMap>
 
+    <resultMap id="categorySortMap" type="Category">
+        <id column="cid" property="cid"/>
+        <result column="name" property="name"/>
+    </resultMap>
+
     <select id="listCategories" resultMap="categoryMap">
         select cid,`name`,uid,create_time,description,picture
         from tb_category
@@ -64,4 +69,11 @@
         create_time = now()
         where cid = #{category.cid}
     </update>
+
+    <select id="listSortCategoriesByBlogs" resultMap="categorySortMap">
+        select c.cid,c.name,count(bid) blogs
+        from tb_category c inner join tb_blog b on c.cid = b.cid
+        group by c.cid
+        order by blogs desc
+    </select>
 </mapper>

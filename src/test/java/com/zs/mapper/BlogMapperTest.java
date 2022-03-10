@@ -1,6 +1,8 @@
 package com.zs.mapper;
 
+import com.zs.handler.MarkdownUtils;
 import com.zs.pojo.Blog;
+import com.zs.pojo.BlogOutline;
 import com.zs.pojo.RequestResult;
 import com.zs.service.BlogService;
 import lombok.extern.slf4j.Slf4j;
@@ -8,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -24,6 +25,8 @@ class BlogMapperTest {
     private BlogMapper blogMapper;
     @Autowired
     private BlogService blogService;
+    @Autowired
+    private BlogOutlineMapper blogOutlineMapper;
 
     @Test
     void listBlogs() {
@@ -64,4 +67,21 @@ class BlogMapperTest {
         assertEquals("博客编辑成功", requestResult.getMessage());
     }
 
+    @Test
+    void blogOutlineGenerate() {
+        List<Blog> blogs = blogMapper.listBlogs();
+        for (Blog blog : blogs) {
+            String parseData = MarkdownUtils.wordParse(blog.getContent());
+            BlogOutline blogOutline = new BlogOutline();
+            blogOutline.setDid(blog.getBid());
+            blogOutline.setOutline(parseData);
+            blogOutlineMapper.insert(blogOutline);
+        }
+    }
+
+    @Test
+    void getBlogView() {
+        Blog blogView = blogMapper.getBlogView(41L);
+        System.out.println(blogView);
+    }
 }

@@ -23,4 +23,10 @@ class CategoryMapperTest {
         List<Category> list = categoryMapper.listConditionCategories("m");
         assertEquals(list.size(), 2);
     }
+
+    @Test
+    void listSortCategoriesByBlogsTest() {
+        List<Category> list = categoryMapper.listSortCategoriesByBlogs();
+        System.out.println(list);
+    }
 }

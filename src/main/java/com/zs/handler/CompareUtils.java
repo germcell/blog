@@ -37,7 +37,8 @@ public class CompareUtils {
                                     "copyright",
                                     "user",
                                     "category",
-                                    "listComments" };
+                                    "listComments",
+                                    "blogOutline"};
         List<String> listExcludeFields = Arrays.asList(excludeFields);
 
         Blog returnBlog = new Blog();

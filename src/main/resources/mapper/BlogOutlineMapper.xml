@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zs.mapper.BlogOutlineMapper">
+
+    <resultMap id="blogOutlineMap" type="BlogOutline">
+        <id column="did" property="did"/>
+        <result column="title" property="title"/>
+        <result column="views" property="views"/>
+        <result column="outline" property="outline"/>
+    </resultMap>
+
+    <insert id="insert">
+        insert into tb_blog_outline (did, outline, views, title)
+        values (#{blogOutline.did}, #{blogOutline.outline}, #{blogOutline.views}, #{blogOutline.title})
+    </insert>
+
+    <select id="listSortByViewsBlogOutline" resultMap="blogOutlineMap">
+        select did,title,views
+        from tb_blog_outline order by views desc limit 0,50
+    </select>
+
+    <select id="getBlogOutlineById" resultMap="blogOutlineMap">
+        select did,title,views,outline
+        from tb_blog_outline
+        where did = #{bid}
+    </select>
+</mapper>

@@ -2,6 +2,13 @@
    list-style: none;
  }
 
+ .typo-selection ul li {
+     list-style-type: number !important;
+ }
+ .typo-selection ol li {
+     list-style-type: disc !important;
+ }
+
 .m-navpd {
   padding-top: 0.2em !important;
   padding-bottom: 0.2em !important;
@@ -12,6 +19,10 @@
   margin-bottom: 0  !important;
   padding-right: 2em !important;
   font-size: 2.2em !important;
+}
+
+a:hover {
+  text-decoration: none !important;
 }
 
 .m-footer {
@@ -72,11 +83,6 @@
   
 }
 
-.m-infobox {
-  padding: 1em;
-  padding-left: 0;
-  padding-bottom: 0;
-}
 
 .m-info {
   display: flex;
@@ -129,6 +135,11 @@
     padding-right: 0 !important;
   }
 }
+
+ .m-padding-lf-clear {
+   padding-left: 0 !important;
+   padding-right: 0 !important;
+ }
 
 .m-top-right {
   position: absolute;
@@ -244,4 +255,82 @@
  }
  .m-is-draft {
    color: rgb(236,0,39) !important;
+ }
+
+ .m-blog-img-size {
+   width: 13.2em !important;
+   height: 8.15em !important;
+ }
+
+ /* 文章字数太多时隐藏一部分 */
+ .m-overflow-blog{
+   width: 410px;
+   height: 66px;
+   overflow:hidden;
+   text-overflow:ellipsis;
+   display: -webkit-box;
+   -webkit-box-orient: vertical;
+   -webkit-line-clamp: 3;
+   overflow: hidden;
+   /*-webkit-line-clamp用来限制在一个块元素显示的文本的行数。 为了实现该效果，它需要组合其他的WebKit属性。常见结合属性：
+   display: -webkit-box; 必须结合的属性 ，将对象作为弹性伸缩盒子模型显示 。
+   -webkit-box-orient 必须结合的属性 ，设置或检索伸缩盒对象的子元素的排列方式 。*/
+ }
+
+ .m-overflow-blog-search {
+   width: 460px;
+   height: 66px;
+   overflow:hidden;
+   text-overflow:ellipsis;
+   display: -webkit-box;
+   -webkit-box-orient: vertical;
+   -webkit-line-clamp: 3;
+   overflow: hidden;
+ }
+
+ .m-container {
+   width: 80.75% !important;
+ }
+
+ .m-user-info-flex {
+   display: flex;
+   height: 3.5em;
+ }
+
+ .m-view-info {
+   margin-right: 1.3em;
+   text-align: center;
+   line-height: 4.1em;
+   font-size: 0.9em;
+   font-weight: 700;
+   color: rgba(0,0,0,0.4);
+ }
+
+ .m-view-cr-info {
+   align-self: center;
+   margin-left: 1.5em !important;
+ }
+
+ .m-title-a {
+     text-decoration: none !important;
+ }
+
+ /*----------- 自定义文章内容样式 -----------*/
+ .m-diy-title {
+     margin-top: 1.2em !important;
+     margin-bottom: 2em !important;
+ }
+ .m-diy-content ul, ol {
+     font-size: 1.07em !important;
+     font-weight: 400 !important;
+ }
+ .m-diy-content h1, h2, h3, h4, h5, h6 {
+     font-weight: 400;
+ }
+ /*--------------  end ---------------- */
+
+ .m-copyright-position {
+    position: absolute;
+    right: 2px;
+    top: -5px;
  }

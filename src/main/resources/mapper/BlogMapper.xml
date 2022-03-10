@@ -4,10 +4,22 @@
 
 <mapper namespace="com.zs.mapper.BlogMapper">
 
-    <!--  只查询了tb_category表的name字段，后续需要时在添加  -->
+    <!--  查询所有关联信息  -->
     <sql id="blogColumn">
-        b.bid,b.title,b.content,b.first_picture,b.cid,b.views,b.is_appreciate,b.is_comment,b.is_publish,b.write_time,update_time,b.uid,
-        b.cr_tip_id,b.is_reprint,c.`name`,cr.cr_id,cr.cr_tip,cr.cr_tip_id
+        b.bid,b.title,b.content,b.first_picture,b.cid,b.views,b.is_appreciate,b.is_comment,b.is_publish,b.write_time,b.update_time,b.uid,
+        b.cr_tip_id,b.is_reprint,c.`name`,cr.cr_id,cr.cr_tip,cr.cr_tip_id,u.uid,u.nickname,u.avatar,bo.outline,bo.views
+    </sql>
+
+    <!--  查询展示时需要的关联信息  -->
+    <sql id="blogColumnView">
+        b.bid,b.title,b.content,b.first_picture,b.cid,b.views,b.is_appreciate,b.is_comment,b.is_publish,b.write_time,b.update_time,b.uid,
+        b.cr_tip_id,c.`name`,u.nickname,u.avatar,cr_id,cr.cr_tip,cr.cr_tip_id
+    </sql>
+
+    <!--  查询编辑时需要的关联信息  -->
+    <sql id="blogColumnEdit">
+        b.bid,b.title,b.content,b.first_picture,b.cid,b.views,b.is_appreciate,b.is_comment,b.is_publish,b.write_time,b.update_time,b.uid,
+        b.cr_tip_id,c.`name`
     </sql>
 
     <resultMap id="blogMap" type="Blog">
@@ -36,6 +48,19 @@
             <result column="cr_tip" property="crTip"/>
             <result column="cr_tip_id" property="crTipId"/>
         </association>
+        <!--   tb_user表     -->
+        <association property="user" javaType="User">
+            <id column="uid" property="uid"/>
+            <result column="nickname" property="nickname"/>
+            <result column="avatar" property="avatar"/>
+        </association>
+        <!--   tb_blog_outline表     -->
+        <association property="blogOutline" javaType="BlogOutline">
+            <id column="bid" property="did"/>
+            <result column="outline" property="outline"/>
+            <result column="views" property="views"/>
+            <result column="title" property="title"/>
+        </association>
     </resultMap>
 
     <select id="listBlogs" resultMap="blogMap">
@@ -43,6 +68,9 @@
         from tb_blog b
         inner join tb_category c on b.cid = c.cid
         inner join tb_copyright cr on cr.cr_tip_id = b.cr_tip_id
+        inner join tb_user u on u.uid = b.uid
+        inner join tb_blog_outline bo on bo.did = b.bid
+        order by b.write_time desc
     </select>
 
     <select id="listConditionBlogs" resultMap="blogMap">
@@ -50,18 +78,22 @@
         from tb_blog b
         inner join tb_category c on b.cid = c.cid
         inner join tb_copyright cr on cr.cr_tip_id = b.cr_tip_id
+        inner join tb_user u on u.uid = b.uid
+        inner join tb_blog_outline bo on bo.did = b.bid
         <where>
             <if test="cid != null"> and b.cid = #{cid} </if>
             <if test="title != null"> and b.title like '%${title}%'</if>
+            <if test="title != null"> or b.content like '%${title}%'</if>
             <if test="isPublish != false"> and b.is_publish = 1</if>
         </where>
+        order by b.write_time desc
     </select>
 
     <delete id="deleteBlogById">
         delete from tb_blog where bid = #{bid}
     </delete>
 
-    <insert id="insertBlog">
+    <insert id="insertBlog" useGeneratedKeys="true" keyProperty="blog.bid">
         insert into tb_blog
         (`bid`, `title`, `content`, `first_picture`, `cid`, `views`, `is_appreciate`,
          `is_comment`, `is_publish`, `write_time`, `update_time`, `uid`, `cr_tip_id`, `is_reprint`)
@@ -71,7 +103,7 @@
     </insert>
 
     <select id="getBlog" resultMap="blogMap">
-        select <include refid="blogColumn"/>
+        select <include refid="blogColumnEdit"/>
         from tb_blog b
         inner join tb_category c on b.cid = c.cid
         inner join tb_copyright cr on cr.cr_tip_id = b.cr_tip_id
@@ -97,5 +129,14 @@
         </trim>
     where bid = #{bid}
     </update>
+
+    <select id="getBlogView" resultMap="blogMap">
+        select <include refid="blogColumnView"/>
+        from tb_blog b
+        inner join tb_user u on b.uid = u.uid
+        inner join tb_category c on b.cid = c.cid
+        inner join tb_copyright cr on cr.cr_tip_id = b.cr_tip_id
+        where b.bid = #{bid}
+    </select>
 
 </mapper>

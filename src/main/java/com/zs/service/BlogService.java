@@ -2,8 +2,11 @@ package com.zs.service;
 
 import com.github.pagehelper.PageInfo;
 import com.zs.pojo.Blog;
+import com.zs.pojo.BlogOutline;
 import com.zs.pojo.RequestResult;
 import com.zs.pojo.User;
+
+import java.util.List;
 
 /**
  * @Created by zs on 2022/3/3.
@@ -41,6 +44,7 @@ public interface BlogService {
      * @param blog 博客内容
      * @param loginUser 发布作者
      * @return
+     * TODO 后端发布博客时，对应还需创建一个概要对象，并插入数据库
      */
     RequestResult insertBlog(Blog blog, User loginUser);
 
@@ -58,5 +62,18 @@ public interface BlogService {
      * @return
      */
     RequestResult updateBlog(Blog blog, Long bid) throws Exception;
+
+    /**
+     * 查询浏览量前 10 的文章概要
+     * @return
+     */
+    List<BlogOutline> listRecommendBlog();
+
+    /**
+     * 查询博客，并将内容由 Markdown 转为 HTML
+     * @param bid
+     * @return
+     */
+    Blog getBlogByIdAndConvert(Long bid);
 
 }

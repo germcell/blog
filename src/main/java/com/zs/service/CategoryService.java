@@ -53,4 +53,10 @@ public interface CategoryService {
      * 查询所有分类
      */
     List<Category> listCategories();
+
+    /**
+     * 查询前 6 个分类，按分类下所存在博客数量排序
+     * @return
+     */
+    List<Category> listSortCategories();
 }

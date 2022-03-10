@@ -138,4 +138,17 @@ public class CategoryServiceImpl implements CategoryService {
     public List<Category> listCategories() {
         return categoryMapper.listCategories();
     }
+
+    /**
+     * 查询前 6 个分类，按分类下所存在博客数量排序
+     * @return
+     */
+    @Override
+    public List<Category> listSortCategories() {
+        List<Category> list = categoryMapper.listSortCategoriesByBlogs();
+        if (list.size() > 6) {
+            return list.subList(0, 6);
+        }
+        return list;
+    }
 }

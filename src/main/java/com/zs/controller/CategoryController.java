@@ -68,8 +68,6 @@ public class CategoryController {
                              MultipartFile pictureFile,
                              HttpServletRequest request) {
 
-        // FIXME 将上传的文件直接存储到服务器
-
         RequestResult requestResult = new RequestResult();
         // 文件大小判断
         if (pictureFile.getSize() > (1024 * 1024)) {

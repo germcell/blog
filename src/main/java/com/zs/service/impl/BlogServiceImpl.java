@@ -2,25 +2,25 @@ package com.zs.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.mysql.cj.log.Log;
 import com.zs.config.Const;
 import com.zs.handler.CompareUtils;
+import com.zs.handler.MarkdownUtils;
 import com.zs.handler.UniversalException;
 import com.zs.mapper.BlogMapper;
+import com.zs.mapper.BlogOutlineMapper;
 import com.zs.mapper.CategoryMapper;
 import com.zs.pojo.Blog;
-import com.zs.pojo.Category;
+import com.zs.pojo.BlogOutline;
 import com.zs.pojo.RequestResult;
 import com.zs.pojo.User;
 import com.zs.service.BlogService;
-import lombok.extern.slf4j.Slf4j;
+import org.aspectj.weaver.ast.Var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
+import javax.annotation.Resource;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * @Created by zs on 2022/3/3.
@@ -32,6 +32,8 @@ public class BlogServiceImpl implements BlogService {
     private BlogMapper blogMapper;
     @Autowired
     private CategoryMapper categoryMapper;
+    @Resource
+    private BlogOutlineMapper blogOutlineMapper;
 
     @Override
     public PageInfo<Blog> listPageBlogs(Integer currentPage, Integer rows) {
@@ -87,6 +89,8 @@ public class BlogServiceImpl implements BlogService {
 
     /**
      * 保存一条博客
+     * 分为两个步骤: 一是保存博客，返回生成主键
+     *            二是解析部分博客内容，生成博客概要对象，并插入数据库
      * @param blog 博客内容
      * @param loginUser 发布作者
      * @return
@@ -96,7 +100,16 @@ public class BlogServiceImpl implements BlogService {
     public RequestResult insertBlog(Blog blog, User loginUser) {
         RequestResult requestResult = new RequestResult();
         blog.setViews(0L);
+        // 保存博客
         int rows = blogMapper.insertBlog(blog, loginUser);
+        // 保存博客概要信息
+        BlogOutline blogOutline = new BlogOutline();
+        blogOutline.setDid(blog.getBid());
+        blogOutline.setViews(blog.getViews());
+        blogOutline.setTitle(blog.getTitle());
+        blogOutline.setOutline(MarkdownUtils.wordParse(blog.getContent()));
+        blogOutlineMapper.insert(blogOutline);
+
         if (rows == 1 && blog.getIsPublish()) {
             requestResult.setCode(Const.EDIT_BLOG_SUCCESS);
             requestResult.setMessage("博客发布成功");
@@ -132,7 +145,7 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public RequestResult updateBlog(Blog blog, Long bid) throws Exception {
         RequestResult requestResult = new RequestResult();
-        /* 更行博客内容 */
+        /* 获取原博客内容 */
         Blog tmp = new Blog();
         tmp.setBid(bid);
         Blog blogById = blogMapper.getBlog(tmp);
@@ -163,4 +176,25 @@ public class BlogServiceImpl implements BlogService {
         return requestResult;
     }
 
+    /**
+     * 查询浏览量前 10 的文章概要
+     * @return
+     */
+    @Override
+    public List<BlogOutline> listRecommendBlog() {
+        return blogOutlineMapper.listSortByViewsBlogOutline();
+    }
+
+    /**
+     * 查询博客，并将内容由 Markdown 转为 HTML
+     * @param bid
+     * @return
+     */
+    @Override
+    public Blog getBlogByIdAndConvert(Long bid) {
+        Blog blog = blogMapper.getBlogView(bid);
+        String htmlData = MarkdownUtils.markdownToHtmlExtensions(blog.getContent());
+        blog.setContent(htmlData);
+        return blog;
+    }
 }

@@ -56,4 +56,10 @@ public interface CategoryMapper {
      */
     @Transactional
     int updateCategoryById(@Param("category") Category category);
+
+    /**
+     * 按分类所拥有的博客数量排序(降序)
+     * @return
+     */
+    List<Category> listSortCategoriesByBlogs();
 }

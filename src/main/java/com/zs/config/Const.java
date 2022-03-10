@@ -2,8 +2,6 @@ package com.zs.config;
 
 import com.zs.pojo.User;
 
-import java.util.Objects;
-
 /**
  * 常量
  * @Created by zs on 2022/2/23.
@@ -144,5 +142,10 @@ public class Const {
      * 博客首图文件大小
      */
     public static final Long BLOG_FIRST_PICTURE_SIZE = 1024 * 1024 * 3L;
+
+    /**
+     * 博客显示概要的字数
+     */
+    public static final Integer BLOG_OUTLINE_NUM = 135;
 
 }

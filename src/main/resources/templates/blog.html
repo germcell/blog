@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" th:href="@{/res/favicon.ico}">
-    <title>详情</title>
+    <title th:text="${blog.title}">详情</title>
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css"> -->
     <link rel="stylesheet" href="../static/css/semantic.min.css" th:href="@{/res/css/semantic.min.css}">
     <link rel="stylesheet" href="../static/dist/components/icon.min.css" th:href="@{/res/dist/components/icon.min.css}">
@@ -17,90 +17,95 @@
 </head>
 <body>
     <!-- 导航 -->
-    <div th:include="common :: nav"></div>
+    <div th:include="common :: nav(1)"></div>
 
     <!-- 主体内容 -->
     <div id="waypoint" class="m-content m-padding-big animated fadeIn" style="padding-bottom: 5em !important;">
         <div class="ui  segments">
-            <!-- 博客作者、浏览信息 -->
-            <div class="ui segment"> 
-                <div class="ui two column grid">
-                    <!-- 浏览信息 -->
-                    <div class="column">
-                        <div class="ui m-infobox">
-                            <div class="m-info">
-                                <div class="m-avatar" style="font-size: 1.6em !important;">
-                                    <a href="#" target="_blank">
-                                        <img src="https://picsum.photos/id/1012/100/100" class="ui avatar image" alt="">
-                                        <span> Marry </span>
-                                    </a>
-                                </div>
-                                <div class="m-calendar" style="font-size: 1em !important;padding-top: 0.4em !important;padding-left: 1em !important;">
-                                    更新: <span>2022.2.18</span>
-                                </div>
-                                <div class="m-eye" style="font-size: 1em !important; padding-top: 0.4em !important;padding-left: 1em !important;">
-                                    浏览次数: <span>232</span>
-                                </div>
-                            </div>      
-                        </div>
+            <div class="ui segment">
+                <!--   作者、文章基本信息  -->
+                <div class="m-user-info-flex">
+                    <div class="ui m-avatar" style="font-size: 1.6em !important; margin-right: 1em;">
+                        <a href="#" target="_blank">
+                            <img src="https://picsum.photos/id/1012/100/100" class="ui avatar image" alt="" th:src="${blog.user.avatar}">
+                            <span th:text="${blog.user.nickname}"> Marry </span>
+                        </a>
                     </div>
-                    <!-- 分类标签 -->
-                    <div class="column right aligned">
-                        <div class="ui basic teal left pointing label" style="padding: 1em 2em 1em auto !important;">
-                            <span>时事</span>  
-                        </div>
+                    <div class="m-view-info">
+                        <i class="icon clock"></i>于 <span th:text="${#dates.format(blog.writeTime, 'yyyy-MM-dd HH:mm')}">2022.2.18 12:23</span> 发布
                     </div>
+                    <div class="m-view-info">
+                        <i class="icon eye"></i><span th:text="${blog.views}">232</span>
+                    </div>
+                    <div class="m-view-info">
+                        <i class="icon thumbs up"></i>点赞: <span>21</span>
+                    </div>
+                    <div class="ui basic teal left pointing label m-view-cr-info">
+                        <span th:text="${blog.category.name}">时事</span>
+                    </div>
+
                 </div>
             </div>
-            <div class="ui segment">
-                <img src="https://picsum.photos/id/1014/700/400" alt="" class="ui fluid rounded image">
+            <div class="ui segment" th:if="${blog.firstPicture == null || blog.firstPicture == ''}">
+                <img src="../static/images/blogPicture/del_blog_img1.jpg" alt="" class="ui fluid rounded image" style="height: 457px;" th:src="@{/res/images/blogPicture/del_blog_img1.jpg}">
+            </div>
+            <div class="ui segment" th:if="${blog.firstPicture != null && blog.firstPicture != ''}">
+                <img src="../static/images/blogPicture/del_blog_img1.jpg" alt="" class="ui fluid rounded image" style="height: 457px;" th:src="${blog.firstPicture}">
             </div>
             <!-- 内容 -->
             <div class="ui segment">
-                <div class="ui right aligned basic segment" style="padding: 0 !important; margin: 0 !important;">
-                    <div class="ui orange basic label">原创</div>
+                <div style="position: relative;">
+                    <h2 class="ui center aligned header m-diy-title" th:text="${blog.title}">
+                        北京冬奥会闭幕
+                    </h2>
+                    <div class="ui orange basic label m-copyright-position" th:text="${blog.copyright.crTip}">原创</div>
                 </div>
-                <h2 class="ui center aligned header" style="margin-top: 0em !important;">北京冬奥会闭幕</h2>
-            
-                <div class="typo type-selection m-blog-content js-toc-content">
-                    <h3>1、开篇</h3>
-                    <h4>1.1</h4>
-                    fsadf
-                    <h4>1.2</h4>
-                    fsaf
-                    <p>
-                        20日晚，冬奥会闭幕式，将在国家体育场“鸟巢”正式亮相。
-                        开闭幕式团队在接受专访时透露，闭幕式依然遵循“简约”风格，与开幕式形成“一脉相承”的叙事模式，通过仪式与表演的有机融合，将再次呈现中国式浪漫。
-                        此外，还会通过“穿越”来呈现和致敬“双奥之城”这一重要元素。目前，闭幕式各项准备工作已经就绪。
-                    </p>
-                    <h4>2、引入</h4> 
+                <div class="typo typo-selection js-toc-content m-diy-content" th:utext="${blog.content}">
 
-                    <!--****使用代码高亮时，一定要不要再pre、code两个标签内写空格和换行，会影响排版******  -->
-<pre><code class="language-java">
-public void main(String[] args) { 
+                    <!--/*-->
+                    <div class="typo type-selection m-blog-content js-toc-content">
+                        <h3>1、开篇</h3>
+                        <h4>1.1</h4>
+                        fsadf
+                        <h4>1.2</h4>
+                        fsaf
+                        <p>
+                            20日晚，冬奥会闭幕式，将在国家体育场“鸟巢”正式亮相。
+                            开闭幕式团队在接受专访时透露，闭幕式依然遵循“简约”风格，与开幕式形成“一脉相承”的叙事模式，通过仪式与表演的有机融合，将再次呈现中国式浪漫。
+                            此外，还会通过“穿越”来呈现和致敬“双奥之城”这一重要元素。目前，闭幕式各项准备工作已经就绪。
+                        </p>
+                        <h4>2、引入</h4>
+
+                        <!--****使用代码高亮时，一定要不要再pre、code两个标签内写空格和换行，会影响排版******  -->
+                        <pre><code class="language-java">
+public void main(String[] args) {
     int a = 2;
-    int b = 3;        
+    int b = 3;
     System.out.println("hello prism");
 }</code></pre>
 
-                    <h4>3、高潮</h4>
-                    <p>
-                        有网友表示，这改革好！没有明星没有演员，几乎没有专业演员参加，强调群众性，演员队伍几乎全部都是来自大中小学。为张导点赞！北京冬奥会，将会是历史上举办最成功的一届冬奥会！再一次让世界瞩目中国！
-                        闭幕式延续开幕式“简约而精彩”的风格，这是属于中国人的浪漫仪式感。
-                    </p>
-                    <h4>4、回味</h4> 
-                    <p>
-                        何其有幸，让我们再一次见证最美的中国风采，为伟大的祖国自豪！闭幕不落幕，青春恰时来，生命不止，运动不息，米兰冬奥会再见！
-                        双奥之城，唯美北京；冰雪之约，温暖礼成；红色之光，点燃激情；蓝色梦幻，浪漫无穷；如此成功，党指航行；团结一心，众志成城；联谊五洲，影响全球；历史五千，彰显文明。祝2022年北京冬奥会圆满成功！祝北京冬奥会闭幕式精彩礼成！
-                        世界瞩目，精彩纷呈，这次我们向世界展现了中国的科技，人文和勇于拼搏的精神！闭幕式体现中国红！浪漫蓝！双奥之城体现各种元素！必将传遍全球！让我们一起奔向未来！祝贺冬奥会圆满成功！
-                    </p>
+                        <h4>3、高潮</h4>
+                        <p>
+                            有网友表示，这改革好！没有明星没有演员，几乎没有专业演员参加，强调群众性，演员队伍几乎全部都是来自大中小学。为张导点赞！北京冬奥会，将会是历史上举办最成功的一届冬奥会！再一次让世界瞩目中国！
+                            闭幕式延续开幕式“简约而精彩”的风格，这是属于中国人的浪漫仪式感。
+                        </p>
+                        <h4>4、回味</h4>
+                        <p>
+                            何其有幸，让我们再一次见证最美的中国风采，为伟大的祖国自豪！闭幕不落幕，青春恰时来，生命不止，运动不息，米兰冬奥会再见！
+                            双奥之城，唯美北京；冰雪之约，温暖礼成；红色之光，点燃激情；蓝色梦幻，浪漫无穷；如此成功，党指航行；团结一心，众志成城；联谊五洲，影响全球；历史五千，彰显文明。祝2022年北京冬奥会圆满成功！祝北京冬奥会闭幕式精彩礼成！
+                            世界瞩目，精彩纷呈，这次我们向世界展现了中国的科技，人文和勇于拼搏的精神！闭幕式体现中国红！浪漫蓝！双奥之城体现各种元素！必将传遍全球！让我们一起奔向未来！祝贺冬奥会圆满成功！
+                        </p>
+                    </div>
+                    <!--*/-->
+
                 </div>
             </div>
 
             <!-- 赞赏 -->
-            <div class="ui center aligned segment">
+            <div class="ui center aligned segment" th:if="${blog.isAppreciate == true}">
                 <button id="appreciate" class="ui orange basic circular button">赞赏</button>
             </div>
+
             <!-- 赞赏二维码 -->
             <div class="ui showQR flowing popup transition hidden">
                 <div class="ui orange basic label">
@@ -116,7 +121,7 @@ public void main(String[] args) {
             </div>
           
             <!-- 留言区域 -->
-            <div id="leave-messsage" class="ui teal segment"> 
+            <div id="leave-messsage" class="ui teal segment" th:if="${blog.isComment == true}">
                 <div class="ui comments">
                     <h3 class="ui dividing header">留言</h3>
                     <div class="comment">
@@ -187,7 +192,7 @@ public void main(String[] args) {
             </div>
 
             <!-- 提交留言 -->
-            <div class="ui grey segment">
+            <div class="ui grey segment" th:if="${blog.isComment == true}">
                 <div class="ui form">
                     <div class="field">
                         <textarea name="content" id="" cols="30" rows="5"  style="resize: none;" placeholder="发表你的看法吧..."></textarea>
@@ -211,10 +216,10 @@ public void main(String[] args) {
     <!-- 侧边快速导航 -->
     <div id="toolbar" class="m-quicknav-flex">
         <div class="ui icon buttons vertical">
-            <button id="showToc" class="ui violet button">目录</button>
-            <a href="#leave-messsage" class="ui violet button">留言</a>
-            <button id="showBlogQR" class="ui grey button"><i class="icon wechat"></i></button>
-            <button id="go-top" class="ui secondary button"><i class="icon up chevron"></i></button>
+            <button id="showToc" class="ui purple button">目录</button>
+            <a href="#leave-messsage" class="ui purple button">留言</a>
+            <button id="showBlogQR" class="ui green button"><i class="icon wechat"></i></button>
+            <button id="go-top" class="ui button"><i class="icon up chevron"></i></button>
         </div>
     </div>
     
@@ -251,64 +256,63 @@ public void main(String[] args) {
     <script src="../static/lib/tocbot/tocbot.min.js" th:src="@{/res/lib/tocbot/tocbot.min.js}"></script>
     <script src="../static/lib/qrcode/qrcode.js" th:src="@{/res/lib/qrcode/qrcode.js}"></script>
     <script src="../static/lib/waypoint/jquery.waypoints.js" th:src="@{/res/lib/waypoint/jquery.waypoints.js}"></script>
+    <script src="../static/js/front.js" th:src="@{/res/js/front.js}"></script>
 
     <script type="text/javascript">
-        $(function() {
-            /*------------移动端显示导航栏------------- */
-            $("#m-show-nav").on("click", function() {
-                $(".m-item").toggle("fast",function(){
-                    $(".m-item").removeClass("m-mobile-hide");
-                });
-            })
-
-             /*------------关于我模态框------------*/
-             $("#about-me").on("click", function() {
-                $('.ui.modal').modal('show');
-            })
-
-             /*------------赞赏:显示二维码------------- */
-             $('#appreciate').popup({
-                    popup : $('.showQR'),
-                    on    : 'click',
-                    position: 'bottom center'
+        $(function () {
+            /*------------赞赏:显示二维码------------- */
+            $('#appreciate').popup({
+                popup : $('.showQR'),
+                on    : 'click',
+                position: 'bottom center'
             });
-
-            /*------------目录:显示文章目录------------- */
-            $('#showToc').popup({
-                    popup : $('.showToc'),
-                    on    : 'click',
-                    position: 'top left'
+            /*------------点击侧边导航栏二维码按钮，显示文章对应的二维码------------- */
+            $('#showBlogQR').popup({
+                popup : $('.showBlogQR'),
+                on    : 'click',
+                position: 'top left'
             });
-            /*----------tocboc初始化--------------*/
-            tocbot.init({
-                // 将生成的目录存放在以 class 为 js-toc 的容器中
-                tocSelector: '.js-toc',
-                // 指定以 class 为 js-toc-content 的容器中的内容需生成目录 
-                contentSelector: '.js-toc-content',
-                // 指定哪些标签作为目录生成依据
-                headingSelector: 'h1, h2, h3, h4',
-                // For headings inside relative or absolute positioned containers within content.
-                hasInnerContainers: true,
-            });
-
-             /*------------点击侧边导航栏二维码按钮，显示文章对应的二维码------------- */
-             $('#showBlogQR').popup({
-                    popup : $('.showBlogQR'),
-                    on    : 'click',
-                    position: 'top left'
-            });
-
             /*----------使用qrcode动态生成每篇文章的二维码链接----------*/
             // blog-qrcode 表示显示二维码的容器【id】
-            var qrcode = new QRCode("blog-qrcode", {      
-                text: "http://jindo.dev.naver.com/collie",
+            var readURL = "";
+            var serverURl = "http://127.0.0.1:8080";
+            var qrcode = new QRCode("blog-qrcode", {
+                // text: "http://jindo.dev.naver.com/collie",
+                text: location.href,
                 width: 95,
                 height: 95,
                 colorDark : "#000000",
                 colorLight : "#ffffff",
                 correctLevel : QRCode.CorrectLevel.H
             });
-
+            /*----------tocboc初始化--------------*/
+            tocbot.init({
+                // 将生成的目录存放在以 class 为 js-toc 的容器中
+                tocSelector: '.js-toc',
+                // 指定以 class 为 js-toc-content 的容器中的内容需生成目录
+                contentSelector: '.js-toc-content',
+                // 指定哪些标签作为目录生成依据
+                headingSelector: 'h1, h2, h3, h4',
+                // For headings inside relative or absolute positioned containers within content.
+                hasInnerContainers: true,
+            });
+            /*------------目录:显示文章目录------------- */
+            $('#showToc').popup({
+                popup : $('.showToc'),
+                on    : 'click',
+                position: 'top left'
+            });
+            /*----------tocboc初始化--------------*/
+            tocbot.init({
+                // 将生成的目录存放在以 class 为 js-toc 的容器中
+                tocSelector: '.js-toc',
+                // 指定以 class 为 js-toc-content 的容器中的内容需生成目录
+                contentSelector: '.js-toc-content',
+                // 指定哪些标签作为目录生成依据
+                headingSelector: 'h1, h2, h3, h4',
+                // For headings inside relative or absolute positioned containers within content.
+                hasInnerContainers: true,
+            });
             /*----------侧边快速工具栏移动检测----------*/
             var waypoint = new Waypoint({
                 element: document.getElementById('waypoint'),
@@ -319,40 +323,14 @@ public void main(String[] args) {
                         $("#toolbar").fadeIn("slow")
                     }
                 }
-            })
-
-            /*-----------关于我QQ------------*/
-            $(".m-qq").on("click", function() {
-                // $(".m-qq-qr").fadeIn("slow")
-                $(".m-qq-qr").toggle("slow", function() {
-                    $(".m-qq-qr").removeClass(".m-qq-qr")
-                })
-            })
-            
-            /*-----------关于我WeChat------------*/
-            $(".m-wechat").on("click", function() {
-                // $(".m-qq-qr").fadeIn("slow")
-                $(".m-wechat-qr").toggle("slow", function() {
-                    $(".m-wechat-qr").removeClass(".m-wechat-qr")
-                })
-            })
-            
-            /*-----------关于我GitHub------------*/
-            $(".m-github").on("click", function() {
-                // $(".m-qq-qr").fadeIn("slow")
-                $(".m-github-qr").toggle("slow", function() {
-                    $(".m-github-qr").removeClass(".m-github-qr")
-                })
-            })
-
+            });
             /*-----------go top----------*/
             $("#go-top").on("click", function() {
                 // $(document).scrollTop(0).slideDown("slow")
                 $('html,body').animate({scrollTop: 0}, "slow");
-            })
-
+            });
         })
     </script>
-    
+
 </body>
 </html>
