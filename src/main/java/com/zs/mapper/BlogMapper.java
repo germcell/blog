@@ -21,6 +21,13 @@ public interface BlogMapper {
     List<Blog> listBlogs();
 
     /**
+     * 查询指定cid的所有记录
+     * @return
+     */
+    List<Blog> listBlogs(@Param("cid") Integer cid);
+
+
+    /**
      * 条件查询
      * @param title 博客标题(模糊查询)
      * @param cid 博客分类id

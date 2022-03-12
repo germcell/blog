@@ -25,17 +25,19 @@
                         <h3 class="ui red header">类别</h3>
                     </div>
                     <div class="column right aligned">
-                        共 <span class="blogCount">14</span> 个
+                        共 <span class="blogCount" th:text="${listCategories.size()}">14</span> 个
                     </div>
                 </div>
             </div>
             <!-- 类别列表 -->
             <div class="ui attached segment">
-                <a class="ui image large label m-margin-rm red">
-                    <img src="../static/images/category/java.jpg" th:src="@{/res/images/category/java.jpg}">
-                    <span>java</span>
-                    <div class="detail">原创: <span>23</span> </div>
+                <a class="ui image large label m-margin-rm m-categoryContent" data-categorycid="" th:data-categorycid="${category.cid}" th:each="category:${listCategories}">
+                    <img src="../static/images/category/java.jpg" th:src="${category.picture}" style="width: 30.312px !important; height: 30.312px !important;">
+                    <span th:text="${category.name}">java</span>
+                    <div class="detail">文章: <span  th:text="${listCategories.size()}">23</span> </div>
                 </a>
+
+                <!--/*-->
                 <a class="ui image large label m-margin-rm">
                     <img src="../static/images/category/java.jpg" th:src="@{/res/images/category/java.jpg}">
                     <span>java</span>
@@ -56,128 +58,94 @@
                     <span>java</span>
                     <div class="detail">原创: <span>23</span> </div>
                 </a>
-                <a class="ui image large label m-margin-rm">
-                    <img src="../static/images/category/java.jpg" th:src="@{/res/images/category/java.jpg}">
-                    <span>java</span>
-                    <div class="detail">原创: <span>23</span> </div>
-                </a>
-                <a class="ui image large label m-margin-rm">
-                    <img src="../static/images/category/java.jpg" th:src="@{/res/images/category/java.jpg}">
-                    <span>java</span>
-                    <div class="detail">原创: <span>23</span> </div>
-                </a>
-                <a class="ui image large label m-margin-rm">
-                    <img src="../static/images/category/java.jpg" th:src="@{/res/images/category/java.jpg}">
-                    <span>java</span>
-                    <div class="detail">原创: <span>23</span> </div>
-                </a>
+                <!--*/-->
             </div>
 
             <!-- body 类别对应的博客内容 -->
             <div class="ui purple segments">
-                <div class="ui segment">
-                    <div class="ui mobile reversed stackable grid">
-                        <div class="twelve wide column">
-                            <a href="#" target="_blank">
-                                <h3 class="ui header">你真正的理解财富自由吗?</h3>
+                <div class="ui attached segment m-padding-small" th:if="${pageInfo.total != 0}" th:each="blog:${pageInfo.list}">
+                    <div id="blogContent" class="ui mobile reversed stackable grid" data-blogcid="" th:data-blogcid="${blog.cid}">
+                        <div class="ten wide column" style="padding-right: 0 !important;">
+                            <a href="javascript:;" target="_blank" th:href="@{/blog/view/{bid}(bid=${blog.bid})}">
+                                <h3 class="ui header" th:text="${blog.title}">你真正的理解财富自由吗?</h3>
                             </a>
-                                <p class="m-blogtext">冬奥会赛程过半，多项纪录诞生。精彩瞬间，见证了运动员的非凡表现，展现了竞技体育的巨大魅力。金牌荣耀，来自赛场上的...</p>
+                            <p class="m-blogtext m-overflow-blog" th:text="${blog.blogOutline.outline}">冬奥会赛程过半，多项纪录诞生。精彩瞬间，见证了运动员的非凡表现，展现了竞技体育的巨大魅力。金牌荣耀，来自赛场上的fsdfsdfsdafasdfsadfsadfsafasdfffffffffffffffffffffff...</p>
                             <!-- 自定义flex布局 -->
                             <div class="ui mini m-infobox">
                                 <div class="m-info">
                                     <div class="m-avatar">
                                         <a href="#" target="_blank">
-                                            <img src="https://picsum.photos/id/1012/100/100" class="ui avatar image" alt="">
-                                            <span> Marry </span>
+                                            <img src="https://picsum.photos/id/1012/100/100" class="ui avatar image" alt="" th:src="${blog.user.avatar}">
+                                            <span th:text="${blog.user.nickname}"> Marry </span>
                                         </a>
                                     </div>
                                     <div class="m-calendar">
-                                        <i class="calendar icon"></i> <span>2022.2.18</span>
+                                        <i class="calendar icon"></i> <span th:text="${#dates.format(blog.writeTime, 'yyyy-MM-dd HH:mm')}">2022.2.18 12:23</span>
                                     </div>
                                     <div class="m-eye">
-                                        <i class="eye icon"></i> <span>232</span>
+                                        <!-- TODO 点赞功能 -->
+                                        <i class="thumbs up icon"></i> <span>2321</span>
+                                        <!--<i class="thumbs up outline icon"></i> <span>232</span>-->
                                     </div>
-                                </div>      
+                                    <div class="m-eye">
+                                        <i class="eye icon"></i> <span th:text="${blog.views}">232</span>
+                                    </div>
+                                </div>
                             </div>
-    
                         </div>
-                        <div class="four wide column">
-                            <a href="#" target="_blank">
-                                <img src="https://picsum.photos/id/1/5616/3744" class="ui image rounded" alt="blogimg">
+                        <div class="one wide column" style="width: 10px !important;"></div>
+                        <div class="five wide column">
+                            <a href="javascript:;" target="_blank" th:href="@{/blog/view/{bid}(bid=${blog.bid})}">
+                                <img src="../static/images/blogPicture/del_blog_img2.jpg" class="ui image rounded m-blog-img-size" alt="丢失" th:unless="${blog.firstPicture eq null || blog.firstPicture == ''}" th:src="${blog.firstPicture}">
+                                <img src="../static/images/blogPicture/del_blog_img2.jpg" class="ui image rounded m-blog-img-size" alt="丢失" th:unless="${blog.firstPicture != null || blog.firstPicture eq ''}" th:src="@{/res/images/blogPicture/del_blog_img2.jpg}">
                             </a>
-                        </div>     
+                        </div>
                     </div>
                 </div>
 
-                <div class="ui segment">
+                <!--/*-->
+                <div class="ui attached segment m-padding-small" th:if="${pageInfo.total != 0}" th:each="blog:${pageInfo.list}">
                     <div class="ui mobile reversed stackable grid">
-                        <div class="twelve wide column">
-                            <a href="#" target="_blank">
-                                <h3 class="ui header">你真正的理解财富自由吗?</h3>
+                        <div class="ten wide column" style="padding-right: 0 !important;">
+                            <a href="javascript:;" target="_blank" th:href="@{/blog/view/{bid}(bid=${blog.bid})}">
+                                <h3 class="ui header" th:text="${blog.title}">你真正的理解财富自由吗?</h3>
                             </a>
-                                <p class="m-blogtext">冬奥会赛程过半，多项纪录诞生。精彩瞬间，见证了运动员的非凡表现，展现了竞技体育的巨大魅力。金牌荣耀，来自赛场上的...</p>
+                            <p class="m-blogtext m-overflow-blog" th:text="${blog.blogOutline.outline}">冬奥会赛程过半，多项纪录诞生。精彩瞬间，见证了运动员的非凡表现，展现了竞技体育的巨大魅力。金牌荣耀，来自赛场上的fsdfsdfsdafasdfsadfsadfsafasdfffffffffffffffffffffff...</p>
                             <!-- 自定义flex布局 -->
                             <div class="ui mini m-infobox">
                                 <div class="m-info">
                                     <div class="m-avatar">
                                         <a href="#" target="_blank">
-                                            <img src="https://picsum.photos/id/1012/100/100" class="ui avatar image" alt="">
-                                            <span> Marry </span>
+                                            <img src="https://picsum.photos/id/1012/100/100" class="ui avatar image" alt="" th:src="${blog.user.avatar}">
+                                            <span th:text="${blog.user.nickname}"> Marry </span>
                                         </a>
                                     </div>
                                     <div class="m-calendar">
-                                        <i class="calendar icon"></i> <span>2022.2.18</span>
+                                        <i class="calendar icon"></i> <span th:text="${#dates.format(blog.writeTime, 'yyyy-MM-dd HH:mm')}">2022.2.18 12:23</span>
                                     </div>
                                     <div class="m-eye">
-                                        <i class="eye icon"></i> <span>232</span>
-                                    </div>
-                                </div>      
-                            </div>
-    
-                        </div>
-                        <div class="four wide column">
-                            <a href="#" target="_blank">
-                                <img src="https://picsum.photos/id/1/5616/3744" class="ui image rounded" alt="blogimg">
-                            </a>
-                        </div>     
-                    </div>
-                </div>
-                
-                <div class="ui segment">
-                    <div class="ui mobile reversed stackable grid">
-                        <div class="twelve wide column">
-                            <a href="#" target="_blank">
-                                <h3 class="ui header">你真正的理解财富自由吗?</h3>
-                            </a>
-                                <p class="m-blogtext">冬奥会赛程过半，多项纪录诞生。精彩瞬间，见证了运动员的非凡表现，展现了竞技体育的巨大魅力。金牌荣耀，来自赛场上的...</p>
-                            <!-- 自定义flex布局 -->
-                            <div class="ui mini m-infobox">
-                                <div class="m-info">
-                                    <div class="m-avatar">
-                                        <a href="#" target="_blank">
-                                            <img src="https://picsum.photos/id/1012/100/100" class="ui avatar image" alt="">
-                                            <span> Marry </span>
-                                        </a>
-                                    </div>
-                                    <div class="m-calendar">
-                                        <i class="calendar icon"></i> <span>2022.2.18</span>
+                                        <!-- TODO 点赞功能 -->
+                                        <i class="thumbs up icon"></i> <span>2321</span>
+                                        <!--<i class="thumbs up outline icon"></i> <span>232</span>-->
                                     </div>
                                     <div class="m-eye">
-                                        <i class="eye icon"></i> <span>232</span>
+                                        <i class="eye icon"></i> <span th:text="${blog.views}">232</span>
                                     </div>
-                                </div>      
+                                </div>
                             </div>
-    
                         </div>
-                        <div class="four wide column">
-                            <a href="#" target="_blank">
-                                <img src="https://picsum.photos/id/1/5616/3744" class="ui image rounded" alt="blogimg">
+                        <div class="one wide column" style="width: 10px !important;"></div>
+                        <div class="five wide column">
+                            <a href="javascript:;" target="_blank" th:href="@{/blog/view/{bid}(bid=${blog.bid})}">
+                                <img src="../static/images/blogPicture/del_blog_img2.jpg" class="ui image rounded m-blog-img-size" alt="丢失" th:unless="${blog.firstPicture eq null || blog.firstPicture == ''}" th:src="${blog.firstPicture}">
+                                <img src="../static/images/blogPicture/del_blog_img2.jpg" class="ui image rounded m-blog-img-size" alt="丢失" th:unless="${blog.firstPicture != null || blog.firstPicture eq ''}" th:src="@{/res/images/blogPicture/del_blog_img2.jpg}">
                             </a>
-                        </div>     
+                        </div>
                     </div>
                 </div>
+                <!--*/-->
 
-                <!-- 分页 -->
+                <!-- TODO 分页 -->
                 <div class="ui segment">
                         <ul class="m-pagination-ul">
                             <li><a href="#" class="ui secondary button">pre</a></li>
@@ -204,48 +172,23 @@
     <script src="../static/js/jquery.min.js" th:src="@{/res/js/jquery.min.js}"></script>
     <!-- <script src="js/flexible.js"></script> -->
     <script src="../static/js/semantic.min.js" th:src="@{/res/js/semantic.min.js}"></script>
+    <script src="../static/js/front.js" th:src="@{/res/js/front.js}"></script>
 
     <script type="text/javascript">
-        $(function() {
-            /*------------移动端显示导航栏------------- */
-            $("#m-show-nav").on("click", function() {
-                $(".m-item").toggle("fast",function(){
-                    $(".m-item").removeClass("m-mobile-hide");
+        $(function () {
+            categoryActive();
+            /* 当前选中分类 */
+            function categoryActive() {
+                // var categoryCid = $('#categoryContent').data('categorycid');
+                var blogCid = $('#blogContent').data('blogcid');
+                $('.m-categoryContent').each(function (i, ele) {
+                    if ($(ele).data('categorycid') == blogCid) {
+                        $(ele).addClass('blue');
+                    }
                 });
-            })
-
-              /*------------关于我模态框------------*/
-              $("#about-me").on("click", function() {
-                $('.ui.modal').modal('show');
-            })
- 
-            /*-----------QQ------------*/
-            $(".m-qq").on("click", function() {
-                // $(".m-qq-qr").fadeIn("slow")
-                $(".m-qq-qr").toggle("slow", function() {
-                    $(".m-qq-qr").removeClass(".m-qq-qr")
-                })
-            })
-            
-            /*-----------WECHAT------------*/
-            $(".m-wechat").on("click", function() {
-                // $(".m-qq-qr").fadeIn("slow")
-                $(".m-wechat-qr").toggle("slow", function() {
-                    $(".m-wechat-qr").removeClass(".m-wechat-qr")
-                })
-            })
-            
-            /*-----------GITHUB------------*/
-            $(".m-github").on("click", function() {
-                // $(".m-qq-qr").fadeIn("slow")
-                $(".m-github-qr").toggle("slow", function() {
-                    $(".m-github-qr").removeClass(".m-github-qr")
-                })
-            })
-            
-
+            }
         })
     </script>
-    
+
 </body>
 </html>

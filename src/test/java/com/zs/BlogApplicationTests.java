@@ -8,18 +8,23 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.util.DigestUtils;
 
+import javax.annotation.Resource;
 import javax.sql.DataSource;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Slf4j
+@EnableScheduling
 @SpringBootTest
 class BlogApplicationTests {
 
-   @Autowired
-   CategoryMapper categoryMapper;
+    @Autowired
+    CategoryMapper categoryMapper;
 
     @Test
     void contextLoads() {
@@ -37,4 +42,11 @@ class BlogApplicationTests {
         System.out.println(info);
         System.out.println(info.getList());
     }
+
+    @Test
+    void task() {
+    }
+
+
+
 }

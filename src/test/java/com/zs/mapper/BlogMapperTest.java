@@ -1,5 +1,6 @@
 package com.zs.mapper;
 
+import com.github.pagehelper.PageInfo;
 import com.zs.handler.MarkdownUtils;
 import com.zs.pojo.Blog;
 import com.zs.pojo.BlogOutline;
@@ -30,9 +31,10 @@ class BlogMapperTest {
 
     @Test
     void listBlogs() {
-        List<Blog> blogs = blogMapper.listBlogs();
+//        List<Blog> blogs = blogMapper.listBlogs();
 //        assertEquals(1, blogs.size());
-        log.info("结果:{}", blogs);
+        PageInfo<Blog> pageInfo = blogService.listPageBlogsByCid(2, 5, 1);
+        log.info("结果:{}", pageInfo);
     }
 
     @Test

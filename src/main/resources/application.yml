@@ -52,3 +52,6 @@ pagehelper:
   supportMethodsArguments: true #是否支持接口参数来传递分页参数，默认false
   pageSizeZero: false #pageSize=0 返回所有
   params: count=countSql
+
+postAvatar: /res/images/avatar22.jpg
+replyAvatar: /res/images/avatar23.jpg

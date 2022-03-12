@@ -70,6 +70,9 @@
         inner join tb_copyright cr on cr.cr_tip_id = b.cr_tip_id
         inner join tb_user u on u.uid = b.uid
         inner join tb_blog_outline bo on bo.did = b.bid
+        <where>
+            <if test="cid != null">b.cid = #{cid}</if>
+        </where>
         order by b.write_time desc
     </select>
 

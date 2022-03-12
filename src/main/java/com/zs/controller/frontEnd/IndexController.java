@@ -115,13 +115,6 @@ public class IndexController {
         }
     }
 
-
-    @GetMapping("/null")
-    @ResponseBody
-    public String nullHandler() {
-        return "";
-    }
-
     /**
      * 浏览文章
      * @param bid

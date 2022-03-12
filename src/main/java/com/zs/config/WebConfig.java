@@ -30,5 +30,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/res/images/category/**")
                 .addResourceLocations("file:" + System.getProperty("user.dir") + Const.CATEGORY_PICTURE_SAVE_DIR);
+        registry.addResourceHandler("/res/images/blogPicture/**")
+                .addResourceLocations("file:"+System.getProperty("user.dir") + Const.BLOG_FIRST_PICTURE_SAVE_DIR);
     }
 }

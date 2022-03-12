@@ -9,10 +9,7 @@ import com.zs.handler.UniversalException;
 import com.zs.mapper.BlogMapper;
 import com.zs.mapper.BlogOutlineMapper;
 import com.zs.mapper.CategoryMapper;
-import com.zs.pojo.Blog;
-import com.zs.pojo.BlogOutline;
-import com.zs.pojo.RequestResult;
-import com.zs.pojo.User;
+import com.zs.pojo.*;
 import com.zs.service.BlogService;
 import org.aspectj.weaver.ast.Var;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -196,5 +193,18 @@ public class BlogServiceImpl implements BlogService {
         String htmlData = MarkdownUtils.markdownToHtmlExtensions(blog.getContent());
         blog.setContent(htmlData);
         return blog;
+    }
+
+    /**
+     * 分页查询指定分类的博客
+     * @param cid
+     * @return
+     */
+    @Override
+    public PageInfo<Blog> listPageBlogsByCid(Integer currentPage, Integer rows, Integer cid) {
+        PageHelper.startPage(currentPage, rows);
+        List<Blog> blogsByCid = blogMapper.listBlogs(cid);
+        PageInfo<Blog> pageInfo = new PageInfo<>(blogsByCid);
+        return pageInfo;
     }
 }

@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" th:href="@{/res/favicon.ico}">
-    <title>首页</title>
+    <title>Z - 知识分享社区</title>
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css"> -->
     <link rel="stylesheet" href="../static/css/semantic.min.css" th:href="@{/res/css/semantic.min.css}">
     <link rel="stylesheet" href="../static/dist/components/icon.min.css" th:href="@{/res/dist/components/icon.min.css}">
@@ -128,7 +128,6 @@
                                         <a href="javascript:;" target="_blank">
                                             <h3 class="ui header" th:text="${blog.title}">你真正的理解财富自由吗?</h3>
                                         </a>
-                                        <!-- TODO 博客内容概要展示 -->
                                         <p class="m-blogtext m-overflow-blog" th:text="${blog.blogOutline.outline}">冬奥会赛程过半，多项纪录诞生。精彩瞬间，见证了运动员的非凡表现，展现了竞技体育的巨大魅力。金牌荣耀，来自赛场上的fsdfsdfsdafasdfsadfsadfsafasdfffffffffffffffffffffff...</p>
                                         <!-- 自定义flex布局 -->
                                         <div class="ui mini m-infobox">
@@ -256,9 +255,6 @@
                                     </div>
                                 </div>
                             </div>
-
-<!--                            <span th:text="${pageInfo}"></span>-->
-
                         </div>
                     </div>
                 </div>
@@ -274,7 +270,7 @@
                                     <h5 class="ui header" style="display: inline;">热门分类</h5>
                                 </div>
                                 <div class="ui right aligned column">
-                                    <a href="#" title="全部分类">
+                                    <a href="javascript:void(0);" title="全部分类" th:href="@{/blog/category/1}">
                                         更多<i class="angle double right icon"></i>
                                     </a>
                                 </div>
@@ -312,11 +308,11 @@
                                     <i class="icon thumbs up" style="color: #ee2727 !important;"></i>
                                     <h5 class="ui header" style="display: inline;">推荐文章</h5>
                                 </div>
-                                <div class="ui right aligned column">
-                                    <a href="#" title="更多文章">
-                                        更多<i class="angle double right icon"></i>
-                                    </a>
-                                </div>
+<!--                                <div class="ui right aligned column">-->
+<!--                                    <a href="#" title="更多文章">-->
+<!--                                        更多<i class="angle double right icon"></i>-->
+<!--                                    </a>-->
+<!--                                </div>-->
                             </div>
                         </div>
 

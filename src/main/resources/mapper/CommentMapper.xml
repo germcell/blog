@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zs.mapper.CommentMapper">
+
+    <resultMap id="commentMap" type="Comment">
+        <id column="com_id" property="comId"/>
+        <result column="nickname" property="nickname"/>
+        <result column="mail" property="mail"/>
+        <result column="content" property="content"/>
+        <result column="avatar" property="avatar"/>
+        <result column="com_parent_id" property="comParentId"/>
+        <result column="reply_time" property="replyTime"/>
+    </resultMap>
+
+    <insert id="insert">
+        insert into tb_comment
+        values (null, #{comment.nickname}, #{comment.mail}, #{comment.content}, #{comment.avatar}, #{comment.comParentId}, #{comment.bid}, #{comment.replyTime})
+    </insert>
+
+    <select id="listCommentsByBid" resultMap="commentMap">
+        select com_id,nickname,mail,content,avatar,com_parent_id,bid,reply_time
+        from tb_comment
+        where bid = #{bid} and com_parent_id = -1
+        order by reply_time desc
+    </select>
+
+    <select id="listCommentsByComId" resultMap="commentMap">
+        select com_id,nickname,mail,content,avatar,com_parent_id,bid,reply_time
+        from tb_comment
+        where com_parent_id = #{comId}
+        order by reply_time desc
+    </select>
+
+</mapper>

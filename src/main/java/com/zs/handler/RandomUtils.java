@@ -1,6 +1,7 @@
 package com.zs.handler;
 
 import com.zs.pojo.BlogOutline;
+import sun.security.x509.AVA;
 
 import java.util.List;
 import java.util.Random;
@@ -36,6 +37,15 @@ public class RandomUtils {
             throw new UniversalException("未查询到推荐文章");
         }
         return list.get(random.nextInt(list.size()));
+    }
+
+    /**
+     * 随机返回一个评论头像地址 (基数为23个头像 static/images/commentAvatar/)
+     * @return
+     */
+    public static String generateAvatar() {
+        String avatarDir = "/res/images/commentAvatar/avatar"+random.nextInt(23+1)+".jpg";
+        return avatarDir;
     }
 
 }

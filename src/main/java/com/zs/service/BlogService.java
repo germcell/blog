@@ -1,10 +1,7 @@
 package com.zs.service;
 
 import com.github.pagehelper.PageInfo;
-import com.zs.pojo.Blog;
-import com.zs.pojo.BlogOutline;
-import com.zs.pojo.RequestResult;
-import com.zs.pojo.User;
+import com.zs.pojo.*;
 
 import java.util.List;
 
@@ -75,5 +72,12 @@ public interface BlogService {
      * @return
      */
     Blog getBlogByIdAndConvert(Long bid);
+
+    /**
+     * 分页查询指定分类的博客
+     * @param cid
+     * @return
+     */
+    PageInfo<Blog> listPageBlogsByCid(Integer currentPage, Integer rows, Integer cid);
 
 }
