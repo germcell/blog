@@ -2,6 +2,7 @@ package com.zs.mapper;
 
 import com.alibaba.druid.sql.visitor.functions.Now;
 import com.zs.pojo.Comment;
+import com.zs.pojo.MDate;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -22,8 +23,8 @@ class CommentMapperTest {
 
     @Test
     void insert() {
-        Comment comment = new Comment(45,"测试","111@qq.com","111","/fs",new Date(), 2332L, 23l, null, null, null);
-        commentMapper.insert(comment);
+//        Comment comment = new Comment(45,"测试","111@qq.com","111","/fs",new Date(), 2332L, 23l, null, null, null);
+//        commentMapper.insert(comment);
     }
 
     @Test
@@ -32,4 +33,17 @@ class CommentMapperTest {
         comments.stream().forEach(c -> System.out.println(c));
 
     }
+
+    @Test
+    void listCommentsByCondition() {
+        Comment comment = new Comment();
+        MDate mDate = new MDate();
+        mDate.setBeginDate("2022-3-1");
+        mDate.setEndDate("2022-3-14");
+        comment.setBid(45L);
+        comment.setMail("@qq.com");
+        List<Comment> comments = commentMapper.listCommentsByCondition(comment, mDate);
+        comments.stream().forEach(c -> System.out.println(c));
+    }
+
 }

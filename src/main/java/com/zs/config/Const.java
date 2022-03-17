@@ -148,4 +148,28 @@ public class Const {
      */
     public static final Integer BLOG_OUTLINE_NUM = 135;
 
+    /**
+     * 删除留言成功
+     */
+    public static final Integer COMMENT_DELETE_SUCCESS = 7001;
+
+    /**
+     * 删除留言成功(伪删除)
+     */
+    public static final Integer COMMENT_DELETE_SUCCESS_FAKE = 7002;
+
+    /**
+     * 删除留言失败(数据库异常)
+     */
+    public static final Integer COMMENT_DELETE_FAIL_DATABASE = 7003;
+
+    /**
+     * 留言审核成功
+     */
+    public static final Integer COMMENT_PASS_SUCCESS = 7004;
+
+    /**
+     * 留言审核失败(传递留言id为空、数据库异常)
+     */
+    public static final Integer COMMENT_PASS_FAIL = 7005;
 }

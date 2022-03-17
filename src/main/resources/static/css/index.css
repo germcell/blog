@@ -49,8 +49,6 @@ a:hover {
   padding: 2em 0em 5em 0em !important;
   /*background-color: rgba(0,0,0);*/
   background-image: url("../images/del_bj.png");
-
-
 }
 
 .blogCount {
@@ -252,8 +250,10 @@ a:hover {
 
  .m-is-publish {
    color: #1ebb1e !important;
+   font-weight: 400 !important;
  }
  .m-is-draft {
+   font-weight: 400 !important;
    color: rgb(236,0,39) !important;
  }
 
@@ -333,4 +333,33 @@ a:hover {
     position: absolute;
     right: 2px;
     top: -5px;
+ }
+
+
+ .m-hidden-comment {
+     overflow: hidden;
+     text-overflow: ellipsis;
+     white-space: nowrap;
+     width: 15em;
+ }
+
+ .m-currentBlog-padding-top {
+     padding-top: 1.5em!important;
+ }
+
+ .m-comment-pass {
+     padding: 0.79em 1em !important;
+ }
+
+ .m-comment-delete {
+     padding: 0.79em 1em !important;
+ }
+
+ .m-comment-is-pass {
+     font-weight: 500 !important;
+     font-family: SimHei !important;
+ }
+
+ .m-comment-no-pass {
+     color: #909090 !important;
  }

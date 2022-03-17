@@ -11,14 +11,14 @@
         <nav class="ui inverted attached segment m-navpd">
             <div class="ui container">
                 <div class="ui inverted secondary menu stackable">
-                    <a href="index.html" th:href="@{/admin/index}"><h2 class="ui teal header m-title">Blog后台管理</h2></a>
+                    <a href="index.html" th:href="@{/admin/index}"><h2 class="ui teal header m-title">Z后台管理</h2></a>
                     <a href="#" class="item m-item m-mobile-hide" th:href="@{/admin/blogs/page/1}" th:classappend="${n==1} ? 'active'">博客管理</a>
                     <a href="javascript:;" th:href="@{/admin/category/1}" class="item m-item m-mobile-hide" th:classappend="${n==2} ? 'active'">分类管理</a>
                     <a href="#" class="item m-item m-mobile-hide" th:classappend="${n==3} ? 'active'">归档管理</a>
                     <div class="right menu">
                         <div class="ui dropdown item">
                             <div class="text">
-                                <img class="ui avatar image" src="../../static/images/del_user_avatar2.jpg" th:src="@{/res/images/del_user_avatar2.jpg}">
+                                <img class="ui avatar image" src="../../static/images/del_user_avatar2.jpg" th:src="${session.loginUser.avatar}">
 <!--                                Jenny Hess-->
                                 <span th:text="${session.loginUser.nickname}"></span>
                                 <i class="icon dropdown"></i>

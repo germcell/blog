@@ -40,7 +40,7 @@
                     <div class="m-view-info">
                         <i class="icon thumbs up"></i>点赞: <span>21</span>
                     </div>
-                    <div class="ui basic teal left pointing label m-view-cr-info">
+                    <div class="ui teal tag label m-view-cr-info">
                         <span th:text="${blog.category.name}">时事</span>
                     </div>
 
@@ -102,7 +102,7 @@ public void main(String[] args) {
             </div>
 
             <!-- 赞赏、查看留言 -->
-            <div class="ui center aligned segment" th:if="${blog.isAppreciate == true || blog.isComment == true}">
+            <div id="leave-messsage" class="ui center aligned segment" th:if="${blog.isAppreciate == true || blog.isComment == true}">
                 <button id="comment" class="ui basic circular button" data-blogid="" th:data-blogid="${blog.bid}" th:if="${blog.isComment == true}">查看留言</button>
                 <button id="appreciate" class="ui orange basic circular button" th:if="${blog.isAppreciate == true}">赞赏</button>
             </div>
@@ -122,7 +122,7 @@ public void main(String[] args) {
 
             <!-- 留言区域-->
             <div class="m-show-comment" style="display: none; font-family: 'Arial','Microsoft YaHei','黑体','宋体',sans-serif;">
-                <div id="leave-messsage" class="ui teal segment">
+                <div class="ui teal segment">
                     <div class="ui comments">
                         <h3 class="ui dividing header" style="width: 125% !important;">留言栏</h3>
                         <!--      留言模板         -->
@@ -136,7 +136,7 @@ public void main(String[] args) {
                                 <div class="metadata">
                                     <span class="date" th:text="${#dates.format(comment.replyTime,'yyyy-MM-dd HH:mm:ss')}">今天下午 5:42</span>
                                 </div>
-                                <div class="text" th:text="${comment.content}">太赞了！ </div>
+                                <div class="text m-comment-is-pass" th:text="${comment.isPass eq true ? comment.content : comment.passContent}" th:classappend="${comment.isPass eq false} ? 'm-comment-no-pass'">太赞了！ </div>
                                 <div class="actions">
                                     <a class="reply" onclick="reply(this)" data-comid="" data-replynickname="" data-commentparentid="" th:data-commentparentid="${comment.comParentId}" th:data-replynickname="${comment.nickname}" th:data-comid="${comment.comId}">回复</a>
                                 </div>
@@ -151,10 +151,12 @@ public void main(String[] args) {
                                         <div class="metadata">
                                             <span class="date" th:text="${#dates.format(childComment.replyTime, 'yyyy-MM-dd HH:mm:ss')}">刚刚</span>
                                         </div>
-                                        <div class="text" th:text="${childComment.content}">艾略特你永远是多么正确 :) </div>
+                                        <div class="text m-comment-is-pass" th:text="${childComment.isPass eq true ? childComment.content : childComment.passContent}" th:classappend="${childComment.isPass eq false} ? 'm-comment-no-pass'">艾略特你永远是多么正确 :) </div>
+                                        <!-- TODO 留言二级回复
                                         <div class="action">
                                             <a class="reply">回复</a>
                                         </div>
+                                        -->
                                     </div>
                                 </div>
                             </div>
@@ -236,7 +238,6 @@ public void main(String[] args) {
                     </div>
                 </div>
             </div>
-
         </div>  
     </div>
 

@@ -17,7 +17,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/blog")
-public class CommentController {
+public class FrontEndCommentController {
 
     @Resource
     private CommentService commentService;

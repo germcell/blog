@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" th:href="@{/res/favicon.ico}">
+    <title>admin-博客-留言管理</title>
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css"> -->
+    <link rel="stylesheet" href="../../static/css/semantic.min.css" th:href="@{/res/css/semantic.min.css}">
+    <link rel="stylesheet" href="../../static/dist/components/icon.min.css" th:href="@{/res/dist/components/icon.min.css}">
+    <link rel="stylesheet" href="../../static/css/toastr.min.css" th:href="@{/res/css/toastr.min.css}">
+    <link rel="stylesheet" href="../../static/css/index.css" th:href="@{/res/css/index.css}">
+</head>
+<body>
+    <!-- 导航 -->
+    <div th:include="/admin/commonend :: nav(0)"></div>
+
+    <!-- 主体内容 -->
+    <div class="m-content blog" style="padding-left: 2em !important; padding-right: 2em !important;">
+        <div class="ui grid">
+            <!--     left 博客信息      -->
+            <div class="four wide column">
+                <div class="ui segment">
+                <div class="ui header">
+                    当前博客
+                    <div class="ui orange basic label" th:text="${blog.copyright.crTip}">原创</div>
+                </div>
+                <div class="ui divided selection list">
+                    <a class="item m-currentBlog-padding-top" href="javascript:void(0);">
+                        <div class="ui red horizontal label">博客ID</div><span th:text="${blog.bid}">2312</span>
+                    </a>
+                    <a class="item m-currentBlog-padding-top" href="javascript:void(0);">
+                        <div class="ui purple horizontal label">博客标题</div><span th:text="${blog.title}">MyBatis分页插件PageHelper</span>
+                    </a>
+                    <a class="item m-currentBlog-padding-top" href="javascript:void(0);">
+                        <div class="ui red horizontal label">所属分类</div><span th:text="${blog.category.name}">MyBatis</span>
+                    </a>
+                    <a class="item m-currentBlog-padding-top" href="javascript:void(0);">
+                        <div class="ui horizontal label">作者</div><span th:text="${blog.user.nickname}">mushroom</span>
+                    </a>
+                    <a class="item m-currentBlog-padding-top" href="javascript:void(0);">
+                        <div class="ui horizontal label">作者邮箱</div><span th:text="${blog.user.mail}">mushroom@qq.com</span>
+                    </a>
+                    <a class="item m-currentBlog-padding-top" href="javascript:void(0);">
+                        <div class="ui horizontal label">发布时间</div><span th:text="${#dates.format(blog.writeTime, 'YYYY-MM-dd HH:mm:ss')}">2022-2-12 23:34:12</span>
+                    </a>
+                    <a class="item m-currentBlog-padding-top" href="javascript:void(0);">
+                        <div class="ui horizontal label">发布状态</div><span th:text="${blog.isPublish eq true ? '已发布' : '草稿'}">已发布</span>
+                    </a>
+                </div>
+                </div>
+            </div>
+            <!--     right 留言信息      -->
+            <div class="twelve wide column">
+                <!-- 搜索 -->
+                <form id="commentSearchForm" action="" class="ui grey segment form" method="get">
+                    <div class="inline fields">
+                        <div class="field">
+                            <input type="text" placeholder="评论内容..." name="title" value="">
+                        </div>
+                        <div class="field">
+                            <input type="date">
+                        </div>
+                        <div style="margin-right: 1em;">—</div>
+                        <div class="field">
+                            <input type="date">
+                        </div>
+                        <div class="field">
+                            <div class="ui checkbox">
+                                <input type="checkbox" id="isPass" name="" value="true">
+                                <label for="isPass" class="m-is-draft">未通过</label>
+                            </div>
+                        </div>
+                        <div class="feild">
+                            <button id="blog-search" type="submit" class="ui green button"> <i class="icon search"></i>搜索</button>
+                        </div>
+                    </div>
+                </form>
+                <div class="ui segment">
+                    <div class="feild">
+                        <a class="ui grey button" href="javascript:;"> <i class="icon trash"></i>清空条件 </a>
+                        <button class="ui primary button m-pass-selected-comment"> <i class="check icon"></i>批量审核</button>
+                        <button class="ui red button m-del-selected-comment"> <i class="x icon"></i>批量删除</button>
+                    </div>
+                </div>
+                <!-- 留言信息 -->
+                <div class="ui segment">
+                    <div class="ui header">留言列表</div>
+                    <table class="ui red celled table">
+                        <thead>
+                        <tr>
+                            <th>
+                                <input class="ui checkbox m-select-all" type="checkbox">
+                            </th>
+                            <th>序号</th>
+                            <th>用户名</th>
+                            <th>邮箱</th>
+                            <th>留言内容</th>
+                            <th>留言时间</th>
+                            <th>审核状态</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="comment,status:${comments}">
+                            <td>
+                                <input class="ui checkbox m-select" type="checkbox" data-comid="" th:data-comid="${comment.comId}">
+                            </td>
+                            <td th:text="${status.count}">1</td>
+                            <td th:if="${comment.nickname.length() >= 5}" th:text="${comment.nickname.substring(0,5)}" title="" th:title="${comment.nickname}">Marry</td>
+                            <td th:if="${comment.nickname.length() < 5}" th:text="${comment.nickname}" title="" th:title="${comment.nickname}">Marry</td>
+                            <td th:if="${comment.mail.length() >= 13}" th:text="${comment.mail.substring(0,9)}+'...'" title="" th:title="${comment.mail}">marry@qq.com</td>
+                            <td th:if="${comment.mail.length() < 13}" th:text="${comment.mail}" title="" th:title="${comment.mail}">marry@qq.com</td>
+                            <td style="font-weight: 700" class="m-hidden-comment" title="" th:title="${comment.content}" th:if="${comment.content.length() >= 17}" th:text="${comment.content.substring(0,17) + '...'}">不错，很有帮助</td>
+                            <td style="font-weight: 700" class="m-hidden-comment" title="" th:title="${comment.content}" th:if="${comment.content.length() < 10}" th:text="${comment.content}">不错，很有帮助</td>
+                            <td th:text="${#dates.format(comment.replyTime, 'YYYY-MM-dd HH:mm:ss')}">2020-12-1 9:06</td>
+                            <td th:text="${comment.isPass eq true ? '通过' : '未通过'}" th:classappend="${comment.isPass eq true ? 'm-is-publish' : 'm-is-draft'}" style="color: red;">未通过</td>
+                            <td>
+                                <a href="javascript:;" class="ui thiny button m-comment-pass" data-comid="" th:data-comid="${comment.comId}">审核</a>
+                                <a href="javascript:;" class="ui thiny button m-comment-delete" data-comid="" data-bid="" th:data-comid="${comment.comId}" th:data-bid="${blog.bid}">删除</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部 -->
+    <div th:include="/admin/commonend :: copyright"></div>
+
+    <!-- 删除分类/批量模态框 -->
+    <div class="ui basic1 modal">
+        <div class="ui icon header">
+            <i class="trash alternate icon"></i> 删除这条留言
+        </div>
+        <div class="content">
+            <p class="ui header" style="color: rgba(218,52,52,0.85) !important;">此操作不可逆，你确定要继续吗?</p>
+        </div>
+        <div class="actions">
+            <button class="ui negative button">取消</button>
+            <button class="ui green button m-comment-del-btn" type="button"> <i class="checkmark icon"></i> 删除</button>
+        </div>
+    </div>
+    <div class="ui basic2 modal">
+        <div class="ui icon header">
+            <i class="trash alternate icon"></i> 删除这已选中留言
+        </div>
+        <div class="content">
+            <p class="ui header" style="color: rgba(218,52,52,0.85) !important;">此操作不可逆，你确定要继续吗?</p>
+        </div>
+        <div class="actions">
+            <button class="ui negative button">取消</button>
+            <button class="ui green button m-comment-del-select-btn" type="button"> <i class="checkmark icon"></i> 删除</button>
+        </div>
+    </div>
+    <!-- 留言审核模态框 -->
+    <div class="ui tiny modal">
+        <div class="ui icon header">留言审核</div>
+        <div class="ui segment m-echo-comment"></div>
+<!--        <form id="passForm" class="ui form" method="post" action="" th:action="@{/admin/comment/post}">-->
+            <input type="hidden" name="comId" value="">
+            <div class="ui basic segment form" id="passForm" >
+<!--            <div class="ui floating dropdown labeled icon button">-->
+<!--                <i class="check icon"></i>-->
+            <div class="ui icon top left pointing dropdown button">
+                <input type="hidden" name="isPass" value="1">
+                <span class="text">选择状态</span>
+                <div class="menu">
+                    <div class="item" data-value="1"><div class="ui green empty circular label"></div>通过</div>
+                    <div class="item" data-value="0"><div class="ui red empty circular label"></div>拒绝通过</div>
+                </div>
+            </div>
+            <div class="ui floating dropdown labeled icon button m-pass-content">
+                <i class="paper plane icon"></i>
+                <input type="hidden" name="passContent" value="">
+                <span class="text">拒绝原因</span>
+                <div class="menu">
+                    <div class="item" data-value="此留言违反了社区规范，已被屏蔽">此留言违反了社区规范，已被屏蔽</div>
+                </div>
+            </div>
+        </div>
+<!--        </form>-->
+        <div class="actions">
+            <button class="ui negative button">取消</button>
+            <button class="ui green button m-pass" type="button"><i class="checkmark icon"></i>提交</button>
+        </div>
+    </div>
+
+    <!-- ---------------- js ------------------------- -->
+    <script src="../../static/js/jquery.min.js" th:src="@{/res/js/jquery.min.js}"></script>
+    <!-- <script src="js/flexible.js"></script> -->
+    <script src="../../static/js/semantic.min.js" th:src="@{/res/js/semantic.min.js}"></script>
+    <script src="../../static/js/toastr.min.js" th:src="@{/res/js/toastr.min.js}"></script>
+    <script src="../../static/js/end.js" th:src="@{/res/js/end.js}"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            /*-----------comement.html 删除留言-------------*/
+            var comId;
+            var paramStr;
+            $(".m-comment-delete").on("click", function () {
+                comId = $(this).data('comid');
+                paramStr = comId + ',';
+                $('.ui.basic1.modal').modal('show');
+            });
+            $(".m-comment-del-btn").on("click", function () {
+                $.ajax({
+                    url: "/admin/comment",
+                    type: "POST",
+                    data: "comIds=" + paramStr + "&_method=DELETE",
+                    success: function (result) {
+                        if (result.code == 7001 || result.code == 7002) {
+                            toastr.success(result.code +" : "+ result.message);
+                            var t1 = setTimeout(function () {
+                                location.reload();
+                                clearTimeout(t1);
+                            }, 1000);
+                        } else {
+                            toastr.error(result.code +" : "+ result.message);
+                        }
+                    },
+                    error: function () {
+                        toastr.error("500 : 删除失败");
+                    }
+                })
+            });
+            toastr.options = {
+                closeButton: true,
+                debug: false,
+                progressBar: false,
+                positionClass: "toast-top-center",
+                onclick: null,
+                showDuration: "1000",
+                hideDuration: "200",
+                timeOut: "2000",
+                extendedTimeOut: "1000",
+                showEasing: "swing",
+                hideEasing: "linear",
+                showMethod: "fadeIn",
+                hideMethod: "fadeOut",
+                positionClass: "toast-top-center"
+            };
+            // toastr.success('提交数据成功');
+            // toastr.error('Error');
+            // toastr.warning('只能选择一行进行编辑');
+            // toastr.info('info');
+            /*-----------end-------------*/
+            var paramStrs = "";
+            /*-----------comement.html 批量删除-------------*/
+            $('.m-del-selected-comment').on('click', function () {
+                paramStrs = "";
+                var cx = $('.m-select');
+                $.each(cx, function (i, ele) {
+                   if ($(ele).prop('checked') === true) {
+                       paramStrs = paramStrs + $(ele).data('comid') + ",";
+                   }
+                });
+                $('.ui.basic2.modal').modal('show');
+            });
+            $('.m-comment-del-select-btn').on('click', function () {
+                if (paramStrs.trim() === "") {
+                    toastr.error("删除失败,无删除项");
+                } else {
+                    $.ajax({
+                        url: '/admin/comment',
+                        type: 'POST',
+                        data: 'comIds=' + paramStrs + '&_method=DELETE',
+                        success: function (result) {
+                            toastr.success(result.code +" : "+ result.message);
+                            var t1 = setTimeout(function () {
+                                location.reload();
+                                clearTimeout(t1);
+                            }, 1000);
+                        },
+                        error: function () {
+                            toastr.error("500 : 删除失败");
+                        }
+                    });
+                }
+            });
+            $('.m-select-all').on('click', function () {
+                var cx = $('.m-select');
+                $.each(cx, function (i, ele) {
+                    if ($(ele).prop('checked') == true) {
+                        $(ele).prop('checked', false);
+                    } else {
+                        $(ele).prop('checked', true);
+                    }
+                });
+            });
+            /*-----------end------------*/
+            /*-----------comement.html 留言审核-------------*/
+            var comId2 = '';
+            $('.m-comment-pass').on('click', function () {
+                $('.m-pass').removeClass("m-pass-selected-btn");
+                $('.m-pass').addClass("m-pass-btn");
+                comId2 = $(this).data('comid') + ',';
+                $('.m-echo-comment').html('"'+$(this).parent().parent().find('td:eq(4)').attr('title')+'"');
+                $('.tiny.modal')
+                    .modal('show');
+                $('.m-pass-btn').on('click', function () {
+                    passComment(comId2);
+                });
+            });
+            /*---------批量审核---------*/
+            var paramStrs2 = "";
+            $('.m-pass-selected-comment').on('click', function () {
+                $('.m-pass').addClass("m-pass-selected-btn");
+                $('.m-pass').removeClass("m-pass-btn");
+                paramStrs2 = "";
+                $('.m-echo-comment').html('留言过多不作展示');
+                var cx = $('.m-select');
+                $.each(cx, function (i, ele) {
+                    if ($(ele).prop('checked') === true) {
+                        paramStrs2 = paramStrs2 + $(ele).data('comid') + ",";
+                    }
+                });
+                $('.ui.tiny.modal').modal('show');
+                $('.m-pass-selected-btn').on('click', function () {
+                    passComment(paramStrs2);
+                })
+            });
+            /*---------end---------*/
+        })
+
+        function passComment(comId2) {
+            var passContent = $('#passForm :input[name="passContent"]').val();
+            var isPass = $('#passForm :input[name="isPass"]').val();
+            if (comId2.trim() === '') {
+                toastr.error("提交失败,无审核项");
+                return false;
+            } else {
+                $.post("/admin/comment", {'comIds': comId2,
+                    'passContent': passContent,
+                    'isPass': isPass}, function (result) {
+                    if (result.code == 7004) {
+                        toastr.success(result.code +" : "+ result.message);
+                        var t1 = setTimeout(function () {
+                            location.reload();
+                            clearTimeout(t1);
+                        }, 1000);
+                    } else {
+                        toastr.error(result.code +" : "+ result.message);
+                    }
+                });
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        $(function() {
+            /*------------移动端导航栏显示------------*/
+            $("#m-show-nav").on("click", function() {
+                $(".m-item").toggle("fast",function(){
+                    $(".m-item").removeClass("m-mobile-hide");
+                });
+            })
+            /*-----------退出下拉菜单-------------*/
+            $('.ui.dropdown').dropdown();
+
+            /*-----------关闭提示框-------------*/
+            $('.message .close')
+                .on('click', function() {
+                    $(this)
+                        .closest('.message')
+                        .transition('fade')
+                    ;
+                })
+            ;
+        })
+    </script>
+    
+</body>
+</html>

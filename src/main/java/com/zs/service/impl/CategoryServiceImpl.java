@@ -139,6 +139,15 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryMapper.listCategories();
     }
 
+//    /**
+//     * 查询所有分类，并统计分类下所属博客数量
+//     * @return
+//     */
+//    @Override
+//    public List<Category> listCategoriesAndBlogs() {
+//        return categoryMapper;
+//    }
+
     /**
      * 查询前 6 个分类，按分类下所存在博客数量排序
      * @return

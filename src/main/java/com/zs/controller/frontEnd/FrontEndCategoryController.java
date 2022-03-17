@@ -9,6 +9,7 @@ import com.zs.service.BlogService;
 import com.zs.service.CategoryService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,23 +33,32 @@ public class FrontEndCategoryController {
     @Resource
     private BlogOutlineService blogOutlineService;
 
-    @GetMapping("/category/{currentPage}")
-    public String page(@PathVariable("currentPage") Integer currentPage, Model model) {
+    /**
+     * 跳转到分类页面，并返回指定分类下的博客(分页显示)
+     * @param currentPage 当前页
+     * @param cid 分类id
+     * @param model
+     * @return
+     */
+    @GetMapping({"/category/{currentPage}/", "/category/{currentPage}/{cid}"})
+    public String page(@PathVariable("currentPage") Integer currentPage,
+                       @PathVariable(value = "cid", required = false) Integer cid,
+                       Model model) {
         // 初始化一个搜索条件(博客标题)，选取浏览量前5的任意一篇博客
         List<BlogOutline> listBlogOutlines = blogOutlineService.listBlogOutlines();
         BlogOutline initSearchCondition = RandomUtils.generateBlogOutline(listBlogOutlines);
         model.addAttribute("initSearch", initSearchCondition);
         // 分类数据、对应的博客数据渲染
-        List<Category> listCategories = categoryService.listCategories();
+        List<Category> listCategories = categoryService.listSortCategories();
         model.addAttribute("listCategories", listCategories);
-        model.addAttribute("pageInfo", blogService.listPageBlogsByCid(currentPage,
-                                                                                    Const.BLOG_PAGE_ROWS,
-                                                                                    listCategories.get(0).getCid()));
+        if (cid != null) {
+            model.addAttribute("pageInfo", blogService.listPageBlogsByCid(currentPage,
+                    Const.BLOG_PAGE_ROWS, cid));
+        } else {
+            model.addAttribute("pageInfo", blogService.listPageBlogsByCid(currentPage,
+                    Const.BLOG_PAGE_ROWS, listCategories.get(0).getCid()));
+        }
         return "category";
     }
-
-
-
-
 
 }

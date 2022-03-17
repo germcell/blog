@@ -80,4 +80,11 @@ public interface BlogService {
      */
     PageInfo<Blog> listPageBlogsByCid(Integer currentPage, Integer rows, Integer cid);
 
+    /**
+     * 查询博客基本信息(留言管理显示)
+     * @param bid
+     * @return
+     */
+    Blog getBlogBaseMsg(Long bid);
+
 }

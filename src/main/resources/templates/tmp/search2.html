@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" th:href="@{/res/favicon.ico}">
-    <title th:text="${'搜索'+search}">搜索</title>
+    <title>搜索</title>
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css"> -->
     <link rel="stylesheet" href="../static/css/semantic.min.css" th:href="@{/res/css/semantic.min.css}">
     <link rel="stylesheet" href="../static/dist/components/icon.min.css" th:href="@{/res/dist/components/icon.min.css}">
@@ -16,8 +16,9 @@
     <div th:include="common :: nav(1)"></div>
 
     <!-- 主体内容 -->
-    <div class="m-content m-padding-big" style="padding-bottom: 5em !important;">
+    <div class="m-content"> 
         <div class="ui container">
+            <!-- 头部:博客总数 -->
             <div class="ui top attached segment">
                 <div class="ui two column grid">
                     <div class="column">
@@ -28,6 +29,7 @@
                     </div>
                 </div>
             </div>
+            <!-- 中间:博客内容部分 -->
             <div class="ui attached teal segment">
                 <div class="ui attached segment m-padding-small" th:if="${pageInfo.total eq 0}">
                     <div class="ui mobile reversed stackable grid ui info message">
@@ -36,42 +38,42 @@
                 </div>
                 <div class="ui attached segment m-padding-small" th:if="${pageInfo.total != 0}" th:each="blog:${pageInfo.list}">
                     <div class="ui mobile reversed stackable grid">
-                        <div class="ten wide column" style="padding-right: 0 !important;">
-                            <a href="javascript:;" target="_blank" th:href="@{/blog/view/{bid}(bid=${blog.bid})}">
-                                <h3 class="ui header" th:text="${blog.title}">你真正的理解财富自由吗?</h3>
-                            </a>
+                    <div class="ten wide column" style="padding-right: 0 !important;">
+                        <a href="javascript:;" target="_blank">
+                            <h3 class="ui header" th:text="${blog.title}">你真正的理解财富自由吗?</h3>
+                        </a>
                             <p class="m-blogtext m-overflow-blog-search" th:text="${blog.blogOutline.outline}">冬奥会赛程过半，多项纪录诞生。精彩瞬间，见证了运动员的非凡表现，展现了竞技体育的巨大魅力。金牌荣耀，来自赛场上的fsdfsdfsdafasdfsadfsadfsafasdfffffffffffffffffffffff...</p>
-                            <!-- 自定义flex布局 -->
-                            <div class="ui mini m-infobox">
-                                <div class="m-info">
-                                    <div class="m-avatar">
-                                        <a href="#" target="_blank">
-                                            <img src="https://picsum.photos/id/1012/100/100" class="ui avatar image" alt="" th:src="${blog.user.avatar}">
-                                            <span th:text="${blog.user.nickname}"> Marry </span>
-                                        </a>
-                                    </div>
-                                    <div class="m-calendar">
-                                        <i class="calendar icon"></i> <span th:text="${#dates.format(blog.writeTime, 'yyyy-MM-dd HH:mm')}">2022.2.18 12:23</span>
-                                    </div>
-                                    <div class="m-eye">
-                                        <!-- TODO 点赞功能 -->
-                                        <i class="thumbs up icon"></i> <span>2321</span>
-                                        <!--<i class="thumbs up outline icon"></i> <span>232</span>-->
-                                    </div>
-                                    <div class="m-eye">
-                                        <i class="eye icon"></i> <span th:text="${blog.views}">232</span>
-                                    </div>
+                        <!-- 自定义flex布局 -->
+                        <div class="ui mini m-infobox">
+                            <div class="m-info">
+                                <div class="m-avatar">
+                                    <a href="#" target="_blank">
+                                        <img src="https://picsum.photos/id/1012/100/100" class="ui avatar image" alt="" th:src="${blog.user.avatar}">
+                                        <span th:text="${blog.user.nickname}"> Marry </span>
+                                    </a>
+                                </div>
+                                <div class="m-calendar">
+                                    <i class="calendar icon"></i> <span th:text="${#dates.format(blog.writeTime, 'yyyy-MM-dd HH:mm')}">2022.2.18 12:23</span>
+                                </div>
+                                <div class="m-eye">
+                                    <!-- TODO 点赞功能 -->
+                                    <i class="thumbs up icon"></i> <span>2321</span>
+                                    <!--<i class="thumbs up outline icon"></i> <span>232</span>-->
+                                </div>
+                                <div class="m-eye">
+                                    <i class="eye icon"></i> <span th:text="${blog.views}">232</span>
                                 </div>
                             </div>
                         </div>
-                        <div class="one wide column" style="width: 10px !important;"></div>
-                        <div class="five wide column">
-                            <a href="javascript:;" target="_blank" th:href="@{/blog/view/{bid}(bid=${blog.bid})}">
-                                <img src="../static/images/blogPicture/del_blog_img2.jpg" class="ui image rounded m-blog-img-size" alt="丢失" th:unless="${blog.firstPicture eq null || blog.firstPicture == ''}" th:src="${blog.firstPicture}">
-                                <img src="../static/images/blogPicture/del_blog_img2.jpg" class="ui image rounded m-blog-img-size" alt="丢失" th:unless="${blog.firstPicture != null || blog.firstPicture eq ''}" th:src="@{/res/images/blogPicture/del_blog_img2.jpg}">
-                            </a>
-                        </div>
                     </div>
+                    <div class="one wide column" style="width: 10px !important;"></div>
+                    <div class="five wide column">
+                        <a href="javascript:;" target="_blank">
+                            <img src="../static/images/blogPicture/del_blog_img2.jpg" class="ui image rounded m-blog-img-size" alt="丢失" th:unless="${blog.firstPicture eq null || blog.firstPicture == ''}" th:src="${blog.firstPicture}">
+                            <img src="../static/images/blogPicture/del_blog_img2.jpg" class="ui image rounded m-blog-img-size" alt="丢失" th:unless="${blog.firstPicture != null || blog.firstPicture eq ''}" th:src="@{/res/images/blogPicture/del_blog_img2.jpg}">
+                        </a>
+                    </div>
+                </div>
                 </div>
 
                 <!--/*-->
@@ -243,6 +245,9 @@
                 <div class="ui attached segment">
                     <div class="ui two column grid">
                         <div class="column center aligned">
+
+                            <!-- TODO 翻页时需判断是否有搜索条件后再选择是否带条件翻页 -->
+
                             <a class="ui small button center aligned" href="javascript:;" data-cp="" th:data-cp="${pageInfo.prePage}" th:unless="${pageInfo.isFirstPage eq true}" th:href="@{/blog/condition/page/{currentPage}(currentPage=${pageInfo.prePage},search=${search})}">上一页</a>
                         </div>
                         <div class="column center aligned">
@@ -251,33 +256,33 @@
                     </div>
                 </div>
             </div>
-
         </div>
-    </div>
+    </div>  
 
     <!-- 底部 -->
     <div th:include="common :: copyright"></div>
 
-    <!--  关于我  -->
+    <!-- 关于我模态框 -->
     <div th:include="common :: aboutme"></div>
 
 
-<!-- ---------------- js ---------------------------------------------------------------------------------- -->
+<!-- ---------------- js ----------------------------------------------------------------------------- -->
     <script src="../static/js/jquery.min.js" th:src="@{/res/js/jquery.min.js}"></script>
     <!-- <script src="js/flexible.js"></script> -->
     <script src="../static/js/semantic.min.js" th:src="@{/res/js/semantic.min.js}"></script>
+    <script src="../static/js/front.js" th:src="@{/res/js/front.js}"></script>
 
     <script type="text/javascript">
         $(function() {
-            /*------------移动端显示导航栏------------- */
+            /*------------移动端导航栏显示------------*/
             $("#m-show-nav").on("click", function() {
                 $(".m-item").toggle("fast",function(){
                     $(".m-item").removeClass("m-mobile-hide");
                 });
             })
-
-              /*------------关于我模态框------------*/
-              $("#about-me").on("click", function() {
+            
+            /*------------关于我模态框------------*/
+            $("#about-me").on("click", function() {
                 $('.ui.modal').modal('show');
             })
  

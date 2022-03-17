@@ -11,11 +11,18 @@
         <result column="create_time" property="createTime"/>
         <result column="description" property="description"/>
         <result column="picture" property="picture"/>
+        <result column="blogCounts" property="blogCounts"/>
     </resultMap>
 
     <resultMap id="categorySortMap" type="Category">
         <id column="cid" property="cid"/>
         <result column="name" property="name"/>
+        <result column="uid" property="uid"/>
+        <result column="create_time" property="createTime"/>
+        <result column="description" property="description"/>
+        <result column="picture" property="picture"/>
+        <result column="blogCounts" property="blogCounts"/>
+        <result column="blogs" property="blogCounts"/>
     </resultMap>
 
     <select id="listCategories" resultMap="categoryMap">
@@ -71,8 +78,8 @@
     </update>
 
     <select id="listSortCategoriesByBlogs" resultMap="categorySortMap">
-        select c.cid,c.name,count(bid) blogs
-        from tb_category c inner join tb_blog b on c.cid = b.cid
+        select c.cid,c.name,c.picture,c.description,c.create_time,count(bid) blogs
+        from tb_category c left join tb_blog b on c.cid = b.cid
         group by c.cid
         order by blogs desc
     </select>

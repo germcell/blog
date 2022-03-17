@@ -78,4 +78,11 @@ public interface BlogMapper {
      * @return
      */
     Blog getBlogView(@Param("bid") Long bid);
+
+    /**
+     * 查询blog表部分信息
+     * @param bid
+     * @return
+     */
+    Blog getBlogBaseMsg(@Param("bid") Long bid);
 }

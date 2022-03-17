@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" th:href="@{/res/favicon.ico}">
-    <title>类别</title>
+    <title>文章分类 - Z社区</title>
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css"> -->
     <link rel="stylesheet" href="../static/css/semantic.min.css" th:href="@{/res/css/semantic.min.css}">
     <link rel="stylesheet" href="../static/dist/components/icon.min.css" th:href="@{/res/dist/components/icon.min.css}">
@@ -14,29 +14,27 @@
 <body>
     <!-- 导航 -->
     <div th:include="common :: nav(2)"></div>
-
     <!-- 主体内容 -->
     <div class="m-content m-padding-big" style="padding-bottom: 5em !important;">
         <div class="ui container">
-            <!-- header -->
+            <!-- 分类数量 -->
             <div class="ui top red attached segment">
                 <div class="ui two column grid">
                     <div class="column">
                         <h3 class="ui red header">类别</h3>
                     </div>
                     <div class="column right aligned">
-                        共 <span class="blogCount" th:text="${listCategories.size()}">14</span> 个
+                        共 <span class="blogCount" th:text="${listCategories.size() != 0 ? listCategories.size() : 0}">14</span> 个
                     </div>
                 </div>
             </div>
-            <!-- 类别列表 -->
-            <div class="ui attached segment">
-                <a class="ui image large label m-margin-rm m-categoryContent" data-categorycid="" th:data-categorycid="${category.cid}" th:each="category:${listCategories}">
+            <!-- 分类列表 -->
+            <div class="ui attached segment" th:if="${listCategories.size() != 0}">
+                <a class="ui image large label m-margin-rm m-categoryContent" data-categorycid="" th:data-categorycid="${category.cid}" th:each="category:${listCategories}" th:href="@{/blog/category/1/{cid}(cid=${category.cid})}">
                     <img src="../static/images/category/java.jpg" th:src="${category.picture}" style="width: 30.312px !important; height: 30.312px !important;">
                     <span th:text="${category.name}">java</span>
-                    <div class="detail">文章: <span  th:text="${listCategories.size()}">23</span> </div>
+                    <div class="detail">文章: <span  th:text="${category.blogCounts}">23</span> </div>
                 </a>
-
                 <!--/*-->
                 <a class="ui image large label m-margin-rm">
                     <img src="../static/images/category/java.jpg" th:src="@{/res/images/category/java.jpg}">
@@ -60,9 +58,8 @@
                 </a>
                 <!--*/-->
             </div>
-
-            <!-- body 类别对应的博客内容 -->
-            <div class="ui purple segments">
+            <!-- 分类下对应的博客内容(有内容时) -->
+            <div class="ui purple segments" th:if="${pageInfo.getList().size() != 0}">
                 <div class="ui attached segment m-padding-small" th:if="${pageInfo.total != 0}" th:each="blog:${pageInfo.list}">
                     <div id="blogContent" class="ui mobile reversed stackable grid" data-blogcid="" th:data-blogcid="${blog.cid}">
                         <div class="ten wide column" style="padding-right: 0 !important;">
@@ -102,7 +99,6 @@
                         </div>
                     </div>
                 </div>
-
                 <!--/*-->
                 <div class="ui attached segment m-padding-small" th:if="${pageInfo.total != 0}" th:each="blog:${pageInfo.list}">
                     <div class="ui mobile reversed stackable grid">
@@ -144,30 +140,33 @@
                     </div>
                 </div>
                 <!--*/-->
-
-                <!-- TODO 分页 -->
+                <!-- TODO 当页数过多时，需设置规则显示（项目的所有分页操作都应改） -->
                 <div class="ui segment">
-                        <ul class="m-pagination-ul">
-                            <li><a href="#" class="ui secondary button">pre</a></li>
-                            <li><a href="#" class="ui vk button">1</a></li>
-                            <li><a href="#" class="ui button">2</a></li>
-                            <li><a href="#" class="ui button">3</a></li>
-                            <li><a href="#" class="ui button">4</a></li>
-                            <li><a href="#" class="ui button">5</a></li>
-                            <li><a href="#" class="ui secondary button">next</a></li>
-                        </ul>
+                    <ul class="m-pagination-ul">
+                        <li><a href="#" class="ui secondary button" th:if="${pageInfo.isHasPreviousPage()}" th:href="@{/blog/category/{currentPage}/{cid}(currentPage=${pageInfo.prePage},cid=${pageInfo.getList().get(0).getCid()})}">pre</a></li>
+                        <li><a href="javascript:void(0);" class="ui button" th:text="${n}" th:each="n:${#numbers.sequence(1, pageInfo.getPages())}" th:classappend="${n == pageInfo.getPageNum()} ? 'vk'" th:href="@{/blog/category/{currentPage}/{cid}(currentPage=${n},cid=${pageInfo.getList().get(0).getCid()})}">1</a></li>
+                        <!--/*-->
+                        <li><a href="#" class="ui vk button">2</a></li>
+                        <li><a href="#" class="ui button">3</a></li>
+                        <li><a href="#" class="ui button">4</a></li>
+                        <li><a href="#" class="ui button">5</a></li>
+                        <!--*/-->
+                        <li><a href="#" class="ui secondary button" th:if="${pageInfo.isHasNextPage()}"th:href="@{/blog/category/{currentPage}/{cid}(currentPage=${pageInfo.nextPage},cid=${pageInfo.getList().get(0).getCid()})}">next</a></li>
+                    </ul>
+                </div>
+            </div>
+            <!-- 分类下对应的博客内容(无内容时) -->
+            <div class="ui purple segments" th:if="${pageInfo.getList().size() == 0}">
+                <div id="blogContent" class="ui attached segment m-padding-small header" data-blogcid="" th:data-blogcid="${}">
+                    当前分类下还没有文章哦...
                 </div>
             </div>
         </div>
     </div>
-
     <!-- 底部 -->
     <div th:include="common :: copyright"></div>
-
     <!--  关于我  -->
     <div th:include="common :: aboutme"></div>
-
-
 <!-- ---------------- js ---------------------------------------------------------------------------------- -->
     <script src="../static/js/jquery.min.js" th:src="@{/res/js/jquery.min.js}"></script>
     <!-- <script src="js/flexible.js"></script> -->
@@ -177,10 +176,14 @@
     <script type="text/javascript">
         $(function () {
             categoryActive();
-            /* 当前选中分类 */
+            /* 为当前被选中分类添加样式 */
             function categoryActive() {
                 // var categoryCid = $('#categoryContent').data('categorycid');
+
+                // TODO 当分类下无内容时，获取不到博客分类id，导致不能添加选中样式
+
                 var blogCid = $('#blogContent').data('blogcid');
+                console.log(blogCid)
                 $('.m-categoryContent').each(function (i, ele) {
                     if ($(ele).data('categorycid') == blogCid) {
                         $(ele).addClass('blue');

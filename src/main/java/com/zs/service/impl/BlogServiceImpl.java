@@ -207,4 +207,14 @@ public class BlogServiceImpl implements BlogService {
         PageInfo<Blog> pageInfo = new PageInfo<>(blogsByCid);
         return pageInfo;
     }
+
+    /**
+     * 查询博客基本信息(留言管理显示)
+     * @param bid
+     * @return
+     */
+    @Override
+    public Blog getBlogBaseMsg(Long bid) {
+        return blogMapper.getBlogBaseMsg(bid);
+    }
 }

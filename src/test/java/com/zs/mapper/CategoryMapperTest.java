@@ -29,4 +29,9 @@ class CategoryMapperTest {
         List<Category> list = categoryMapper.listSortCategoriesByBlogs();
         System.out.println(list);
     }
+
+    @Test
+    void listSortCategoriesAndBlogs() {
+
+    }
 }

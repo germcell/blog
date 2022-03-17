@@ -86,4 +86,10 @@ class BlogMapperTest {
         Blog blogView = blogMapper.getBlogView(41L);
         System.out.println(blogView);
     }
+
+    @Test
+    void getBlogBaseMsg() {
+        Blog blogBaseMsg = blogMapper.getBlogBaseMsg(1l);
+        System.out.println(blogBaseMsg);
+    }
 }

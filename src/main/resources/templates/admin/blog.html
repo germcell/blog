@@ -90,10 +90,11 @@
                     <td th:text="${blog.title}">static关键字</td>
                     <td th:text="${blog.category.name}">Java</td>
                     <td th:unless="${blog.isPublish == false}" class="m-is-publish">发布</td>
-                    <td th:unless="${blog.isPublish == true}" class="m-is-draft">草稿</td>
+                    <td th:unless="${blog.isPublish == true}" class="m-is-draft" style="font-weight: 400!important;">草稿</td>
                     <td th:text="${#dates.format(blog.updateTime, 'yyyy-MM-dd HH:mm:ss')}">2020-12-1 9:06</td>
                     <td>
                         <a href="javascript:;" class="ui thiny teal basic button" th:href="@{/admin/blogs/edit/{bid}(bid=${blog.bid})}">编辑</a>
+                        <a href="javascript:;" class="ui thiny blue basic button" th:href="@{/admin/comments/{bid}(bid=${blog.bid})}">留言管理</a>
                         <a href="javascript:;" class="ui thiny red  basic button m-blog-delete">删除</a>
                     </td>
                   </tr>
@@ -175,6 +176,10 @@
     <!-- <script src="js/flexible.js"></script> -->
     <script src="../../static/js/semantic.min.js" th:src="@{/res/js/semantic.min.js}"></script>
     <script src="../../static/js/end.js" th:src="@{/res/js/end.js}"></script>
+
+    <script type="text/javascript">
+
+    </script>
 
     <script type="text/javascript">
         $(function() {

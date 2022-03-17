@@ -25,6 +25,7 @@ public class Category {
     private String description;
     private String picture;
     private User user;
+    private Long blogCounts;  // 所属分类博客数量
     /* 和博客类构成一对多关系：一个分类 --> 多篇博客 */
     private List<Blog> listBlogs;
 

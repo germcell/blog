@@ -7,7 +7,7 @@
     <!--  查询所有关联信息  -->
     <sql id="blogColumn">
         b.bid,b.title,b.content,b.first_picture,b.cid,b.views,b.is_appreciate,b.is_comment,b.is_publish,b.write_time,b.update_time,b.uid,
-        b.cr_tip_id,b.is_reprint,c.`name`,cr.cr_id,cr.cr_tip,cr.cr_tip_id,u.uid,u.nickname,u.avatar,bo.outline,bo.views
+        b.cr_tip_id,b.is_reprint,c.`name`,cr.cr_id,cr.cr_tip,cr.cr_tip_id,u.uid,u.nickname,u.mail,u.avatar,bo.outline,bo.views
     </sql>
 
     <!--  查询展示时需要的关联信息  -->
@@ -53,6 +53,7 @@
             <id column="uid" property="uid"/>
             <result column="nickname" property="nickname"/>
             <result column="avatar" property="avatar"/>
+            <result column="mail" property="mail"/>
         </association>
         <!--   tb_blog_outline表     -->
         <association property="blogOutline" javaType="BlogOutline">
@@ -60,6 +61,33 @@
             <result column="outline" property="outline"/>
             <result column="views" property="views"/>
             <result column="title" property="title"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="blogBaseMap" type="Blog">
+        <id column="bid" property="bid"/>
+        <result column="title" property="title"/>
+        <result column="cid" property="cid"/>
+        <result column="is_publish" property="isPublish"/>
+        <result column="write_time" property="writeTime"/>
+        <result column="uid" property="uid"/>
+        <result column="cr_tip_id" property="crTipId"/>
+        <!--   只查询了tb_category表的name字段，后续需要时在添加     -->
+        <association property="category" javaType="Category">
+            <id column="cid" property="cid"/>
+            <result column="name" property="name"/>
+        </association>
+        <!--   tb_copyright表     -->
+        <association property="copyright" javaType="Copyright">
+            <id column="cr_id" property="crId"/>
+            <result column="cr_tip" property="crTip"/>
+            <result column="cr_tip_id" property="crTipId"/>
+        </association>
+        <!--   tb_user表     -->
+        <association property="user" javaType="User">
+            <id column="uid" property="uid"/>
+            <result column="nickname" property="nickname"/>
+            <result column="mail" property="mail"/>
         </association>
     </resultMap>
 
@@ -85,8 +113,8 @@
         inner join tb_blog_outline bo on bo.did = b.bid
         <where>
             <if test="cid != null"> and b.cid = #{cid} </if>
-            <if test="title != null"> and b.title like '%${title}%'</if>
-            <if test="title != null"> or b.content like '%${title}%'</if>
+            <if test="title != null and title != ''"> and b.title like '%${title}%'</if>
+            <if test="title != null and title != ''"> or b.content like '%${title}%'</if>
             <if test="isPublish != false"> and b.is_publish = 1</if>
         </where>
         order by b.write_time desc
@@ -139,6 +167,15 @@
         inner join tb_user u on b.uid = u.uid
         inner join tb_category c on b.cid = c.cid
         inner join tb_copyright cr on cr.cr_tip_id = b.cr_tip_id
+        where b.bid = #{bid}
+    </select>
+
+    <select id="getBlogBaseMsg" resultMap="blogBaseMap">
+        select b.bid,b.title,b.cid,b.is_publish,b.write_time,b.uid,b.cr_tip_id,c.`name`,cr.cr_tip,u.nickname,u.mail
+        from tb_blog b
+        inner join tb_category c on b.cid = c.cid
+        inner join tb_copyright cr on cr.cr_tip_id = b.cr_tip_id
+        inner join tb_user u on u.uid = b.uid
         where b.bid = #{bid}
     </select>
 

@@ -17,7 +17,7 @@ import java.util.List;
 @Setter
 public class Comment {
 
-  private long comId; // 评论id
+  private Long comId; // 评论id
   private String nickname;
   private String mail;
   private String content;
@@ -25,6 +25,8 @@ public class Comment {
   private Date replyTime; // 发布时间
   private Long bid;
   private Long comParentId; // 父评论id
+  private Boolean isPass; // 审核状态 1通过 0未通过
+  private String passContent; // 审核状态为0时的显示文本
   /* 和博客类构成多对一关系：多个评论 --> 一篇博客 */
   private Blog blog;
   /* 和本身构成一对多关系：一个评论 --> 多个子评论，暂时仅支持两级评论 */
