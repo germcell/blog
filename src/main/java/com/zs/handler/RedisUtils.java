@@ -1,27 +1,35 @@
 package com.zs.handler;
 
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.Set;
 
 /**
  * @Created by zs on 2022/3/8.
  */
+@Component("redisUtils")
 public class RedisUtils {
 
-    /**
-     * 存储浏览量的 redis key
-     */
-//    private static List<String> setVisit = new HashSet<>();
+    @Resource
+    private StringRedisTemplate stringRedisTemplate;
 
-//    @Resource
-//    private static StringRedisTemplate stringRedisTemplate;
-//
-//    @Resource
-//    private static RedisTemplate<String, Object> redisTemplate;
+    public void setString(String key, String value) {
+        stringRedisTemplate.opsForValue().set(key, value);
+    }
 
-//    public static void setString(String key, Object value) {
-//        redisTemplate.opsForValue().set();
-//    }
+    public String getString(String key) {
+        String value = stringRedisTemplate.opsForValue().get(key);
+        return value;
+    }
+
+    public Set<String> getKeys() {
+        return stringRedisTemplate.keys("*");
+    }
+
+    public void delKeys(Set<String> keys) {
+        stringRedisTemplate.delete(keys);
+    }
 
 }
