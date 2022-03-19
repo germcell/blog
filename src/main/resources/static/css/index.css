@@ -40,7 +40,7 @@ h3:hover {
 }
 
 .m-content {
-  padding: 2em 5em 2em 8em !important;
+  padding: 6em 5em 2em 8em !important;
   /* padding-top: 2em !important;
   padding-bottom: 2em !important;
   padding-left: 8em !important;
@@ -79,7 +79,7 @@ h3:hover {
 
 .m-padding-big {
   padding-left: 15em !important;
-  padding-top: 1.5em !important;
+  padding-top: 5.5em !important;
   padding-bottom: 0.5em !important;
   padding-right: 15em !important;
   
@@ -322,8 +322,8 @@ h3:hover {
 
  /*----------- 自定义文章内容样式 -----------*/
  .m-diy-title {
-     margin-top: 1.2em !important;
-     margin-bottom: 2em !important;
+     margin-top: 1.7em !important;
+     margin-bottom: 2.7em !important;
  }
  .m-diy-content ul, ol {
      font-size: 1.07em !important;
@@ -368,3 +368,32 @@ h3:hover {
  .m-comment-no-pass {
      color: #909090 !important;
  }
+
+ .m-rank1 {
+     color: red;
+     padding-right: 1em;
+ }
+ .m-rank2 {
+     color: orange;
+     padding-right: 1em;
+ }
+ .m-rank3 {
+     color: rgb(187, 55, 55);
+     padding-right: 1em;
+ }
+ .m-rank {
+     color: #909090;
+     padding-right: 1em;
+ }
+ .m-rank-hidden {
+     overflow: hidden;
+     text-overflow: ellipsis;
+     white-space: nowrap;
+     width: 100%;
+ }
+
+ .nav-flexed {
+     position: fixed;
+     z-index: 222;
+     width: 100% !important;
+}

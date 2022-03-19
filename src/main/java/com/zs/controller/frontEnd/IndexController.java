@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.zs.config.Const;
 import com.zs.handler.RandomUtils;
 import com.zs.handler.RedisUtils;
+import com.zs.handler.UniversalException;
 import com.zs.pojo.Blog;
 import com.zs.pojo.BlogOutline;
 import com.zs.pojo.RequestResult;
@@ -11,6 +12,8 @@ import com.zs.service.BlogOutlineService;
 import com.zs.service.BlogService;
 import com.zs.service.CategoryService;
 import com.zs.service.ViewsAndLikesService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,6 +41,8 @@ public class IndexController {
 
     @Resource
     private ViewsAndLikesService viewsAndLikesService;
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public static Map<String, Long> StatisticalVisitsMap = new HashMap<>();
 
@@ -145,7 +150,12 @@ public class IndexController {
     public String view(@PathVariable("bid") Long bid, Model model, HttpServletRequest request) {
         if (bid != null && !Objects.equals("", bid)) {
             // 浏览量计数
-            viewsAndLikesService.addView(bid);
+            try {
+                viewsAndLikesService.addView(bid);
+            } catch (Exception e) {
+                logger.info("redis服务器宕机: {}", new Date());
+                throw new UniversalException("redis服务器宕机");
+            }
             // 页面数据渲染
             Blog blog = blogService.getBlogByIdAndConvert(bid);
             if (blog != null) {

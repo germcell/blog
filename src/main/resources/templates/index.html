@@ -13,7 +13,7 @@
 </head>
 <body>
     <!-- 导航 -->
-    <div th:include="common :: nav(1)"></div>
+    <div class="nav-flexed" th:include="common :: nav(1)"></div>
 
     <!-- 主体内容 -->
     <div class="m-content"> 
@@ -72,10 +72,11 @@
                                 </div>
                                 <div class="one wide column" style="width: 10px !important;"></div>
                                 <div class="five wide column">
-                                    <a href="javascript:;" target="_blank" th:href="@{/blog/view/{bid}(bid=${blog.bid})}">
-                                        <img src="../static/images/blogPicture/del_blog_img2.jpg" class="ui image rounded m-blog-img-size" alt="丢失" th:unless="${blog.firstPicture eq null || blog.firstPicture == ''}" th:src="${blog.firstPicture}">
-                                        <img src="../static/images/blogPicture/del_blog_img2.jpg" class="ui image rounded m-blog-img-size" alt="丢失" th:unless="${blog.firstPicture != null || blog.firstPicture eq ''}" th:src="@{/res/images/blogPicture/del_blog_img2.jpg}">
-                                    </a>
+                                    <div th:if="${blog.firstPicture != null and blog.firstPicture != ''}">
+                                        <a href="javascript:;" target="_blank" th:href="@{/blog/view/{bid}(bid=${blog.bid})}">
+                                            <img src="../static/images/blogPicture/del_blog_img2.jpg" class="ui image rounded m-blog-img-size" alt="丢失" th:src="${blog.firstPicture}">
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                             </div>
@@ -191,10 +192,10 @@
                                     </div>
                                     <div class="one wide column" style="width: 10px !important;"></div>
                                     <div class="five wide column">
-                                        <a href="javascript:;" target="_blank">
-                                            <img src="../static/images/blogPicture/del_blog_img2.jpg" class="ui image rounded m-blog-img-size" alt="丢失" th:unless="${blog.firstPicture eq null || blog.firstPicture == ''}" th:src="${blog.firstPicture}">
-                                            <!--  <img src="../static/images/blogPicture/del_blog_img2.jpg" class="ui image rounded m-blog-img-size" alt="丢失" th:unless="${blog.firstPicture != null || blog.firstPicture eq ''}" th:src="@{/res/images/blogPicture/del_blog_img2.jpg}">-->
-                                        </a>
+<!--                                        <a href="javascript:;" target="_blank" th:if="${blog.firstPicture != null || blog.firstPicture != ''}">-->
+<!--                                            <img src="../static/images/blogPicture/del_blog_img2.jpg" class="ui image rounded m-blog-img-size" alt="丢失" th:src="${blog.firstPicture}">-->
+<!--                                        </a>-->
+
                                     </div>
                                 </div>
                             </div>
@@ -301,32 +302,32 @@
                             <div class="ui two column grid">
                                 <div class="column">
                                     <i class="icon thumbs up" style="color: #ee2727 !important;"></i>
-                                    <h5 class="ui header" style="display: inline;">推荐文章</h5>
+                                    <h5 class="ui header" style="display: inline;">更多人看</h5>
                                 </div>
                             </div>
                         </div>
 
                         <div class="ui teal">
                             <div class="ui fluid vertical menu">
-                                <a class="item" href="javascript:(0);" target="_blank" th:each="recommend:${recommendBlogs}" th:href="@{/blog/view/{bid}(bid=${recommend.did})}">
-                                    <span th:text="${recommend.title}">test1</span>
+                                <a class="item m-rank-hidden" href="javascript:(0);" target="_blank" th:each="recommend,status:${recommendBlogs}" th:href="@{/blog/view/{bid}(bid=${recommend.did})}">
+                                    <span class="m-rank1" th:classappend="${status.count <= 3} ? 'm-rank'+${status.count} : 'm-rank'" th:text="${status.count}">1</span><span th:text="${recommend.title}">test1</span>
                                 </a>
 
                                 <!--/*-->
                                 <a class="item" href="#" target="_blank">
-                                    <span>test1</span>
+                                    <span class="m-rank2">2</span><span>test1</span>
                                 </a>
                                 <a class="item" href="#" target="_blank">
-                                    <span>test1</span>
+                                    <span class="m-rank3">3</span><span>test1</span>
                                 </a>
                                 <a class="item" href="#" target="_blank">
-                                    <span>test1</span>
+                                    <span class="m-rank">4</span><span>test1</span>
                                 </a>
                                 <a class="item" href="#" target="_blank">
-                                    <span>test1</span>
+                                    <span class="m-rank">5</span><span>test1</span>
                                 </a>
                                 <a class="item" href="#" target="_blank">
-                                    <span>test1</span>
+                                    <span class="m-rank">6</span><span>test1</span>
                                 </a>
                                 <!--*/-->
                             </div>

@@ -17,7 +17,7 @@
 </head>
 <body>
     <!-- 导航 -->
-    <div th:include="common :: nav(1)"></div>
+    <div class="nav-flexed" th:include="common :: nav(1)"></div>
 
     <!-- 主体内容 -->
     <div id="waypoint" class="m-content m-padding-big animated fadeIn" style="padding-bottom: 5em !important;">
@@ -46,12 +46,12 @@
 
                 </div>
             </div>
-            <div class="ui segment" th:if="${blog.firstPicture == null || blog.firstPicture == ''}">
-                <img src="../static/images/blogPicture/del_blog_img1.jpg" alt="" class="ui fluid rounded image" style="height: 457px;" th:src="@{/res/images/blogPicture/del_blog_img1.jpg}">
-            </div>
-            <div class="ui segment" th:if="${blog.firstPicture != null && blog.firstPicture != ''}">
+            <div class="ui segment" th:if="${blog.firstPicture != null and blog.firstPicture != ''}">
                 <img src="../static/images/blogPicture/del_blog_img1.jpg" alt="" class="ui fluid rounded image" style="height: 457px;" th:src="${blog.firstPicture}">
             </div>
+<!--            <div class="ui segment" th:if="${blog.firstPicture != null && blog.firstPicture != ''}">-->
+<!--                <img src="../static/images/blogPicture/del_blog_img1.jpg" alt="" class="ui fluid rounded image" style="height: 457px;" th:src="${blog.firstPicture}">-->
+<!--            </div>-->
             <!-- 内容 -->
             <div class="ui segment">
                 <div style="position: relative;">

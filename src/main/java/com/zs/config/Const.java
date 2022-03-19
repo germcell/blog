@@ -86,7 +86,7 @@ public class Const {
     /**
      * 分类每页条数
      */
-    public static final int CATEGORY_PAGE_ROWS = 5;
+    public static final int CATEGORY_PAGE_ROWS = 10;
 
     /**
      * 新建/编辑分类成功
@@ -116,7 +116,7 @@ public class Const {
     /**
      * 博客每页条数
      */
-    public static final Integer BLOG_PAGE_ROWS = 5;
+    public static final Integer BLOG_PAGE_ROWS = 10;
 
     /**
      * 删除博客成功

@@ -156,7 +156,7 @@
             <if test="blog.isReprint != null">  is_reprint = #{blog.isReprint}, </if>
             <if test="blog.isPublish != null">  is_publish = #{blog.isPublish}, </if>
             <if test="blog.crTipId != null">  cr_tip_id = #{blog.crTipId}, </if>
-            <if test="blog.firstPicture != ''">  first_picture = #{blog.firstPicture}, </if>
+            <if test="blog.firstPicture != '' and blog.firstPicture != null">  first_picture = #{blog.firstPicture}, </if>
             <if test="blog.views != null">  views = #{blog.views}, </if>
         </trim>
     where bid = #{bid}
