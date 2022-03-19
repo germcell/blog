@@ -25,6 +25,10 @@ a:hover {
   text-decoration: none !important;
 }
 
+h3:hover {
+    text-decoration-line: underline;
+}
+
 .m-footer {
   padding-top: 4em !important;
   padding-bottom: 2em !important;
@@ -85,7 +89,7 @@ a:hover {
 .m-info {
   display: flex;
   height: 35px;
-  line-height: 35px;
+  line-height: 50px;
   text-align: center;
   font-size: 0.9em;
 }
@@ -111,9 +115,10 @@ a:hover {
 .m-blogtext {
   margin-top: 0.5em;
   margin-bottom: 0;
-  letter-spacing: 1px;
+  letter-spacing: 1.1px;
   color: rgba(0, 0, 0, .7);
   font-size: 1.1em;
+  font-family: SimHei;
 }
 
 .m-mobile-show {

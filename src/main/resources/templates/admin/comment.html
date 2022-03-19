@@ -23,15 +23,12 @@
             <div class="four wide column">
                 <div class="ui segment">
                 <div class="ui header">
-                    当前博客
-                    <div class="ui orange basic label" th:text="${blog.copyright.crTip}">原创</div>
+                    <span class="ui h4 " th:text="${blog.title}"></span>
+                    <div class="ui orange mini basic label" th:text="${blog.copyright.crTip}">原创</div>
                 </div>
                 <div class="ui divided selection list">
                     <a class="item m-currentBlog-padding-top" href="javascript:void(0);">
                         <div class="ui red horizontal label">博客ID</div><span th:text="${blog.bid}">2312</span>
-                    </a>
-                    <a class="item m-currentBlog-padding-top" href="javascript:void(0);">
-                        <div class="ui purple horizontal label">博客标题</div><span th:text="${blog.title}">MyBatis分页插件PageHelper</span>
                     </a>
                     <a class="item m-currentBlog-padding-top" href="javascript:void(0);">
                         <div class="ui red horizontal label">所属分类</div><span th:text="${blog.category.name}">MyBatis</span>
@@ -54,40 +51,41 @@
             <!--     right 留言信息      -->
             <div class="twelve wide column">
                 <!-- 搜索 -->
-                <form id="commentSearchForm" action="" class="ui grey segment form" method="get">
+                <form id="commentSearchForm" action="" th:action="@{/admin/comment/search}" class="ui grey segment form">
                     <div class="inline fields">
                         <div class="field">
-                            <input type="text" placeholder="评论内容..." name="title" value="">
+                            <input type="hidden" name="bid" value="" th:value="${blog.bid}">
+                            <input type="text" placeholder="用户名/邮箱/评论内容..." name="content" value="">
                         </div>
                         <div class="field">
-                            <input type="date">
+                            <input type="date" name="beginDate">
                         </div>
                         <div style="margin-right: 1em;">—</div>
                         <div class="field">
-                            <input type="date">
+                            <input type="date" name="endDate">
                         </div>
                         <div class="field">
                             <div class="ui checkbox">
-                                <input type="checkbox" id="isPass" name="" value="true">
+                                <input type="checkbox" id="isPass" name="isPass" value="0">
                                 <label for="isPass" class="m-is-draft">未通过</label>
                             </div>
                         </div>
                         <div class="feild">
-                            <button id="blog-search" type="submit" class="ui green button"> <i class="icon search"></i>搜索</button>
+                            <button id="comment-search" type="button" class="ui green button"> <i class="icon search"></i>搜索</button>
                         </div>
                     </div>
                 </form>
                 <div class="ui segment">
                     <div class="feild">
-                        <a class="ui grey button" href="javascript:;"> <i class="icon trash"></i>清空条件 </a>
+                        <a class="ui grey button" href="javascript:;" onclick="window.location.reload();"> <i class="icon trash"></i>清空条件 </a>
                         <button class="ui primary button m-pass-selected-comment"> <i class="check icon"></i>批量审核</button>
                         <button class="ui red button m-del-selected-comment"> <i class="x icon"></i>批量删除</button>
                     </div>
                 </div>
                 <!-- 留言信息 -->
-                <div class="ui segment">
+                <div id="comment-refresh" class="ui segment">
                     <div class="ui header">留言列表</div>
-                    <table class="ui red celled table">
+                    <table class="ui red celled table" th:fragment="commentList">
                         <thead>
                         <tr>
                             <th>
@@ -112,13 +110,13 @@
                             <td th:if="${comment.nickname.length() < 5}" th:text="${comment.nickname}" title="" th:title="${comment.nickname}">Marry</td>
                             <td th:if="${comment.mail.length() >= 13}" th:text="${comment.mail.substring(0,9)}+'...'" title="" th:title="${comment.mail}">marry@qq.com</td>
                             <td th:if="${comment.mail.length() < 13}" th:text="${comment.mail}" title="" th:title="${comment.mail}">marry@qq.com</td>
-                            <td style="font-weight: 700" class="m-hidden-comment" title="" th:title="${comment.content}" th:if="${comment.content.length() >= 17}" th:text="${comment.content.substring(0,17) + '...'}">不错，很有帮助</td>
+                            <td style="font-weight: 700" class="m-hidden-comment" title="" th:title="${comment.content}" th:if="${comment.content.length() >= 15}" th:text="${comment.content.substring(0,15) + '...'}">不错，很有帮助</td>
                             <td style="font-weight: 700" class="m-hidden-comment" title="" th:title="${comment.content}" th:if="${comment.content.length() < 10}" th:text="${comment.content}">不错，很有帮助</td>
                             <td th:text="${#dates.format(comment.replyTime, 'YYYY-MM-dd HH:mm:ss')}">2020-12-1 9:06</td>
                             <td th:text="${comment.isPass eq true ? '通过' : '未通过'}" th:classappend="${comment.isPass eq true ? 'm-is-publish' : 'm-is-draft'}" style="color: red;">未通过</td>
                             <td>
                                 <a href="javascript:;" class="ui thiny button m-comment-pass" data-comid="" th:data-comid="${comment.comId}">审核</a>
-                                <a href="javascript:;" class="ui thiny button m-comment-delete" data-comid="" data-bid="" th:data-comid="${comment.comId}" th:data-bid="${blog.bid}">删除</a>
+                                <a href="javascript:;" class="ui thiny button m-comment-delete" data-comid="" data-bid="" th:data-comid="${comment.comId}" th:data-bid="${comment.bid}">删除</a>
                             </td>
                         </tr>
                         </tbody>
@@ -201,7 +199,7 @@
             /*-----------comement.html 删除留言-------------*/
             var comId;
             var paramStr;
-            $(".m-comment-delete").on("click", function () {
+            $(document).on("click", ".m-comment-delete", function () {
                 comId = $(this).data('comid');
                 paramStr = comId + ',';
                 $('.ui.basic1.modal').modal('show');
@@ -231,7 +229,6 @@
                 closeButton: true,
                 debug: false,
                 progressBar: false,
-                positionClass: "toast-top-center",
                 onclick: null,
                 showDuration: "1000",
                 hideDuration: "200",
@@ -294,7 +291,7 @@
             /*-----------end------------*/
             /*-----------comement.html 留言审核-------------*/
             var comId2 = '';
-            $('.m-comment-pass').on('click', function () {
+            $(document).on('click', '.m-comment-pass', function () {
                 $('.m-pass').removeClass("m-pass-selected-btn");
                 $('.m-pass').addClass("m-pass-btn");
                 comId2 = $(this).data('comid') + ',';
@@ -324,6 +321,38 @@
                 })
             });
             /*---------end---------*/
+            /*---------留言搜索---------*/
+            $('#comment-search').on('click', function () {
+                const content = $('#commentSearchForm :input[name=content]').val();
+                var isPass = $('#commentSearchForm :input[name=isPass]').prop('checked');
+                const beginDate = $('#commentSearchForm :input[name=beginDate]').val();
+                const endDate = $('#commentSearchForm :input[name=endDate]').val();
+                if (content.trim() === '' && beginDate === '' && endDate === '' && isPass == false) {
+                    toastr.info('请提供搜索条件');
+                    return false;
+                }
+                if (beginDate !== '' && endDate !== '') {
+                    if (beginDate > endDate) {
+                        toastr.info('开始日期不能大于结束日期');
+                        return false;
+                    }
+                }
+                if (isPass == true) {
+                    isPass = 0;
+                } else {
+                    isPass = 1;
+                }
+                $('#comment-refresh').load($('#commentSearchForm').attr('action'), {
+                    bid: $('#commentSearchForm :input[name=bid]').val(),
+                    content: content,
+                    isPass: isPass,
+                    beginDate: beginDate,
+                    endDate: endDate
+                });
+
+
+                    // $('#commentSearchForm').submit();
+            });
         })
 
         function passComment(comId2) {

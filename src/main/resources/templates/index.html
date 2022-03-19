@@ -25,7 +25,7 @@
                     <div class="ui top attached segment">
                         <div class="ui two column grid">
                             <div class="column">
-                                <h3 class="ui blue header">最新文章</h3>
+                                <h3 class="ui blue header"><i class="icon file code outline" style="color: #ff230070;"></i>最新文章</h3>
                             </div>
                             <div class="column right aligned">
                                 共 <span class="blogCount" th:text="${pageInfo.total}">14</span> 篇
@@ -87,7 +87,6 @@
                                         <a href="javascript:;" target="_blank">
                                             <h3 class="ui header" th:text="${blog.title}">你真正的理解财富自由吗?</h3>
                                         </a>
-                                        <!-- TODO 博客内容概要展示 -->
                                         <p class="m-blogtext m-overflow-blog" th:text="${blog.blogOutline.outline}">冬奥会赛程过半，多项纪录诞生。精彩瞬间，见证了运动员的非凡表现，展现了竞技体育的巨大魅力。金牌荣耀，来自赛场上的fsdfsdfsdafasdfsadfsadfsafasdfffffffffffffffffffffff...</p>
                                         <!-- 自定义flex布局 -->
                                         <div class="ui mini m-infobox">
@@ -115,9 +114,8 @@
                                     <div class="one wide column" style="width: 10px !important;"></div>
                                     <div class="five wide column">
                                         <a href="javascript:;" target="_blank">
-                                            <!-- TODO 图片大小调整 -->
                                             <img src="../static/images/blogPicture/del_blog_img2.jpg" class="ui image rounded m-blog-img-size" alt="丢失" th:unless="${blog.firstPicture eq null || blog.firstPicture == ''}" th:src="${blog.firstPicture}">
-                                            <!--                                        <img src="../static/images/blogPicture/del_blog_img2.jpg" class="ui image rounded m-blog-img-size" alt="丢失" th:unless="${blog.firstPicture != null || blog.firstPicture eq ''}" th:src="@{/res/images/blogPicture/del_blog_img2.jpg}">-->
+                                            <!-- <img src="../static/images/blogPicture/del_blog_img2.jpg" class="ui image rounded m-blog-img-size" alt="丢失" th:unless="${blog.firstPicture != null || blog.firstPicture eq ''}" th:src="@{/res/images/blogPicture/del_blog_img2.jpg}">-->
                                         </a>
                                     </div>
                                 </div>
@@ -155,9 +153,8 @@
                                     <div class="one wide column" style="width: 10px !important;"></div>
                                     <div class="five wide column">
                                         <a href="javascript:;" target="_blank">
-                                            <!-- TODO 图片大小调整 -->
                                             <img src="../static/images/blogPicture/del_blog_img2.jpg" class="ui image rounded m-blog-img-size" alt="丢失" th:unless="${blog.firstPicture eq null || blog.firstPicture == ''}" th:src="${blog.firstPicture}">
-                                            <!--                                        <img src="../static/images/blogPicture/del_blog_img2.jpg" class="ui image rounded m-blog-img-size" alt="丢失" th:unless="${blog.firstPicture != null || blog.firstPicture eq ''}" th:src="@{/res/images/blogPicture/del_blog_img2.jpg}">-->
+                                            <!--  <img src="../static/images/blogPicture/del_blog_img2.jpg" class="ui image rounded m-blog-img-size" alt="丢失" th:unless="${blog.firstPicture != null || blog.firstPicture eq ''}" th:src="@{/res/images/blogPicture/del_blog_img2.jpg}">-->
                                         </a>
                                     </div>
                                 </div>
@@ -168,7 +165,6 @@
                                         <a href="javascript:;" target="_blank">
                                             <h3 class="ui header" th:text="${blog.title}">你真正的理解财富自由吗?</h3>
                                         </a>
-                                        <!-- TODO 博客内容概要展示 -->
                                         <p class="m-blogtext m-overflow-blog" th:text="${blog.blogOutline.outline}">冬奥会赛程过半，多项纪录诞生。精彩瞬间，见证了运动员的非凡表现，展现了竞技体育的巨大魅力。金牌荣耀，来自赛场上的fsdfsdfsdafasdfsadfsadfsafasdfffffffffffffffffffffff...</p>
                                         <!-- 自定义flex布局 -->
                                         <div class="ui mini m-infobox">
@@ -196,9 +192,8 @@
                                     <div class="one wide column" style="width: 10px !important;"></div>
                                     <div class="five wide column">
                                         <a href="javascript:;" target="_blank">
-                                            <!-- TODO 图片大小调整 -->
                                             <img src="../static/images/blogPicture/del_blog_img2.jpg" class="ui image rounded m-blog-img-size" alt="丢失" th:unless="${blog.firstPicture eq null || blog.firstPicture == ''}" th:src="${blog.firstPicture}">
-                                            <!--                                        <img src="../static/images/blogPicture/del_blog_img2.jpg" class="ui image rounded m-blog-img-size" alt="丢失" th:unless="${blog.firstPicture != null || blog.firstPicture eq ''}" th:src="@{/res/images/blogPicture/del_blog_img2.jpg}">-->
+                                            <!--  <img src="../static/images/blogPicture/del_blog_img2.jpg" class="ui image rounded m-blog-img-size" alt="丢失" th:unless="${blog.firstPicture != null || blog.firstPicture eq ''}" th:src="@{/res/images/blogPicture/del_blog_img2.jpg}">-->
                                         </a>
                                     </div>
                                 </div>
@@ -278,7 +273,7 @@
                         </div>
                         <div class="ui red segment">
                             <div class="ui fluid vertical menu">
-                                <a class="item" href="#" target="_blank" th:each="cg:${categories}">
+                                <a class="item" href="#" target="_blank" th:each="cg:${categories}" th:href="@{/blog/category/1/{cid}(cid=${cg.cid})}">
                                     [[${cg.name}]]<i class="tags icon"></i>
                                 </a>
 
@@ -308,11 +303,6 @@
                                     <i class="icon thumbs up" style="color: #ee2727 !important;"></i>
                                     <h5 class="ui header" style="display: inline;">推荐文章</h5>
                                 </div>
-<!--                                <div class="ui right aligned column">-->
-<!--                                    <a href="#" title="更多文章">-->
-<!--                                        更多<i class="angle double right icon"></i>-->
-<!--                                    </a>-->
-<!--                                </div>-->
                             </div>
                         </div>
 
@@ -359,6 +349,14 @@
     <!-- <script src="js/flexible.js"></script> -->
     <script src="../static/js/semantic.min.js" th:src="@{/res/js/semantic.min.js}"></script>
     <script src="../static/js/front.js" th:src="@{/res/js/front.js}"></script>
-
+    <script type="text/javascript">
+        setInterval(function () {
+            $.get("/blog/initSearch", function (result) {
+                if (result.code == 7043) {
+                    $('#search_input').attr('placeholder', result.data.title);
+                }
+            });
+        }, 7000);
+    </script>
 </body>
 </html>

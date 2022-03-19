@@ -46,7 +46,7 @@ public class CommentController {
             comment.setBid(bid);
             MDate mDate = new MDate();
             if (blogBaseMsg == null) {
-                return "/error/404";
+                return "error/404";
             }
             // 渲染博客信息、留言信息
             model.addAttribute("blog", blogBaseMsg);
@@ -57,9 +57,6 @@ public class CommentController {
             return "error/404";
         }
     }
-
-    // TODO 留言管理页查询业务
-    // TODO 留言审核
 
     /**
      * 删除留言
@@ -105,6 +102,23 @@ public class CommentController {
         }
     }
 
+    /**
+     * 留言查询
+     * @param comment
+     * @param mDate
+     * @param model
+     * @return
+     */
+    @PostMapping("/comment/search")
+    public String search(Comment comment, MDate mDate, Model model) {
+        if (comment == null && mDate == null) {
+            return "error/404";
+        } else {
+            List<Comment> comments = commentService.listCommentsByCondition(comment, mDate);
+            model.addAttribute("comments", comments);
+            return "admin/comment :: commentList";
+        }
+    }
 
 }
 

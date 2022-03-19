@@ -37,11 +37,12 @@ class CommentMapperTest {
     @Test
     void listCommentsByCondition() {
         Comment comment = new Comment();
+//        comment.setContent("1");
+        comment.setIsPass(false);
         MDate mDate = new MDate();
-        mDate.setBeginDate("2022-3-1");
-        mDate.setEndDate("2022-3-14");
-        comment.setBid(45L);
-        comment.setMail("@qq.com");
+//        mDate.setBeginDate("2022-3-1");
+//        mDate.setEndDate("2022-3-14");
+
         List<Comment> comments = commentMapper.listCommentsByCondition(comment, mDate);
         comments.stream().forEach(c -> System.out.println(c));
     }

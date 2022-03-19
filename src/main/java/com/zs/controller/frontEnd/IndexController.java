@@ -6,9 +6,11 @@ import com.zs.handler.RandomUtils;
 import com.zs.handler.RedisUtils;
 import com.zs.pojo.Blog;
 import com.zs.pojo.BlogOutline;
+import com.zs.pojo.RequestResult;
 import com.zs.service.BlogOutlineService;
 import com.zs.service.BlogService;
 import com.zs.service.CategoryService;
+import com.zs.service.ViewsAndLikesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,20 +36,21 @@ public class IndexController {
     @Resource
     private BlogOutlineService blogOutlineService;
 
+    @Resource
+    private ViewsAndLikesService viewsAndLikesService;
+
     public static Map<String, Long> StatisticalVisitsMap = new HashMap<>();
 
-    /* 生成搜索条件时，用于中转blog对象的集合 */
-    private List<BlogOutline> listBlogOutlines = new LinkedList<>();
-    private List<Blog> listBlogs = new LinkedList<>();
-
     /*
-       TODO 防止用户重复请求，
+       TODO 防止用户重复搜索请求，
        reqCache 第一次会存储搜索条件，如果第二次搜索条件与第一次相同时，则不处理搜索请求
     */
     private Map<String, String> reqCache = new HashMap<>();
 
+    public static List<BlogOutline> top50Blog = new ArrayList<>();
+
     /**
-     * 入口url
+     * 入口
      * @return
      */
     @GetMapping()
@@ -71,10 +74,27 @@ public class IndexController {
             PageInfo<Blog> pageInfo = blogService.pageConditionBlog(currentPage, Const.BLOG_PAGE_ROWS,
                                                                     null, 0, true);
             // 初始化一个搜索条件(博客标题)，选取浏览量前50的任意一篇博客
-            List<BlogOutline> listBlogOutlines = blogOutlineService.listBlogOutlines();
-            BlogOutline initSearchCondition = RandomUtils.generateBlogOutline(listBlogOutlines);
+            if (top50Blog != null && top50Blog.size() != 0) {
+                if (Const.initSearchCount < Const.INIT_SEARCH_COUNT) {
+                    BlogOutline initSearchCondition = RandomUtils.generateBlogOutline(top50Blog);
+                    model.addAttribute("initSearch", initSearchCondition);
+                    Const.initSearchCount++;
+                } else {
+                    top50Blog = blogOutlineService.listBlogOutlines();
+                    Const.initSearchCount = 0;
+                    BlogOutline initSearchCondition = RandomUtils.generateBlogOutline(top50Blog);
+                    model.addAttribute("initSearch", initSearchCondition);
+                    Const.initSearchCount++;
+                }
+            } else {
+                top50Blog = blogOutlineService.listBlogOutlines();
+                Const.initSearchCount = 0;
+                BlogOutline initSearchCondition = RandomUtils.generateBlogOutline(top50Blog);
+                model.addAttribute("initSearch", initSearchCondition);
+                Const.initSearchCount++;
+            }
+
             // 渲染页面数据
-            model.addAttribute("initSearch", initSearchCondition);
             model.addAttribute("pageInfo", pageInfo);
             model.addAttribute("categories", categoryService.listSortCategories());
             model.addAttribute("recommendBlogs", blogService.listRecommendBlog());
@@ -120,24 +140,22 @@ public class IndexController {
      * @param bid
      * @param model
      * @return
-     * TODO 浏览量计数
      */
     @GetMapping("/view/{bid}")
     public String view(@PathVariable("bid") Long bid, Model model, HttpServletRequest request) {
-        // StatisticalVisitsMap 先进行点击量计数，由定时任务定时将浏览量存入数据库(未限制相同ip)
-//        String remoteAddr = request.getRemoteAddr();
-//        BlogOutline blogOutlineById = blogOutlineService.getBlogOutlineById(bid);
-//        StatisticalVisitsMap.put(remoteAddr, blogOutlineById.getViews() + 1);
-//        blogOutlineService.updateViews();
-
-        if (bid != null || Objects.equals("", bid)) {
+        if (bid != null && !Objects.equals("", bid)) {
+            // 浏览量计数
+            viewsAndLikesService.addView(bid);
+            // 页面数据渲染
             Blog blog = blogService.getBlogByIdAndConvert(bid);
             if (blog != null) {
-                // 初始化一个搜索条件(博客标题)，选取浏览量前5的任意一篇博客
-                List<BlogOutline> listBlogOutlines = blogOutlineService.listBlogOutlines();
-                BlogOutline initSearchCondition = RandomUtils.generateBlogOutline(listBlogOutlines);
-                // blog.html渲染数据
-                model.addAttribute("initSearch", initSearchCondition);
+                // 初始化一个搜索条件(博客标题)，如果 top50Blog集合有数据则返回，没有则置为''
+                if (top50Blog != null && top50Blog.size() != 0) {
+                    BlogOutline initSearchCondition = RandomUtils.generateBlogOutline(top50Blog);
+                    model.addAttribute("initSearch", initSearchCondition);
+                } else {
+                    model.addAttribute("initSearch", new BlogOutline(0L, "", 0L, ""));
+                }
                 model.addAttribute("blog", blog);
                 return "blog";
             } else {
@@ -147,4 +165,37 @@ public class IndexController {
             return "error/404";
         }
     }
+
+    /**
+     * 初始化一个搜索条件(博客标题)，选取浏览量前50的任意一篇博客
+     */
+    @GetMapping("/initSearch")
+    @ResponseBody
+    public RequestResult initSearch() {
+        RequestResult requestResult = new RequestResult();
+        if (top50Blog != null && top50Blog.size() != 0) {
+            if (Const.initSearchCount < Const.INIT_SEARCH_COUNT) {
+                BlogOutline initSearchCondition = RandomUtils.generateBlogOutline(top50Blog);
+                requestResult.setData(initSearchCondition);
+                requestResult.setCode(Const.INIT_SEARCH_SUCCESS);
+                Const.initSearchCount++;
+            } else {
+                top50Blog = blogOutlineService.listBlogOutlines();
+                Const.initSearchCount = 0;
+                BlogOutline initSearchCondition = RandomUtils.generateBlogOutline(top50Blog);
+                requestResult.setData(initSearchCondition);
+                requestResult.setCode(Const.INIT_SEARCH_SUCCESS);
+                Const.initSearchCount++;
+            }
+        } else {
+            top50Blog = blogOutlineService.listBlogOutlines();
+            Const.initSearchCount = 0;
+            BlogOutline initSearchCondition = RandomUtils.generateBlogOutline(top50Blog);
+            requestResult.setData(initSearchCondition);
+            requestResult.setCode(Const.INIT_SEARCH_SUCCESS);
+            Const.initSearchCount++;
+        }
+        return requestResult;
+    }
+
 }

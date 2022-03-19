@@ -67,4 +67,11 @@ public interface CommentMapper {
      */
     int updateCommentByComIds(@Param("comment") Comment comment,
                               @Param("list") List<Long> comIds);
+
+    /**
+     * 根据bid删除
+     * @param bid
+     * @return
+     */
+    int deleteCommentByBid(@Param("bid") Integer bid);
 }

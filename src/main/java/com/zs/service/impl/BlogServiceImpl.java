@@ -9,6 +9,7 @@ import com.zs.handler.UniversalException;
 import com.zs.mapper.BlogMapper;
 import com.zs.mapper.BlogOutlineMapper;
 import com.zs.mapper.CategoryMapper;
+import com.zs.mapper.CommentMapper;
 import com.zs.pojo.*;
 import com.zs.service.BlogService;
 import org.aspectj.weaver.ast.Var;
@@ -31,6 +32,8 @@ public class BlogServiceImpl implements BlogService {
     private CategoryMapper categoryMapper;
     @Resource
     private BlogOutlineMapper blogOutlineMapper;
+    @Resource
+    private CommentMapper commentMapper;
 
     @Override
     public PageInfo<Blog> listPageBlogs(Integer currentPage, Integer rows) {
@@ -65,6 +68,9 @@ public class BlogServiceImpl implements BlogService {
 
     /**
      * 按博客id删除博客
+     *   1、删除博客对应的留言信息
+     *   2、删除博客的概要信息
+     *   3、删除博客信息
      * @param bid
      * @return
      */
@@ -72,15 +78,11 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public RequestResult deleteBlogById(Integer bid) {
         RequestResult requestResult = new RequestResult();
-        int rows = blogMapper.deleteBlogById(bid);
-        if (rows == 1) {
-            // TODO 评论功能上线后，此处删除博客的同时还需删除博客所对应的评论
-            requestResult.setCode(Const.DELETE_BLOG_SUCCESS);
-            requestResult.setMessage("删除成功");
-        } else {
-            requestResult.setCode(Const.DELETE_BLOG_FAILED);
-            requestResult.setMessage("删除失败 : database异常");
-        }
+        commentMapper.deleteCommentByBid(bid);
+        blogOutlineMapper.deleteByBid(bid);
+        blogMapper.deleteBlogById(bid);
+        requestResult.setCode(Const.DELETE_BLOG_SUCCESS);
+        requestResult.setMessage("删除成功");
         return requestResult;
     }
 
@@ -179,7 +181,11 @@ public class BlogServiceImpl implements BlogService {
      */
     @Override
     public List<BlogOutline> listRecommendBlog() {
-        return blogOutlineMapper.listSortByViewsBlogOutline();
+        List<BlogOutline> recommendList = blogOutlineMapper.listSortByViewsBlogOutline();
+        if (recommendList.size() > 10) {
+            return recommendList.subList(0,10);
+        }
+        return recommendList;
     }
 
     /**

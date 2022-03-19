@@ -26,4 +26,20 @@
         from tb_blog_outline
         where did = #{bid}
     </select>
+
+    <delete id="deleteByBid">
+        delete from tb_blog_outline where did = #{bid}
+    </delete>
+
+    <update id="updateByCondition">
+        update tb_blog_outline
+        <trim prefix="set" suffixOverrides=",">
+            <if test="bo.title != null and bo.title != ''"> title = #{bo.title}, </if>
+            <if test="bo.outline != null and bo.outline != ''"> outline = #{bo.outline}, </if>
+            <if test="bo.views != null"> views = #{bo.views}, </if>
+        </trim>
+        <where>
+            <if test="bo.did != null"> and did = #{bo.did} </if>
+        </where>
+    </update>
 </mapper>

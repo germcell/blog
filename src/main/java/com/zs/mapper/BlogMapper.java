@@ -67,6 +67,7 @@ public interface BlogMapper {
      * @param blog 条件，里面只包含了需要修改项的数据，其余为null
      * @param bid
      * @return
+     * TODO 修改 tb_blog 表记录时，对应修改 tb_blogoutline 表记录
      */
     @Transactional
     int updateBlogById(@Param("blog") Blog blog,

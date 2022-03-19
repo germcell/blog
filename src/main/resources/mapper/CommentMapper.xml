@@ -21,8 +21,8 @@
     </sql>
 
     <insert id="insert">
-        insert into tb_comment
-        values (null, #{comment.nickname}, #{comment.mail}, #{comment.content}, #{comment.avatar}, #{comment.comParentId}, #{comment.bid}, #{comment.replyTime})
+        insert into tb_comment (com_id, nickname, mail, content, avatar, com_parent_id, bid, reply_time, is_pass)
+        values (null, #{comment.nickname}, #{comment.mail}, #{comment.content}, #{comment.avatar}, #{comment.comParentId}, #{comment.bid}, #{comment.replyTime},1)
     </insert>
 
     <select id="listCommentsByBid" resultMap="commentMap">
@@ -43,9 +43,10 @@
         select com_id,nickname,mail,content,avatar,com_parent_id,bid,reply_time,is_pass,pass_content
         from tb_comment
         <where>
-            <if test="comment.bid != null">and bid = #{comment.bid}</if>
-            <if test="comment.mail != null || comment.mail != ''">and mail like '%${comment.mail}%'</if>
-            <if test="date.beginDate != null || date.endDate != null">and reply_time &gt;= #{date.beginDate} and reply_time &lt;= #{date.endDate}</if>
+            <if test="comment.bid != null and comment.bid != ''">and bid = #{comment.bid}</if>
+            <if test="comment.content != null and comment.content != ''">and nickname like '%${comment.content}%' or mail like '%${comment.content}%' or content like '%${comment.content}%' </if>
+            <if test="date.beginDate != null and date.beginDate != ''">and reply_time &gt;= #{date.beginDate} </if>
+            <if test="date.endDate != null and date.endDate != ''">and reply_time &lt;= #{date.endDate} </if>
             <if test="comment.isPass != null">and is_pass = #{comment.isPass}</if>
         </where>
         order by reply_time desc
@@ -89,5 +90,9 @@
             #{comIds}
         </foreach>
     </update>
+
+    <delete id="deleteCommentByBid">
+        delete from tb_comment where bid = #{bid}
+    </delete>
 
 </mapper>

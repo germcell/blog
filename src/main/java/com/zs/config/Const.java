@@ -9,6 +9,16 @@ import com.zs.pojo.User;
 public class Const {
 
     /**
+     * 搜索条件初始化次数计数
+     */
+    public static volatile Integer initSearchCount = 0;
+
+    /**
+     * 搜索条件更新，当计数为到100时更新
+     */
+    public static final Integer INIT_SEARCH_COUNT = 100;
+
+    /**
      * 登录用户session存储的键的名称
      */
     public static final User LOGIN_USER_SESSION = null;
@@ -172,4 +182,14 @@ public class Const {
      * 留言审核失败(传递留言id为空、数据库异常)
      */
     public static final Integer COMMENT_PASS_FAIL = 7005;
+
+    /**
+     * 初始化搜索条件请求成功
+     */
+    public static final Integer INIT_SEARCH_SUCCESS = 7043;
+
+    /**
+     * 初始化搜索条件请求成功
+     */
+    public static final Integer INIT_SEARCH_FAIL = 7044;
 }

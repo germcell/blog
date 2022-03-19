@@ -24,5 +24,24 @@ public interface BlogOutlineMapper {
      */
     List<BlogOutline> listSortByViewsBlogOutline();
 
+    /**
+     * 查询
+     * @param bid
+     * @return
+     */
     BlogOutline getBlogOutlineById(@Param("bid") Long bid);
+
+    /**
+     * 删除
+     * @param bid
+     * @return
+     */
+    int deleteByBid(@Param("bid") Integer bid);
+
+    /**
+     * 条件更新
+     * @param bo
+     * @return
+     */
+    int updateByCondition(@Param("bo") BlogOutline bo);
 }

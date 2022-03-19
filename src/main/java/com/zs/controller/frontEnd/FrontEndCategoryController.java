@@ -1,7 +1,9 @@
 package com.zs.controller.frontEnd;
 
+import com.github.pagehelper.PageInfo;
 import com.zs.config.Const;
 import com.zs.handler.RandomUtils;
+import com.zs.pojo.Blog;
 import com.zs.pojo.BlogOutline;
 import com.zs.pojo.Category;
 import com.zs.service.BlogOutlineService;
@@ -53,10 +55,10 @@ public class FrontEndCategoryController {
         model.addAttribute("listCategories", listCategories);
         if (cid != null) {
             model.addAttribute("pageInfo", blogService.listPageBlogsByCid(currentPage,
-                    Const.BLOG_PAGE_ROWS, cid));
+                                                                                       Const.BLOG_PAGE_ROWS, cid));
         } else {
-            model.addAttribute("pageInfo", blogService.listPageBlogsByCid(currentPage,
-                    Const.BLOG_PAGE_ROWS, listCategories.get(0).getCid()));
+            model.addAttribute("pageInfo", blogService.listPageBlogsByCid(currentPage,Const.BLOG_PAGE_ROWS,
+                                                                                       listCategories.get(0).getCid()));
         }
         return "category";
     }

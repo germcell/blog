@@ -140,7 +140,7 @@
                     </div>
                 </div>
                 <!--*/-->
-                <!-- TODO 当页数过多时，需设置规则显示（项目的所有分页操作都应改） -->
+                <!-- TODO 当页数过多时，需设置页码显示规则（项目的所有分页操作都应该修改） -->
                 <div class="ui segment">
                     <ul class="m-pagination-ul">
                         <li><a href="#" class="ui secondary button" th:if="${pageInfo.isHasPreviousPage()}" th:href="@{/blog/category/{currentPage}/{cid}(currentPage=${pageInfo.prePage},cid=${pageInfo.getList().get(0).getCid()})}">pre</a></li>
@@ -157,7 +157,7 @@
             </div>
             <!-- 分类下对应的博客内容(无内容时) -->
             <div class="ui purple segments" th:if="${pageInfo.getList().size() == 0}">
-                <div id="blogContent" class="ui attached segment m-padding-small header" data-blogcid="" th:data-blogcid="${}">
+                <div id="blogContent" class="ui attached segment m-padding-small header" data-blogcid="">
                     当前分类下还没有文章哦...
                 </div>
             </div>
@@ -179,9 +179,7 @@
             /* 为当前被选中分类添加样式 */
             function categoryActive() {
                 // var categoryCid = $('#categoryContent').data('categorycid');
-
-                // TODO 当分类下无内容时，获取不到博客分类id，导致不能添加选中样式
-
+                // FIXME 当分类下无内容时，获取不到博客分类id，导致不能添加选中样式
                 var blogCid = $('#blogContent').data('blogcid');
                 console.log(blogCid)
                 $('.m-categoryContent').each(function (i, ele) {
