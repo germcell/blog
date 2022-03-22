@@ -41,9 +41,11 @@ public class UploadUtils {
                         uploadFile.transferTo(new File(parentDir + childDir));
                 } else {
                     serverSaveFileName = null;
+                    throw new UniversalException("上传图片格式有误");
                 }
             } else {
                 serverSaveFileName = null;
+                throw new UniversalException("上传图片大小有误");
             }
         } else {
             serverSaveFileName = "";

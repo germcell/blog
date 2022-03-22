@@ -6,12 +6,12 @@
 </head>
 <body>
 
-    <div th:fragment="nav(n)">
+    <div  th:fragment="nav(n)">
         <!-- 导航 -->
         <nav class="ui inverted attached segment m-navpd">
             <div class="ui container">
                 <div class="ui inverted secondary menu stackable">
-                    <a href="index.html" th:href="@{/admin/index}"><h2 class="ui teal header m-title">Z后台管理</h2></a>
+                    <a href="index.html" th:href="@{/admin/index}"><h2 class="ui teal header m-title">ZLog管理</h2></a>
                     <a href="#" class="item m-item m-mobile-hide" th:href="@{/admin/blogs/page/1}" th:classappend="${n==1} ? 'active'">博客管理</a>
                     <a href="javascript:;" th:href="@{/admin/category/1}" class="item m-item m-mobile-hide" th:classappend="${n==2} ? 'active'">分类管理</a>
                     <a href="#" class="item m-item m-mobile-hide" th:classappend="${n==3} ? 'active'">归档管理</a>

@@ -561,7 +561,7 @@
 }
 .editormd-form input[type="text"] {
   display: inline-block;
-  width: 264px;
+  width: 264px !important;
 }
 .editormd-form .fa-btns {
   display: inline-block;

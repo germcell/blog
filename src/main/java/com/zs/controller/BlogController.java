@@ -2,8 +2,10 @@ package com.zs.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.zs.config.Const;
+import com.zs.handler.UniversalException;
 import com.zs.handler.UploadUtils;
 import com.zs.pojo.Blog;
+import com.zs.pojo.EditorJson;
 import com.zs.pojo.RequestResult;
 import com.zs.pojo.User;
 import com.zs.service.BlogService;
@@ -13,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.logging.Log;
 import org.apache.ibatis.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -21,8 +24,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 import java.util.logging.Logger;
 
@@ -36,10 +44,15 @@ public class BlogController {
 
     @Autowired
     private BlogService blogService;
+
     @Autowired
     private CategoryService categoryService;
+
     @Autowired
     private CopyrightService copyrightService;
+
+    @Resource
+    private HashMap<String, List<String>> imageMap;
 
     /**
      * 分页查询
@@ -218,6 +231,46 @@ public class BlogController {
             attributes.addFlashAttribute("requestResult", requestResult);
         }
         return "redirect:/admin/blogs/page/1";
+    }
+
+    /**
+     * 处理editormd的上传图片请求
+     * @param file
+     * @param user
+     * @return
+     */
+    @PostMapping("/editormd/images")
+    @ResponseBody
+    public EditorJson imagesHandler(@RequestParam("editormd-image-file") MultipartFile file,
+                                    @SessionAttribute("loginUser") User user,
+                                    HttpServletRequest request) {
+
+        EditorJson result = new EditorJson();
+        try {
+            String accessDir = UploadUtils.uploadPictureHandler(file, user.getNickname(), Const.BLOG_CONTENT_PICTURE_SIZE);
+            if (accessDir == null || Objects.equals("", accessDir)) {
+                result.setSuccess(0);
+                result.setMessage("错误 : 只支持5MB的jpg,jpeg,png格式的图片");
+            } else {
+                // 保存处理信息(请求ip，图片路径)
+                String remoteAddr = request.getRemoteAddr();
+                List<String> listDir = imageMap.get(remoteAddr);
+                if (listDir == null) {
+                    listDir = new ArrayList<>();
+                    listDir.add(accessDir);
+                    imageMap.put(remoteAddr, listDir);
+                } else {
+                    listDir.add(accessDir);
+                }
+                // 返回处理结果
+                result.setSuccess(1);
+                result.setMessage("upload success");
+                result.setUrl(Const.BLOG_FIRST_PICTURE_ACCESS_DIR + accessDir);
+            }
+        } catch (Exception e) {
+            throw new UniversalException("图片上传失败,格式或大小错误");
+        }
+        return result;
     }
 
 }

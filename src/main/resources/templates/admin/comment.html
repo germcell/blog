@@ -14,7 +14,7 @@
 </head>
 <body>
     <!-- 导航 -->
-    <div th:include="/admin/commonend :: nav(0)"></div>
+    <div class="nav-flexed" th:include="/admin/commonend :: nav(0)"></div>
 
     <!-- 主体内容 -->
     <div class="m-content blog" style="padding-left: 2em !important; padding-right: 2em !important;">
@@ -349,8 +349,6 @@
                     beginDate: beginDate,
                     endDate: endDate
                 });
-
-
                     // $('#commentSearchForm').submit();
             });
         })

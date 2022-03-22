@@ -53,7 +53,7 @@
 <!--                <img src="../static/images/blogPicture/del_blog_img1.jpg" alt="" class="ui fluid rounded image" style="height: 457px;" th:src="${blog.firstPicture}">-->
 <!--            </div>-->
             <!-- 内容 -->
-            <div class="ui segment">
+            <div class="ui segment m-padding-blog-content">
                 <div style="position: relative;">
                     <h2 class="ui center aligned header m-diy-title" th:text="${blog.title}">
                         北京冬奥会闭幕
@@ -132,7 +132,7 @@ public void main(String[] args) {
                                 <img src="../static/images/commentAvatar/avatar22.jpg" th:src="${comment.avatar}">
                             </a>
                             <div class="content">
-                                <a class="author" th:text="${comment.nickname}">Matt</a>
+                                <a class="author m-show-userInfo" data-mail="" th:data-mail="${comment.mail}" data-avatar="" th:data-avatar="${comment.avatar}"  th:text="${comment.nickname}">Matt</a>
                                 <div class="metadata">
                                     <span class="date" th:text="${#dates.format(comment.replyTime,'yyyy-MM-dd HH:mm:ss')}">今天下午 5:42</span>
                                 </div>
@@ -147,7 +147,7 @@ public void main(String[] args) {
                                         <img src="../static/images/commentAvatar/avatar23.jpg" th:src="${childComment.avatar}">
                                     </a>
                                     <div class="content">
-                                        <a class="author" th:text="${childComment.nickname}">Jenny Hess</a>
+                                        <a class="author m-show-userInfo" data-mail="" th:data-mail="${childComment.mail}" data-avatar="" th:data-avatar="${childComment.avatar}" th:text="${childComment.nickname}">Jenny Hess</a>
                                         <div class="metadata">
                                             <span class="date" th:text="${#dates.format(childComment.replyTime, 'yyyy-MM-dd HH:mm:ss')}">刚刚</span>
                                         </div>
@@ -237,6 +237,21 @@ public void main(String[] args) {
                         </div>
                     </div>
                 </div>
+
+                <!-- 留言用户信息卡片 -->
+                <div class="ui m-userInfo popup" style="padding: 0;border-radius: 10px;border: 1px solid #2a907adb;">
+                    <img src="../static/images/userInfo_bg.png" th:src="@{/res/images/userInfo_bg.png}" style="width: inherit; height:45%;border-radius: 10px 10px 0 0;">
+                    <div class="m-userInfo-cont">
+                        <div class="">
+                            <img src="../static/images/del_avatar2.jpg" class="m-userInfo-avatar" th:src="@{/res/images/del_avatar2.jpg}">
+                        </div>
+                        <div class="m-userInfo-info">
+                            <h4><i class="icon user tiny grey"></i> <span class="m-nickname">mushroom</span></h4>
+                            <p><i class="icon envelope square tiny grey"></i> <span class="m-mail">mushroom@qq.com</span></p>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>  
     </div>
@@ -288,6 +303,19 @@ public void main(String[] args) {
     <script src="../static/js/front.js" th:src="@{/res/js/front.js}"></script>
 
     <script type="text/javascript">
+        /* 留言用户信息卡片 */
+        $(document).on('mouseover', '.m-show-userInfo', function () {
+            $('.m-userInfo img').attr('src',$(this).attr('data-avatar'));
+            $('.m-userInfo-info .m-nickname').html($(this).html());
+            $('.m-userInfo-info .m-mail').html($(this).attr('data-mail'));
+            $(this).popup({
+                popup : $('.m-userInfo'),
+                on: 'click',
+                position: 'top left',
+            });
+        });
+    </script>
+    <script type="text/javascript">
         function reply(ele) {
             $('#comment-form :input[name=content]').attr('placeholder', '@' + $(ele).data('replynickname'));
             $('#comment-form :input[name=content]').focus();
@@ -319,9 +347,8 @@ public void main(String[] args) {
                 $('.m-show-comment').css('display', 'block');
                 $(window).scrollTo('.m-show-comment', {duration: 300});
                 $('#comment-fresh').load(/*[[@{/blog/comment/add}]]*/"/blog/comment/load/" + $(this).data('blogid'), function () {
-                })
+                });
             });
-
             /*------------- 提交留言 ----------*/
             $('#comment-submit-btn').on('click',function () {
                 var submit_result = $('#comment-form').form('validate form');

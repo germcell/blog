@@ -85,6 +85,12 @@ h3:hover {
   
 }
 
+.m-padding-blog-content {
+    padding-top: 2em !important;
+    padding-right: 3.5em !important;
+    padding-left: 3.5em !important;
+    padding-bottom: 2em !important;
+}
 
 .m-info {
   display: flex;
@@ -397,3 +403,39 @@ h3:hover {
      z-index: 222;
      width: 100% !important;
 }
+ /* 强制更改editormd图片上传框的样式 */
+ .editormd-form input[type="text"] {
+     display: inline-block;
+     width: 264px !important;
+ }
+
+ /* 读者信息框 */
+ .m-userInfo {
+     width: 17em;
+     height: 10.7em;
+ }
+
+ .m-userInfo-cont {
+     display: flex;
+ }
+
+ .m-userInfo-avatar {
+     border-radius: 20%;
+     width: 47px;
+     height: 47px;
+     margin: 0.6em 1em 0.8em 0.8em;
+     padding: 0.2em;
+ }
+
+ .m-userInfo-info {
+     margin: 0.3em 1em 0.8em 0;
+ }
+
+ .m-userInfo-info h4 {
+     margin-bottom: 0.3em;
+     font-weight: 700;
+ }
+
+ .m-margin-tiny {
+     margin: 0.6em 1em 0.8em 0.8em;
+ }

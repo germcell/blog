@@ -115,6 +115,7 @@
 
              /*--------初始化markdown编辑器---------*/  
              contentEditor = editormd("m-editormd", {
+                 placeholder: '开始编辑...',
                  width: '100%',
                  height: 700,
                  emoji: true,
@@ -122,12 +123,11 @@
                  // 此路径为editor编辑器需要的lib目录，直接使用相对路径，如果配置了资源访问路径，则需加上
                  path: "/res/lib/editormd/lib/",
                  //  原目录: path: "../../static/lib/editormd/lib/"
-                 // TODO 编辑文章时的图片处理
                  imageUpload: true,
                  imageFormats: ["jpg", "jpeg", "png"],
-                 imageUploadURL: "{{ url_for('main.upload') }}",
+                 imageUploadURL: "http://127.0.0.1:8080/admin/editormd/images",
                  onload: function () {
-                     console.log("上传成功")
+                     console.log("begin upload");
                  },
                  // editorTheme: "pastel-on-dark",
                  // previewTheme: "dark"
@@ -162,8 +162,6 @@
                     }
                 }
             });
-
-
         })
     </script>
     

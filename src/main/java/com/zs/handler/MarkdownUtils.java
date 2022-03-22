@@ -36,7 +36,7 @@ public class MarkdownUtils {
         Pattern chineseReg = Pattern.compile("[\u4e00-\u9fa5]");
         Pattern numberReg = Pattern.compile("[0-9]"); // 48 - 57
         Pattern letterReg = Pattern.compile("[a-z]");
-        Pattern punctuationReg = Pattern.compile("[!！￥%…&（）？*—+,./?^$]");
+        Pattern punctuationReg = Pattern.compile("[!！￥%…&（）？—+,./?^$]");
 
         // 将String转为集合
         List<String> listOrigin = new LinkedList<>();

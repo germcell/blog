@@ -11,17 +11,19 @@
         <nav class="ui inverted attached segment m-navpd">
             <div class="ui container">
                 <div class="ui inverted secondary menu stackable">
-                    <a th:href="@{/blog}"><h2 class="ui teal header m-title ">Z社区</h2></a>
-                    <a href="javascript:void(0);" class="item m-item m-mobile-hide" th:classappend="${n==1} ? 'active'" th:href="@{/blog/index/}">首页</a>
+                    <a th:href="@{/blog}"><h2 class="ui teal header m-title ">ZLog</h2></a>
+                    <a href="javascript:void(0);" class="item m-item m-mobile-hide" th:classappend="${n==1} ? 'active'" th:href="@{/blog/index/}">最新发布</a>
                     <a href="javascript:void(0);" class="item m-item m-mobile-hide" th:classappend="${n==2} ? 'active'" th:href="@{/blog/category/1/}">分类</a>
                     <!-- <a href="#" class="item m-item m-mobile-hide">标签</a> -->
-                    <a href="#" class="item m-item m-mobile-hide" th:classappend="${n==3} ? 'active'">归档</a>
-                    <a href="#" class="item m-item m-mobile-hide" id="about-me">关于我</a>
-                    <div class="right item m-item m-mobile-hide" style="height: 43px !important;">
+                    <a href="#" class="item m-item m-mobile-hide" th:classappend="${n==3} ? 'active'">归档集</a>
+                    <a href="#" class="item m-item m-mobile-hide" id="about-me">关于本站</a>
+                    <div class="right item m-item m-mobile-hide" style="height: 50px !important;">
                         <form class="ui form" method="get" target="_blank" action="" th:action="@{/blog/condition/page/1}">
                             <div class="ui icon input">
-                                <input id="search_input" type="text" placeholder="" name="search" value="" th:if="${search != null}" th:value="${search}">
-                                <input id="search_input" type="text" placeholder="" name="search" value="" th:if="${search == null}" th:placeholder="${initSearch.title}">
+                                <input id="search_input" type="text" placeholder="" name="search" value="" th:if="${search != null}" th:value="${search}" style="
+                                width: 20em !important;">
+                                <input id="search_input" type="text" placeholder="" name="search" value="" th:if="${search == null}" th:placeholder="${initSearch.title}" style="
+                                width: 20em !important;">
                                 <i class="search link icon"></i>
                             </div>
                         </form>

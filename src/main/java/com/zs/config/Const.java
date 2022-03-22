@@ -149,9 +149,15 @@ public class Const {
     public static final int EDIT_BLOG_FAILED_UPLOAD_EXCEPTION = 5055;
 
     /**
-     * 博客首图文件大小
+     * 博客首图文件大小 3MB
      */
     public static final Long BLOG_FIRST_PICTURE_SIZE = 1024 * 1024 * 3L;
+
+    /**
+     * 博客首内容图片大小 5MB
+     */
+    public static final Long BLOG_CONTENT_PICTURE_SIZE = 1024 * 1024 * 5L;
+
 
     /**
      * 博客显示概要的字数

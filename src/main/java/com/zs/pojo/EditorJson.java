@@ -6,18 +6,17 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 /**
- * 请求结果类
- * @Created by zs on 2022/2/23.
+ * @Created by zs on 2022/3/20.
  */
 @Data
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class RequestResult {
+public class EditorJson {
     /**
-     * 自定义返回json结果
+     * editormd上传图片返回json数据
      */
-    private int code;
+    private int success;
     private String message;
-    private Object data;
+    private String url;
 }
