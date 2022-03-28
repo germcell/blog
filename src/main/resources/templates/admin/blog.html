@@ -87,7 +87,8 @@
                         <input class="bid" type="hidden" name="bid" value="" th:value="${blog.bid}">
                     </td>
                     <td th:text="${status.count + ((pageInfo.pageNum-1) * pageInfo.pageSize)}">1</td>
-                    <td th:text="${blog.title}">static关键字</td>
+                    <td th:if="${blog.title.length() >= 45}" th:text="${blog.title.substring(0,45) + '...'}" title="" th:title="${blog.title}">static关键字</td>
+                    <td th:if="${blog.title.length() < 45}" th:text="${blog.title}" title="" th:title="${blog.title}">static关键字</td>
                     <td th:text="${blog.category.name}">Java</td>
                     <td th:unless="${blog.isPublish == false}" class="m-is-publish">发布</td>
                     <td th:unless="${blog.isPublish == true}" class="m-is-draft" style="font-weight: 400!important;">草稿</td>

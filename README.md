@@ -6,17 +6,13 @@
 #### 软件架构
 B/S
 
-#### 安装教程
+#### 运行环境
 
-1.  
-2.  xxxx
-3.  xxxx
+1. SpringBoot 2.6.3
+2. redis 5.0.14
+3. maven 3.8.4
+4. mysql 8
 
-#### 使用说明
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
 
 
 
